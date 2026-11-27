@@ -1,5 +1,6 @@
 {
-  "project_name": "Focused Local B2B Invoicing CLI",
+  "_comment": "Sample spec for pulse-crowd",
+
   "product_type": "developer_tool",
   "lifecycle_stage": "mvp",
   "geographic_scope": "single_city",

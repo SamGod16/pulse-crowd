@@ -14,7 +14,7 @@ from simulate_crowd import run_simulation, write_outputs  # noqa: E402
 from validate_skill import validate_repo  # noqa: E402
 
 
-class MiroFishCrowdSimTests(unittest.TestCase):
+class PulseCrowdSimTests(unittest.TestCase):
     def setUp(self) -> None:
         self.minimal_spec = json.loads(
             (ROOT / "examples" / "minimal-b2b-cli.json").read_text(encoding="utf-8")

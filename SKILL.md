@@ -1,5 +1,7 @@
 ---
-name: mirofish-crowd-sim
+name: pulse-crowd
+subtitle: Adaptive Virtual Crowd Simulation
+tagline: Understand the market before you enter it.
 description: >-
   Run adaptive, multi-round virtual crowd simulations (minimum 1,000 virtual
   personas, scaling upward automatically with project complexity) to stress-test

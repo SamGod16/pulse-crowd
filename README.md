@@ -1,4 +1,4 @@
-# mirofish-crowd-sim
+# pulse-crowd
 
 > Adaptive multi-round virtual crowd simulation (`1,000` to `25,000+` personas) for AI coding agents — stress-test product launches, onboarding gates, pricing fairness, and compliance risk before shipping.
 
@@ -16,7 +16,7 @@ Asking an AI assistant to "simulate a launch" in a single prompt—or testing a 
 - Fixed, oversized test runs waste time on simple developer utilities that only need a focused cohort mix.
 - Proprietary single-tool orchestration scripts break across other AI assistants.
 
-`mirofish-crowd-sim` packages a **portable Agent Skill** (`SKILL.md` + zero-dependency Python 3 stdlib tooling) that sizes the virtual crowd automatically **before** dispatch and runs deterministic multi-round simulations across **at least 1,000 virtual personas**.
+`pulse-crowd` packages a **portable Agent Skill** (`SKILL.md` + zero-dependency Python 3 stdlib tooling) that sizes the virtual crowd automatically **before** dispatch and runs deterministic multi-round simulations across **at least 1,000 virtual personas**.
 
 ---
 
@@ -35,7 +35,7 @@ Asking an AI assistant to "simulate a launch" in a single prompt—or testing a 
 ## Project Structure
 
 ```text
-mirofish-crowd-sim/
+pulse-crowd/
 ├── SKILL.md                          # Core Agent Skills instructions and workflow
 ├── README.md                         # Project documentation
 ├── LICENSE                           # MIT License
@@ -53,7 +53,7 @@ mirofish-crowd-sim/
 │   ├── minimal-b2b-cli.json          # Lean dev-tool spec (sizes to 1,500 personas)
 │   └── regulated-marketplace.json    # Complex regional marketplace spec (sizes to 6,750 personas)
 └── tests/
-    └── test_mirofish_crowd_sim.py    # Python unittest suite
+    └── test_pulse_crowd_sim.py    # Python unittest suite
 ```
 
 ---
@@ -76,42 +76,42 @@ Per Vercel Labs' [`skills`](https://github.com/vercel-labs/skills) CLI documenta
 
 ```bash
 # Interactive multi-agent global install
-npx skills add <OWNER>/mirofish-crowd-sim -g
+npx skills add <OWNER>/pulse-crowd -g
 
 # Target specific agents non-interactively
-npx skills add <OWNER>/mirofish-crowd-sim -a claude-code -g -y
-npx skills add <OWNER>/mirofish-crowd-sim -a codex -g -y
-npx skills add <OWNER>/mirofish-crowd-sim -a opencode -g -y
+npx skills add <OWNER>/pulse-crowd -a claude-code -g -y
+npx skills add <OWNER>/pulse-crowd -a codex -g -y
+npx skills add <OWNER>/pulse-crowd -a opencode -g -y
 ```
 
-> **Verification note:** `npx skills add` syntax reflects documented CLI flags; remote fetch from `<OWNER>/mirofish-crowd-sim` requires the repository to be published on GitHub first.
+> **Verification note:** `npx skills add` syntax reflects documented CLI flags; remote fetch from `<OWNER>/pulse-crowd` requires the repository to be published on GitHub first.
 
 ### Option 2: Manual Global Installation (Clone / Symlink)
 
 Clone the repository once, then link or copy it to the shared standard path (`~/.agents/skills/`) and any agent-native directories you use:
 
 ```bash
-git clone https://github.com/<OWNER>/mirofish-crowd-sim.git ~/skills/mirofish-crowd-sim
+git clone https://github.com/<OWNER>/pulse-crowd.git ~/skills/pulse-crowd
 mkdir -p ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.config/opencode/skills
 
 # Shared Agent Skills path (scanned by Codex, OpenCode, Gemini CLI, Cursor)
-ln -sfn ~/skills/mirofish-crowd-sim ~/.agents/skills/mirofish-crowd-sim
+ln -sfn ~/skills/pulse-crowd ~/.agents/skills/pulse-crowd
 
 # Agent-specific user-level skill directories
-ln -sfn ~/skills/mirofish-crowd-sim ~/.claude/skills/mirofish-crowd-sim
-ln -sfn ~/skills/mirofish-crowd-sim ~/.codex/skills/mirofish-crowd-sim
-ln -sfn ~/skills/mirofish-crowd-sim ~/.config/opencode/skills/mirofish-crowd-sim
+ln -sfn ~/skills/pulse-crowd ~/.claude/skills/pulse-crowd
+ln -sfn ~/skills/pulse-crowd ~/.codex/skills/pulse-crowd
+ln -sfn ~/skills/pulse-crowd ~/.config/opencode/skills/pulse-crowd
 ```
 
-For workspace-only installation inside a single repository instead of global installation, place the folder under `.agents/skills/mirofish-crowd-sim/` (or `.claude/skills/mirofish-crowd-sim/`).
+For workspace-only installation inside a single repository instead of global installation, place the folder under `.agents/skills/pulse-crowd/` (or `.claude/skills/pulse-crowd/`).
 
 ### Verify Your Installation
 
 Confirm the skill directory resolves cleanly and passes self-checks:
 
 ```bash
-python3 ~/.agents/skills/mirofish-crowd-sim/scripts/validate_skill.py
-python3 -m unittest discover -s ~/.agents/skills/mirofish-crowd-sim/tests -v
+python3 ~/.agents/skills/pulse-crowd/scripts/validate_skill.py
+python3 -m unittest discover -s ~/.agents/skills/pulse-crowd/tests -v
 ```
 
 Expected confirmation: `Skill validation PASSED` and `Ran 6 tests ... OK`.
