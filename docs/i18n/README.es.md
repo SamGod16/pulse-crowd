@@ -23,6 +23,17 @@
 | **Script fijo de 10–15 personas** | ~15 personas fijas | Simplifica en exceso o desperdicia escala | Ad-hoc | Atado a una herramienta |
 | **`pulse-crowd` (Esta Skill)** | **Adaptativo `1,000` – `25,000+`** | **Estratificado con mínimo estadístico** | **Monte Carlo con IC 95%** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
 
+### Caso Real Antes vs. Después (`6,750` Personas Virtuales)
+
+Simulación real ejecutada con `scripts/simulate_crowd.py` (`--runs 3 --seed 42`) sobre un marketplace regulado antes y después de corregir fricción KYC, riesgos de privacidad de menores y percepción de precios:
+
+| Métrica | Antes (Sin Endurecer) | Después ([`regulated-marketplace.json`](../../examples/regulated-marketplace.json)) |
+| :--- | :--- | :--- |
+| **Puntuación Readiness** | **`11.7 / 100`** (`±0.35 IC95`) | **`92.3 / 100`** (`±0.07 IC95`) |
+| **Sentimiento (`R1 → R2 → R3`)** | `-0.473 → -0.681 → -0.443` | `+0.452 → +0.530 → +0.649` |
+| **Retención vs. Rechazos** | `22` activos · `5,838` rechazos por desconfianza | `6,583` activos/promotores · `0` rechazos por desconfianza |
+| **Veredicto** | **NO-GO** *(Espiral de rechazo regulatorio)* | **GO** *(Listo para Lanzamiento Fase 1)* |
+
 ### Qué hace
 1. **Dimensionamiento adaptativo previo (`scripts/size_swarm.py`):** Evalúa la complejidad real (tipo de producto, segmentos, geografía, niveles de precio, canales, riesgo regulatorio y fase) y exige un **mínimo estricto de 1,000 personas virtuales**, escalando hasta **25,000+**.
 2. **Asignación estratificada por cohortes:** Usa asignación de Resto Mayor (*Largest Remainder*) garantizando representación estadística para cohortes minoritarias críticas (auditores legales, zonas rurales, críticos escépticos).

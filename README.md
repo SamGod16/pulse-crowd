@@ -25,6 +25,20 @@
 | **Static 10–15 persona script** | Fixed ~15 personas | Oversimplifies or wastes scale | Ad-hoc | Tool-locked |
 | **`pulse-crowd` (This Skill)** | **Adaptive `1,000` – `25,000+`** | **Stratified + Largest Remainder floor** | **Seeded Monte Carlo 95% CI** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
 
+### Real Before vs. After Case Study (`6,750` Virtual Personas)
+
+Simulated directly via `scripts/simulate_crowd.py` (`--runs 3 --seed 42`) on a two-sided youth sports marketplace before vs. after fixing heavy KYC friction, minor/privacy compliance gaps, and negative pricing sentiment:
+
+| Metric | Pre-Hardening Baseline | Post-Hardening ([`regulated-marketplace.json`](examples/regulated-marketplace.json)) |
+| :--- | :--- | :--- |
+| **Adaptive Population** | `6,750` personas (`complex_4k_8k`) | `6,750` personas (`complex_4k_8k`) |
+| **Readiness Score** | **`11.7 / 100`** (`±0.35 CI95`) | **`92.3 / 100`** (`±0.07 CI95`) |
+| **Sentiment (`R1 → R2 → R3`)** | `-0.473 → -0.681 → -0.443` | `+0.452 → +0.530 → +0.649` |
+| **Retained vs. Rejected** | `22` active · `832` stalled · `5,838` distrust rejections | `6,583` active/advocates · `1` stalled · `0` distrust rejections |
+| **Verdict** | **NO-GO** *(Critical Blockers Trigger Rejection Spiral)* | **GO** *(Conditional or Phase-1 Launch Ready)* |
+
+> Try tuning those exact parameters yourself right in the browser: **[Live Interactive Demo →](https://samgod16.github.io/pulse-crowd/)**
+
 ### The Problem
 
 Asking an AI assistant to "simulate a launch" in a single prompt—or testing a product against 10–15 synthetic personas—misses structural market dynamics:
