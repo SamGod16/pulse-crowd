@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MiroFish Crowd Sim Project Specification",
+  "type": "object",
+  "required": ["project_name", "product_type", "cohorts"],
+  "properties": {
+    "project_name": { "type": "string", "minLength": 1 },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "developer_tool",
+        "b2b_saas",
+        "b2c_consumer",
+        "community_network",
+        "two_sided_marketplace",
+        "regulated_platform"
+      ]
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "enum": ["concept", "mvp", "pre_launch", "growth_scale"],
+      "default": "mvp"
+    },
+    "geographic_scope": {
+      "type": "string",
+      "enum": ["single_city", "regional", "national", "multi_country"],
+      "default": "regional"
+    },
+    "regulatory_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "default": "medium"
+    },
+    "evaluation_depth": {
+      "type": "string",
+      "enum": ["standard", "thorough", "stress_test"],
+      "default": "standard"
+    },
+    "target_segments": { "type": "integer", "minimum": 1 },
+    "pricing_tiers": { "type": "integer", "minimum": 0 },
+    "acquisition_channels": { "type": "integer", "minimum": 1 },
+    "cohorts": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role", "share"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "share": { "type": "number", "exclusiveMinimum": 0 },
+          "is_b2b_buyer": { "type": "boolean", "default": false },
+          "value_fit": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
+          "initial_trust": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
+          "onboarding_friction": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "regulatory_blocker_risk": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "pricing_fairness": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
+          "local_liquidity": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "liquidity_dependence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "social_susceptibility": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "social_voice_weight": { "type": "number", "minimum": 0.2 },
+          "pro_value_fit": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "skepticism_bias": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+        }
+      }
+    }
+  }
+}
