@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pulse-crowd"
+version = "1.0.0"
+description = "Adaptive multi-round virtual crowd simulation (1,000-25,000+ personas) for AI coding agents."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "SamGod16" }]
+keywords = [
+    "crowd-simulation",
+    "ai-agents",
+    "agent-skills",
+    "market-research",
+    "monte-carlo",
+    "product-validation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/SamGod16/pulse-crowd"
+Repository = "https://github.com/SamGod16/pulse-crowd"
+"Live Demo" = "https://samgod16.github.io/pulse-crowd/"
+Issues = "https://github.com/SamGod16/pulse-crowd/issues"
+Changelog = "https://github.com/SamGod16/pulse-crowd/blob/main/CHANGELOG.md"
+
+[project.scripts]
+pulse-crowd-size = "pulse_crowd.size_swarm:main"
+pulse-crowd-sim = "pulse_crowd.simulate_crowd:main"
+
+[tool.setuptools]
+packages = ["pulse_crowd"]
+
+[tool.setuptools.package-dir]
+pulse_crowd = "scripts"

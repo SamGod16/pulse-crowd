@@ -7,3 +7,6 @@ __pycache__/
 sim_output/
 *.tmp
 .pytest_cache/
+build/
+dist/
+*.egg-info/

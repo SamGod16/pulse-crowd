@@ -12,4 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adaptive pre-simulation sizing engine (`scripts/size_swarm.py`) enforcing a strict minimum of `1,000` virtual personas and scaling dynamically up to `25,000+` based on product complexity, geography, regulatory exposure, segments, and lifecycle stage.
 - Multi-round Agent-Based Crowd Simulator (`scripts/simulate_crowd.py`) using Python 3 standard library only, supporting Monte Carlo confidence intervals across runs, cohort breakdown CSVs, stratified trace samples, and Readiness Score rubrics.
 - Repository specification & security validator (`scripts/validate_skill.py`).
+- Zero-dependency Python packaging (`pyproject.toml`) exposing `pulse-crowd-size` and `pulse-crowd-sim` CLI entry points.
+- GitHub Actions CI matrix across Python `3.9`–`3.14` (`.github/workflows/ci.yml`), PyPI Trusted Publishing workflow (`.github/workflows/publish-pypi.yml`), and Dependabot config.
+- Interactive web demo (`docs/index.html`) deployed to GitHub Pages and terminal preview SVG (`assets/demo-preview.svg`).
+- Community health documentation (`CODE_OF_CONDUCT.md`, `.github/ISSUE_TEMPLATE/`, `.github/PULL_REQUEST_TEMPLATE.md`).
 - Reference methodology (`references/methodology.md`), JSON Schema (`references/spec-schema.json`), two anonymized example specs (`examples/minimal-b2b-cli.json`, `examples/regulated-marketplace.json`), and `unittest` test suite (`tests/test_pulse_crowd_sim.py`).

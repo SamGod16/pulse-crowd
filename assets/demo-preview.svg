@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="PulseCrowd Adaptive Crowd Simulation CLI Preview">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#131922"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#58a6ff"/>
+      <stop offset="100%" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Terminal Card -->
+  <rect width="880" height="420" rx="14" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Top Bar -->
+  <rect width="880" height="40" rx="14" fill="#161b22"/>
+  <rect y="26" width="880" height="14" fill="#161b22"/>
+  <line x1="0" y1="40" x2="880" y2="40" stroke="#30363d" stroke-width="1"/>
+  <circle cx="24" cy="20" r="6" fill="#f85149"/>
+  <circle cx="44" cy="20" r="6" fill="#d29922"/>
+  <circle cx="64" cy="20" r="6" fill="#3fb950"/>
+  <text x="440" y="25" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13" font-weight="600">pulse-crowd — Adaptive Multi-Round Virtual Crowd Simulator (Python 3 stdlib)</text>
+
+  <!-- Pipeline Flow Pills -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="600">
+    <rect x="28" y="58" width="175" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="115" y="79" text-anchor="middle" fill="#79c0ff">1. Codebase Audit</text>
+
+    <path d="M 210 75 L 228 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="228,71 236,75 228,79" fill="#8b949e"/>
+
+    <rect x="242" y="58" width="185" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="334" y="79" text-anchor="middle" fill="#79c0ff">2. Size Swarm (&gt;= 1,000)</text>
+
+    <path d="M 434 75 L 452 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="452,71 460,75 452,79" fill="#8b949e"/>
+
+    <rect x="466" y="58" width="195" height="34" rx="8" fill="#1f2937" stroke="#d29922" stroke-width="1"/>
+    <text x="563" y="79" text-anchor="middle" fill="#e3b341">3. 3-Round Contagion</text>
+
+    <path d="M 668 75 L 686 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="686,71 694,75 686,79" fill="#8b949e"/>
+
+    <rect x="700" y="58" width="152" height="34" rx="8" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="776" y="79" text-anchor="middle" fill="#56d364">4. Readiness Score</text>
+  </g>
+
+  <!-- Left Card: Minimal B2B CLI -->
+  <rect x="28" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="46" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">$ simulate_crowd.py --spec minimal-b2b-cli.json</text>
+  <line x1="46" y1="150" x2="412" y2="150" stroke="#21262d" stroke-width="1"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#c9d1d9">
+    <text x="46" y="176" fill="#8b949e">Population Tier:</text>
+    <text x="235" y="176" fill="#e6edf3" font-weight="700">1,500 personas (lean_1k)</text>
+
+    <text x="46" y="202" fill="#8b949e">Readiness Score:</text>
+    <text x="235" y="202" fill="#3fb950" font-weight="700">90.0 / 100 (±0.07 CI95)</text>
+
+    <text x="46" y="228" fill="#8b949e">Sentiment Trajectory:</text>
+    <text x="235" y="228" fill="#79c0ff">+0.350 → +0.386 → +0.543</text>
+
+    <text x="46" y="254" fill="#8b949e">Verdict:</text>
+    <rect x="235" y="239" width="150" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="310" y="254" text-anchor="middle" fill="#56d364" font-size="11.5" font-weight="700">GO (Launch Ready)</text>
+  </g>
+
+  <!-- Mini Sentiment Bars Left -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#8b949e">
+    <text x="46" y="294">R1 Discovery</text>
+    <rect x="145" y="284" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="145" y="284" width="128" height="12" rx="4" fill="#58a6ff"/>
+
+    <text x="46" y="320">R2 Contagion</text>
+    <rect x="145" y="310" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="145" y="310" width="142" height="12" rx="4" fill="#d29922"/>
+
+    <text x="46" y="346">R3 Equilibrium</text>
+    <rect x="145" y="336" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="145" y="336" width="186" height="12" rx="4" fill="#3fb950"/>
+
+    <text x="46" y="376" fill="#6e7681" font-size="10.5">3 cohorts • single_city • low regulatory risk</text>
+  </g>
+
+  <!-- Right Card: Regulated Marketplace -->
+  <rect x="450" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="468" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
+  <line x1="468" y1="150" x2="834" y2="150" stroke="#21262d" stroke-width="1"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#c9d1d9">
+    <text x="468" y="176" fill="#8b949e">Population Tier:</text>
+    <text x="657" y="176" fill="#e6edf3" font-weight="700">6,750 (complex_4k_8k)</text>
+
+    <text x="468" y="202" fill="#8b949e">Readiness Score:</text>
+    <text x="657" y="202" fill="#3fb950" font-weight="700">92.3 / 100 (±0.07 CI95)</text>
+
+    <text x="468" y="228" fill="#8b949e">Sentiment Trajectory:</text>
+    <text x="657" y="228" fill="#79c0ff">+0.452 → +0.530 → +0.649</text>
+
+    <text x="468" y="254" fill="#8b949e">Verdict:</text>
+    <rect x="657" y="239" width="150" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="732" y="254" text-anchor="middle" fill="#56d364" font-size="11.5" font-weight="700">GO (Phase-1 Ready)</text>
+  </g>
+
+  <!-- Mini Sentiment Bars Right -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#8b949e">
+    <text x="468" y="294">R1 Discovery</text>
+    <rect x="567" y="284" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="284" width="160" height="12" rx="4" fill="#58a6ff"/>
+
+    <text x="468" y="320">R2 Contagion</text>
+    <rect x="567" y="310" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="310" width="184" height="12" rx="4" fill="#d29922"/>
+
+    <text x="468" y="346">R3 Equilibrium</text>
+    <rect x="567" y="336" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="336" width="214" height="12" rx="4" fill="#3fb950"/>
+
+    <text x="468" y="376" fill="#6e7681" font-size="10.5">8 cohorts • regional • high regulatory risk (safety gate active)</text>
+  </g>
+</svg>

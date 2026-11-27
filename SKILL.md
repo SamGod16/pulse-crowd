@@ -14,7 +14,7 @@ compatibility: >-
   and a terminal/shell tool. Tested with Antigravity; compatible with Claude Code,
   OpenAI Codex CLI, OpenCode, Gemini CLI, and Cursor via SKILL.md discovery.
 metadata:
-  author: samu
+  author: SamGod16
   version: "1.0.0"
   category: product-validation
 ---

@@ -1,0 +1,37 @@
+name: Bug Report
+description: Report a bug in sizing, simulation, validation, or agent skill discovery
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug in **pulse-crowd**!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Clear description of the bug and unexpected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include CLI command, example spec (anonymized), and flags used.
+      placeholder: |
+        python3 scripts/simulate_crowd.py --spec examples/minimal-b2b-cli.json --runs 3 --seed 42
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version & OS
+      placeholder: e.g. Python 3.12 on macOS 15 / Ubuntu 24.04
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log or JSON output
+      render: shell

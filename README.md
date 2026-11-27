@@ -9,23 +9,45 @@
 ![Python: 3.9+ stdlib](https://img.shields.io/badge/Python-3.9%2B%20stdlib-informational.svg)
 [![GitHub Stars](https://img.shields.io/github/stars/SamGod16/pulse-crowd?style=social)](https://github.com/SamGod16/pulse-crowd)
 
-**[📊 Live Interactive Demo](https://samgod16.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🐛 Report Bug](https://github.com/SamGod16/pulse-crowd/issues)**
+**[📊 Live Interactive Demo](https://samgod16.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[🐛 Report Bug](https://github.com/SamGod16/pulse-crowd/issues)**
+
+![PulseCrowd Adaptive Crowd Simulation CLI Preview](assets/demo-preview.svg)
 
 ---
 
-## The Problem
+## Why PulseCrowd?
+
+| Approach | Sample Size | Minority Risk Detection | Determinism & CI | Portability |
+| :--- | :--- | :--- | :--- | :--- |
+| **Single LLM launch prompt** | 1 generic persona | Hides compliance & cold-start edges | None | Prompt only |
+| **Static 10–15 persona script** | Fixed ~15 personas | Oversimplifies or wastes scale | Ad-hoc | Tool-locked |
+| **`pulse-crowd` (This Skill)** | **Adaptive `1,000` – `25,000+`** | **Stratified + Largest Remainder floor** | **Seeded Monte Carlo 95% CI** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
+
+### The Problem
 
 Asking an AI assistant to "simulate a launch" in a single prompt—or testing a product against 10–15 synthetic personas—misses structural market dynamics:
 
 - Small sample prompts hide minority failure modes (legal auditors, regional cold-start zones, skeptical power users, or guardian verification friction).
-- Fixed, oversized test runs waste time on simple developer utilities that only need a focused cohort mix.
+- Fixed, oversized test runs waste compute on simple developer utilities that only need a focused cohort mix.
 - Proprietary single-tool orchestration scripts break across other AI assistants.
 
 `pulse-crowd` packages a **portable Agent Skill** (`SKILL.md` + zero-dependency Python 3 stdlib tooling) that sizes the virtual crowd automatically **before** dispatch and runs deterministic multi-round simulations across **at least 1,000 virtual personas**.
 
 ---
 
-## What It Does
+## How It Works
+
+```mermaid
+flowchart LR
+    A["1. Ground-Truth Code Audit"] --> B["2. Build Spec JSON"]
+    B --> C["3. size_swarm.py (>= 1,000 Personas)"]
+    C --> D["Round 1: Discovery & Policy Gates"]
+    D --> E["Round 2: Asymmetric Social Contagion"]
+    E --> F["Round 3: Week-2 Equilibrium & B2B Conversion"]
+    F --> G{"Distrust > 15%?"}
+    G -->|Yes| H["Cap Verdict at NO-GO"]
+    G -->|No| I["Readiness Score (0-100) + 95% CI"]
+```
 
 1. **Pre-Dispatch Adaptive Swarm Sizing (`scripts/size_swarm.py`):** Evaluates project complexity across product architecture, target segments, geographic footprint, pricing tiers, acquisition channels, regulatory risk, lifecycle stage, and desired depth. Enforces a strict **minimum floor of 1,000 virtual personas** and scales dynamically up to **25,000+** for complex, multi-sided, or regulated platforms.
 2. **Stratified Cohort Allocation:** Uses Largest Remainder allocation with a per-cohort statistical power floor so critical minority cohorts (such as compliance reviewers or rural provinces) remain measurable.
@@ -43,10 +65,20 @@ Asking an AI assistant to "simulate a launch" in a single prompt—or testing a 
 pulse-crowd/
 ├── SKILL.md                          # Core Agent Skills instructions and workflow
 ├── README.md                         # Project documentation
+├── pyproject.toml                    # Zero-dependency Python packaging & CLI entry points
 ├── LICENSE                           # MIT License
 ├── CHANGELOG.md                      # Release history
 ├── CONTRIBUTING.md                   # Contribution and testing guidelines
-├── .gitignore
+├── CODE_OF_CONDUCT.md                # Contributor Covenant Code of Conduct
+├── assets/
+│   └── demo-preview.svg              # Architecture & observed benchmark preview
+├── docs/
+│   └── index.html                    # Interactive GitHub Pages web demo
+├── .github/
+│   ├── dependabot.yml                # Automated GitHub Actions updates
+│   ├── PULL_REQUEST_TEMPLATE.md      # Pull request checklist
+│   ├── ISSUE_TEMPLATE/               # Structured bug & feature templates
+│   └── workflows/                    # CI matrix (Python 3.9–3.14) & PyPI release
 ├── scripts/
 │   ├── size_swarm.py                 # Adaptive >= 1,000 population sizing calculator
 │   ├── simulate_crowd.py             # 3-round agent-based crowd simulator + reporting
@@ -58,15 +90,15 @@ pulse-crowd/
 │   ├── minimal-b2b-cli.json          # Lean dev-tool spec (sizes to 1,500 personas)
 │   └── regulated-marketplace.json    # Complex regional marketplace spec (sizes to 6,750 personas)
 └── tests/
-    └── test_pulse_crowd_sim.py    # Python unittest suite
+    └── test_pulse_crowd_sim.py       # Python unittest suite
 ```
 
 ---
 
 ## Requirements & Dependencies
 
-- **Runtime:** Python `3.9+` (tested locally on `Python 3.9.6`).
-- **External packages:** None. All scripts use Python's standard library (`json`, `csv`, `math`, `random`, `statistics`, `argparse`, `pathlib`, `unittest`, `re`).
+- **Runtime:** Python `3.9+` (tested locally on `Python 3.9.6` and verified in CI across `3.9`–`3.14`).
+- **External packages:** None. All core scripts use Python's standard library (`json`, `csv`, `math`, `random`, `statistics`, `argparse`, `pathlib`, `unittest`, `re`).
 - **Optional CLI:** Node.js / `npx` if installing via the community `skills` CLI (`npx skills add`).
 
 ---
@@ -89,8 +121,6 @@ npx skills add SamGod16/pulse-crowd -a codex -g -y
 npx skills add SamGod16/pulse-crowd -a opencode -g -y
 ```
 
-> **Verification note:** `npx skills add` syntax reflects documented CLI flags; remote fetch from `SamGod16/pulse-crowd` requires the repository to be published on GitHub first.
-
 ### Option 2: Manual Global Installation (Clone / Symlink)
 
 Clone the repository once, then link or copy it to the shared standard path (`~/.agents/skills/`) and any agent-native directories you use:
@@ -109,6 +139,14 @@ ln -sfn ~/skills/pulse-crowd ~/.config/opencode/skills/pulse-crowd
 ```
 
 For workspace-only installation inside a single repository instead of global installation, place the folder under `.agents/skills/pulse-crowd/` (or `.claude/skills/pulse-crowd/`).
+
+### Option 3: Install Python CLI via `pip` (from GitHub)
+
+```bash
+pip install git+https://github.com/SamGod16/pulse-crowd.git
+pulse-crowd-size --spec examples/minimal-b2b-cli.json
+pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
+```
 
 ### Verify Your Installation
 
@@ -226,7 +264,7 @@ When activated, a compatible agent will:
 
 ## Contributing
 
-Contributions are welcome. Please review [CONTRIBUTING.md](CONTRIBUTING.md) and run both checks before submitting changes:
+Contributions are welcome! Check our **[Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**, review [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md), and run both checks before opening a pull request:
 
 ```bash
 python3 scripts/validate_skill.py
