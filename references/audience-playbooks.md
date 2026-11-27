@@ -71,3 +71,19 @@ Use this reference during **Step 0 (Guided Intake)** and **Step 2 (Spec Construc
 **Typical cohorts:** Supply side + demand side (including metro vs secondary/rural liquidity gaps), B2B buyers, minors + guardians if applicable, and legal/GDPR/compliance auditors (`social_voice_weight: 2.0+`).
 
 - Always pay close attention to `local_liquidity`, `liquidity_dependence`, and the `rejected_distrust > 15%` regulatory safety gate.
+
+---
+
+## 7. Other / Custom Projects (`custom_project`)
+
+Use this playbook whenever the user selects **"Other / Custom"**—for example: **browser extensions, Discord/Telegram/Slack bots, newsletters, paid communities, online courses/info-products, indie games, desktop utilities, hardware, local services, or hybrid businesses**.
+
+- **How to tailor from the user's description:**
+  1. Ask 3–4 short questions: *What is it? How do people first find and try it? Who pays (or how is it monetized)? What could make someone hesitate or quit halfway?*
+  2. Define 3–4 bespoke cohorts matching their real stakeholders:
+     - `core_target_users` (primary users/subscribers/players/clients)
+     - `curious_browsers` (low-patience cold visitors testing the first screen/hook)
+     - `paid_or_pro_buyers` (if monetized via subscriptions, sponsorship, one-time, or service booking)
+     - `skeptical_evaluators` (store/platform reviewers, privacy checkers, or price-sensitive critics)
+  3. Map their concrete user path into `ux_journey` (e.g., *Install / Hook -> First Setup / Permission -> Core Value Moment -> Monetization / Retention*).
+

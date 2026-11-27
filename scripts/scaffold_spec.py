@@ -9,7 +9,8 @@ PulseCrowd specification tailored to their exact business vertical:
   - future_app     (Pre-code mobile/web app idea & planned UX journey)
   - future_website (Landing page, waitlist, booking funnel, info-product)
   - b2b_saas       (SaaS / dev-tool pricing tiers, auth & team buyers)
-  - marketplace    (Two-sided or regulated platform with liquidity & compliance)
+  - marketplace    (Two-Sided or regulated platform with liquidity & compliance)
+  - custom         (Other / Custom project: Chrome ext, bot, course, newsletter, game, etc.)
 
 Pure Python 3.9+ standard library (zero external dependencies).
 """
@@ -29,6 +30,7 @@ VALID_BUSINESS_TYPES = (
     "future_website",
     "b2b_saas",
     "marketplace",
+    "custom",
 )
 
 
@@ -48,6 +50,8 @@ def build_spec(
     forced_signup_early: bool = False,
     heavy_popups: bool = False,
     pricing_fairness: float = 0.35,
+    custom_description: str = "",
+    is_b2b: bool = False,
 ) -> dict[str, Any]:
     """Generate a tailored spec template calibrated for the chosen business audience."""
     if business_type not in VALID_BUSINESS_TYPES:
@@ -444,6 +448,138 @@ def build_spec(
             ],
         }
 
+    if business_type == "custom":
+        auth_friction = 0.60 if forced_signup_early else 0.16
+        distraction = 0.50 if heavy_popups else 0.14
+        label = f"{project_name} ({custom_description})" if custom_description else project_name
+        return {
+            "project_name": label,
+            "product_type": "custom_project",
+            "lifecycle_stage": stage,
+            "geographic_scope": scope,
+            "regulatory_risk": regulatory_risk,
+            "evaluation_depth": "standard",
+            "target_segments": 4,
+            "pricing_tiers": 2,
+            "acquisition_channels": 2,
+            "ux_journey": [
+                {
+                    "id": "discovery_hook",
+                    "name": "First Impression & Discovery Hook",
+                    "component_or_route": "entry-screen",
+                    "step_friction": 0.08,
+                    "distraction_load": distraction,
+                    "confusion_risk": 0.16,
+                    "trust_gap": 0.12,
+                    "surprise_cost": 0.0,
+                    "value_clarity_gain": 0.25,
+                },
+                {
+                    "id": "setup_or_gate",
+                    "name": "Initial Setup / Entry Requirement",
+                    "component_or_route": "setup-gate",
+                    "step_friction": auth_friction,
+                    "distraction_load": 0.12,
+                    "confusion_risk": 0.18,
+                    "trust_gap": 0.20 if regulatory_risk != "low" else 0.10,
+                    "surprise_cost": 0.0,
+                    "value_clarity_gain": 0.12,
+                },
+                {
+                    "id": "core_experience",
+                    "name": "Core Value Delivery",
+                    "component_or_route": "core-flow",
+                    "step_friction": 0.14,
+                    "distraction_load": 0.14,
+                    "confusion_risk": 0.15,
+                    "trust_gap": 0.08,
+                    "surprise_cost": 0.04,
+                    "value_clarity_gain": 0.22,
+                },
+                {
+                    "id": "monetization_step",
+                    "name": "Pricing / Commitment Step",
+                    "component_or_route": "offer-step",
+                    "step_friction": 0.14,
+                    "distraction_load": 0.10,
+                    "confusion_risk": 0.12,
+                    "trust_gap": 0.10,
+                    "surprise_cost": 0.35 if pricing_fairness < 0 else 0.05,
+                    "value_clarity_gain": 0.06,
+                },
+            ],
+            "cohorts": [
+                {
+                    "id": "core_target_users",
+                    "name": "Core Target Users",
+                    "role": "Primary Adopter",
+                    "share": 0.45,
+                    "is_b2b_buyer": is_b2b,
+                    "value_fit": 0.64,
+                    "initial_trust": 0.42,
+                    "onboarding_friction": auth_friction * 0.65,
+                    "regulatory_blocker_risk": 0.15 if regulatory_risk != "low" else 0.05,
+                    "pricing_fairness": pricing_fairness,
+                    "local_liquidity": 0.84,
+                    "liquidity_dependence": 0.05,
+                    "social_susceptibility": 0.42,
+                    "social_voice_weight": 1.1,
+                    "pro_value_fit": 0.50,
+                },
+                {
+                    "id": "curious_browsers",
+                    "name": "Low-Patience Cold Visitors",
+                    "role": "Cold Discovery User",
+                    "share": 0.30,
+                    "is_b2b_buyer": False,
+                    "value_fit": 0.36,
+                    "initial_trust": 0.20,
+                    "onboarding_friction": auth_friction,
+                    "regulatory_blocker_risk": 0.10,
+                    "pricing_fairness": pricing_fairness - 0.10,
+                    "local_liquidity": 0.84,
+                    "liquidity_dependence": 0.05,
+                    "social_susceptibility": 0.56,
+                    "social_voice_weight": 1.0,
+                },
+                {
+                    "id": "committed_buyers",
+                    "name": "Committed Paid Evaluators",
+                    "role": "Willingness-to-Pay Segment",
+                    "share": 0.15,
+                    "is_b2b_buyer": is_b2b,
+                    "is_commerce_buyer": not is_b2b,
+                    "value_fit": 0.58,
+                    "initial_trust": 0.36,
+                    "onboarding_friction": 0.20,
+                    "regulatory_blocker_risk": 0.12,
+                    "pricing_fairness": pricing_fairness,
+                    "local_liquidity": 0.80,
+                    "liquidity_dependence": 0.05,
+                    "social_susceptibility": 0.35,
+                    "social_voice_weight": 1.3,
+                    "pro_value_fit": 0.62,
+                },
+                {
+                    "id": "skeptical_evaluators",
+                    "name": "Community & Platform Critics",
+                    "role": "Risk & Trust Amplifier",
+                    "share": 0.10,
+                    "is_b2b_buyer": False,
+                    "value_fit": 0.25,
+                    "initial_trust": 0.12,
+                    "onboarding_friction": 0.18,
+                    "regulatory_blocker_risk": 0.28 if regulatory_risk == "high" else 0.12,
+                    "pricing_fairness": pricing_fairness - 0.15,
+                    "local_liquidity": 0.78,
+                    "liquidity_dependence": 0.0,
+                    "social_susceptibility": 0.28,
+                    "social_voice_weight": 1.8,
+                    "skepticism_bias": 0.22,
+                },
+            ],
+        }
+
     # b2b_saas or marketplace
     is_mkt = business_type == "marketplace"
     return {
@@ -617,8 +753,16 @@ def run_interactive(lang: str = "es") -> dict[str, Any]:
             ("future_website", "Futura Web / Landing / Funnel de Leads o Reservas" if es else "Future Website / Landing Page / Lead Funnel"),
             ("b2b_saas", "SaaS B2B o Herramienta para Desarrolladores" if es else "B2B SaaS or Developer Tool"),
             ("marketplace", "Marketplace Bilateral o Plataforma Regulada" if es else "Two-Sided Marketplace or Regulated Platform"),
+            ("custom", "Otra opción / Proyecto personalizado (extensión, bot, curso, juego, servicio...)" if es else "Other / Custom project (extension, bot, course, newsletter, game, local service...)"),
         ],
     )
+    custom_desc = ""
+    if btype == "custom":
+        custom_desc = input((
+            "Describe brevemente qué estás creando (ej. extensión Chrome, bot, curso, servicio): "
+            if es
+            else "Briefly describe what you are building (e.g. Chrome extension, bot, course, local service): "
+        )).strip()
     name = input(("Nombre del proyecto o tienda [Mi Proyecto]: " if es else "Project or store name [My Project]: ")).strip() or "My Project"
     stage = _prompt_choice(
         "¿En qué fase está?" if es else "What stage is it in?",
@@ -641,7 +785,9 @@ def run_interactive(lang: str = "es") -> dict[str, Any]:
         default_idx=2,
     )
 
-    kwargs: dict[str, Any] = {"project_name": name, "stage": stage, "scope": scope}
+    kwargs: dict[str, Any] = {"project_name": name, "stage": stage, "scope": scope, "custom_description": custom_desc}
+    if btype == "custom":
+        kwargs["is_b2b"] = _prompt_bool("¿Tus clientes principales son empresas/profesionales (B2B)?" if es else "Are primary paying users businesses (B2B)?", False)
     if btype in ("dropshipping", "ecommerce"):
         kwargs["aov_usd"] = _prompt_float("Ticket medio / Precio producto (USD/EUR)" if es else "Average Order Value (USD)", 49.0 if btype == "dropshipping" else 79.0)
         kwargs["margin_pct"] = _prompt_float("Margen bruto % antes de anuncios" if es else "Gross margin % before ad spend", 62.0 if btype == "dropshipping" else 68.0)
@@ -681,6 +827,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--return-days", type=int, default=14)
     parser.add_argument("--forced-signup-early", action="store_true")
     parser.add_argument("--heavy-popups", action="store_true")
+    parser.add_argument("--custom-description", default="", help="Brief description when --business-type=custom.")
     parser.add_argument("--out", help="Optional path to write the generated spec JSON.")
     args = parser.parse_args(argv)
 
@@ -701,6 +848,7 @@ def main(argv: list[str] | None = None) -> int:
             return_policy_days=args.return_days,
             forced_signup_early=args.forced_signup_early,
             heavy_popups=args.heavy_popups,
+            custom_description=args.custom_description,
         )
 
     rendered = json.dumps(spec, ensure_ascii=False, indent=2) + "\n"

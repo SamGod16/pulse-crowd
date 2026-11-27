@@ -14,10 +14,11 @@
         "b2c_consumer",
         "mobile_app",
         "community_network",
+        "ecommerce_brand",
+        "dropshipping_store",
         "two_sided_marketplace",
         "regulated_platform",
-        "ecommerce_brand",
-        "dropshipping_store"
+        "custom_project"
       ]
     },
     "lifecycle_stage": {

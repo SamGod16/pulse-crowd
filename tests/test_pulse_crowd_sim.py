@@ -182,6 +182,16 @@ class PulseCrowdSimTests(unittest.TestCase):
         self.assertEqual(web_res["sizing_plan"]["sizing_factors"]["product_type"], "website_funnel")
         self.assertIn("ux_funnel", web_res)
 
+        custom_spec = build_spec(
+            "custom",
+            project_name="MyBot",
+            custom_description="Discord AI study assistant",
+            is_b2b=False,
+        )
+        custom_res = run_simulation(custom_spec, seed=42, runs=1)
+        self.assertEqual(custom_res["sizing_plan"]["sizing_factors"]["product_type"], "custom_project")
+        self.assertIn("Discord AI study assistant", custom_res["project_name"])
+
     def test_write_outputs_and_cli_execution(self) -> None:
         metrics = run_simulation(self.dropship_spec, seed=7, runs=2)
         with tempfile.TemporaryDirectory() as tmpdir:

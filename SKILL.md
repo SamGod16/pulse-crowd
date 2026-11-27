@@ -16,7 +16,7 @@ compatibility: >-
   OpenAI Codex CLI, OpenCode, Gemini CLI, and Cursor via SKILL.md discovery.
 metadata:
   author: SamuelCoreLabs
-  version: "2.1.0"
+  version: "2.2.0"
   category: product-validation
 ---
 
@@ -31,7 +31,7 @@ Works both on **existing codebases / Shopify themes** AND **pre-code future idea
 ## Core Invariants
 
 1. **Ask & Ground First:** If the user has not yet specified their business type, stage (existing codebase vs. future pre-code idea), and key funnel/pricing constraints, **ask concise intake questions first** (Step 0) before generating any spec. When a codebase exists, verify parameters directly against real routes, UI components, cart/checkout logic, auth/KYC gates, and legal copy.
-2. **Audience-Tailored Simulation:** Adapt virtual cohorts and UX funnel steps to the exact vertical using [references/audience-playbooks.md](./references/audience-playbooks.md) (`dropshipping`, `ecommerce`, `future_app`, `future_website`, `b2b_saas`, `marketplace`).
+2. **Audience-Tailored Simulation:** Adapt virtual cohorts and UX funnel steps to the exact vertical using [references/audience-playbooks.md](./references/audience-playbooks.md) (`dropshipping`, `ecommerce`, `future_app`, `future_website`, `b2b_saas`, `marketplace`, `custom`).
 3. **Pre-Dispatch Adaptive Sizing:** Always compute the virtual population size BEFORE simulating traffic using `scripts/size_swarm.py`.
 4. **1,000-Persona Minimum Floor:** Never run a crowd test under `1,000` total virtual personas (`MIN_TOTAL_POPULATION = 1000`). Scale upward automatically for multi-sided, multi-step UX, commerce, or high-regulation products.
 5. **Epistemic Honesty:** Report outputs explicitly as synthetic scenario-sensitivity metrics derived from user-provided / codebase assumptions—never as real empirical telemetry or live ROAS guarantees.
@@ -50,6 +50,7 @@ Whenever invoked with an open prompt (e.g., *"run pulse-crowd"*, *"help me test 
    - **Future Website / Landing Page / Lead Funnel** (waitlist, booking, info-product, agency funnel)
    - **B2B SaaS / Developer Tool** (subscriptions, free trial, dev docs, team buyers)
    - **Two-Sided Marketplace or Regulated Platform** (supply/demand liquidity, minors, GDPR/KYC)
+   - **Other / Custom Project** (browser extension, bot, course/info-product, newsletter, community, indie game, hardware, local service, etc. — ask the user to describe what they're building in 1–2 lines!)
 
 2. **Do you already have code/store files here, or is it a future project you're planning?**
    - If existing codebase/store exists: confirm target directory/URL/theme files to audit.
@@ -64,6 +65,10 @@ Whenever invoked with an open prompt (e.g., *"run pulse-crowd"*, *"help me test 
      - Who is the primary target user vs. who might be skeptical (e.g., parents, privacy auditors, enterprise security, price comparators)?
      - Walk me through the intended steps from landing to value/payment (e.g., do you force signup/KYC/card upfront before showing value?).
      - What is the pricing model (free, freemium, subscription, one-time) and any legal/privacy exposure?
+   - **If Other / Custom Project:**
+     - Briefly describe what you're building and how users discover/access it (e.g., Chrome Web Store, Telegram link, newsletter signup, local booking).
+     - Who are your target users/buyers, and what could cause distrust or drop-off (permissions, store review, price, unclear setup)?
+     - What are the exact steps from first click to core payoff or payment?
 
 *(If the user already provided all answers upfront or pointed directly to a full spec/codebase, skip already-answered questions and move immediately to Step 1.)*
 
@@ -82,7 +87,7 @@ python3 scripts/scaffold_spec.py \
   --out /tmp/project_spec.json
 ```
 
-*(Supported `--business-type` values: `dropshipping`, `ecommerce`, `future_app`, `future_website`, `b2b_saas`, `marketplace`; or run `python3 scripts/scaffold_spec.py --interactive` directly.)* Refine the generated cohorts and `ux_journey` steps to match the user's exact answers or audited code files.
+*(Supported `--business-type` values: `dropshipping`, `ecommerce`, `future_app`, `future_website`, `b2b_saas`, `marketplace`, `custom`; or run `python3 scripts/scaffold_spec.py --interactive` directly.)* Refine the generated cohorts and `ux_journey` steps to match the user's exact answers or audited code files.
 
 ---
 

@@ -5,6 +5,11 @@ All notable changes to `pulse-crowd` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-11-28
+
+### Added
+- **Option 7 (`Other / Custom Project` — `custom_project`):** Added an explicit fallback business option in Step 0 (`SKILL.md`), `scripts/scaffold_spec.py --interactive` & CLI (`--business-type custom --custom-description "..."`), `references/audience-playbooks.md`, `references/spec-schema.json`, `scripts/size_swarm.py`, and `docs/index.html` so users building extensions, bots, courses, newsletters, games, hardware, or local services can freely describe their project and get custom cohorts + UX funnel simulation.
+
 ## [2.1.0] - 2026-11-27
 
 ### Added

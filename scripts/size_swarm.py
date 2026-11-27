@@ -31,6 +31,7 @@ PRODUCT_TYPE_WEIGHTS = {
     "dropshipping_store": 600,
     "two_sided_marketplace": 650,
     "regulated_platform": 850,
+    "custom_project": 300,
 }
 
 GEOGRAPHIC_SCOPE_WEIGHTS = {

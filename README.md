@@ -113,7 +113,7 @@ pulse-crowd/
 │   ├── ISSUE_TEMPLATE/               # Structured bug, feature & Q&A templates
 │   └── workflows/                    # CI matrix (Python 3.9–3.14) & PyPI release
 ├── scripts/
-│   ├── scaffold_spec.py              # Interactive & CLI business spec generator (6 verticals)
+│   ├── scaffold_spec.py              # Interactive & CLI business spec generator (6 verticals + custom)
 │   ├── size_swarm.py                 # Adaptive >= 1,000 population sizing calculator
 │   ├── simulate_crowd.py             # 3-round + UX funnel crowd simulator + reporting
 │   └── validate_skill.py             # SKILL.md spec, link, schema, and secret checker
@@ -267,7 +267,7 @@ Generated output artifacts in `--out-dir`:
 
 Once installed globally, you can simply invoke the skill (`"run pulse-crowd"`) or describe your project:
 
-- *"Run pulse-crowd"* — the agent automatically asks what business you are building (*dropshipping, e-commerce, future app, future website, SaaS, marketplace*), asks 3–5 tailored questions, and runs the full simulation to help you!
+- *"Run pulse-crowd"* — the agent automatically asks what business you are building (*dropshipping, e-commerce, future app, future website, SaaS, marketplace, or other custom project*), asks 3–5 tailored questions, and runs the full simulation to help you!
 - *"Audit every screen of our onboarding and checkout flow, detect where users get stuck, distracted, or lost across >= 1,000 virtual personas, and pinpoint the exact React/Liquid components to fix."*
 - *"Simulate 4,000+ TikTok/Meta visitors on our dropshipping store (`aov`, shipping window, cart popups) and compute our break-even max CPC."*
 - Or launch the interactive wizard directly in your terminal:
@@ -278,7 +278,7 @@ Once installed globally, you can simply invoke the skill (`"run pulse-crowd"`) o
 ### Expected Agent Workflow
 
 When activated, a compatible agent will:
-1. **Step 0 — Guided Business Intake:** Ask which business vertical & stage you are targeting (*Dropshipping Store*, *DTC E-Commerce*, *Future Mobile/Web App*, *Future Website / Lead Funnel*, *B2B SaaS*, or *Marketplace*) and ask tailored questions if details are missing.
+1. **Step 0 — Guided Business Intake:** Ask which business vertical & stage you are targeting (*Dropshipping Store*, *DTC E-Commerce*, *Future Mobile/Web App*, *Future Website / Lead Funnel*, *B2B SaaS*, *Marketplace*, or *Other / Custom Project*) and ask tailored questions if details are missing.
 2. Inspect your real codebase/store routes (if available) or scaffold from [references/audience-playbooks.md](references/audience-playbooks.md) and `scripts/scaffold_spec.py` following [references/spec-schema.json](references/spec-schema.json).
 3. Run `scripts/size_swarm.py` to compute adaptive traffic (`>= 1,000`).
 4. Execute `scripts/simulate_crowd.py` across multiple seeds and present UX bottlenecks (`stuck`, `distracted`, `lost`), unit economics, and tailored fixes in your language.
