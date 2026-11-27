@@ -4,12 +4,12 @@
 
 [English](../../README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md) · **日本語** · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português](README.pt-BR.md) · [Italiano](README.it.md) · [हिन्दी](README.hi.md) · [Русский](README.ru.md)
 
-[![CI](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/SamGod16/pulse-crowd?color=green)](https://github.com/SamGod16/pulse-crowd/releases)
+[![CI](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SamuelCoreLabs/pulse-crowd?color=green)](https://github.com/SamuelCoreLabs/pulse-crowd/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python: 3.9+ stdlib](https://img.shields.io/badge/Python-3.9%2B%20stdlib-informational.svg)
 
-**[📊 インタラクティブデモ](https://samgod16.github.io/pulse-crowd/)** · **[📦 Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
+**[📊 インタラクティブデモ](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 Releases](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
 
 ![PulseCrowd CLI プレビュー](../../assets/demo-preview.svg)
 
@@ -38,12 +38,12 @@
 
 ### オプション 1: `npx skills`（マルチエージェント CLI）
 ```bash
-npx skills add SamGod16/pulse-crowd -g
+npx skills add SamuelCoreLabs/pulse-crowd -g
 ```
 
 ### オプション 2: 手動インストール（Git + シンボリックリンク）
 ```bash
-git clone https://github.com/SamGod16/pulse-crowd.git ~/skills/pulse-crowd
+git clone https://github.com/SamuelCoreLabs/pulse-crowd.git ~/skills/pulse-crowd
 mkdir -p ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.config/opencode/skills
 ln -sfn ~/skills/pulse-crowd ~/.agents/skills/pulse-crowd
 ln -sfn ~/skills/pulse-crowd ~/.claude/skills/pulse-crowd
@@ -53,7 +53,7 @@ ln -sfn ~/skills/pulse-crowd ~/.config/opencode/skills/pulse-crowd
 
 ### オプション 3: `pip` で Python CLI を導入
 ```bash
-pip install git+https://github.com/SamGod16/pulse-crowd.git
+pip install git+https://github.com/SamuelCoreLabs/pulse-crowd.git
 pulse-crowd-size --spec examples/minimal-b2b-cli.json
 pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
 ```

@@ -34,7 +34,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers by opening a private security/conduct report or contacting the repository owner via GitHub (`@SamGod16`). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers by opening a private security/conduct report or contacting the repository owner via GitHub (`@SamuelCoreLabs`). All complaints will be reviewed and investigated promptly and fairly.
 
 ## Attribution
 

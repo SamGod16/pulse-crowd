@@ -9,7 +9,7 @@ description = "Adaptive multi-round virtual crowd simulation (1,000-25,000+ pers
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
-authors = [{ name = "SamGod16" }]
+authors = [{ name = "SamuelCoreLabs" }]
 keywords = [
     "crowd-simulation",
     "ai-agents",
@@ -34,11 +34,11 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/SamGod16/pulse-crowd"
-Repository = "https://github.com/SamGod16/pulse-crowd"
-"Live Demo" = "https://samgod16.github.io/pulse-crowd/"
-Issues = "https://github.com/SamGod16/pulse-crowd/issues"
-Changelog = "https://github.com/SamGod16/pulse-crowd/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/SamuelCoreLabs/pulse-crowd"
+Repository = "https://github.com/SamuelCoreLabs/pulse-crowd"
+"Live Demo" = "https://samuelcorelabs.github.io/pulse-crowd/"
+Issues = "https://github.com/SamuelCoreLabs/pulse-crowd/issues"
+Changelog = "https://github.com/SamuelCoreLabs/pulse-crowd/blob/main/CHANGELOG.md"
 
 [project.scripts]
 pulse-crowd-size = "pulse_crowd.size_swarm:main"

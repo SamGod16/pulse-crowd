@@ -4,12 +4,12 @@
 
 [English](../../README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português](README.pt-BR.md) · **Italiano** · [हिन्दी](README.hi.md) · [Русский](README.ru.md)
 
-[![CI](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/SamGod16/pulse-crowd?color=green)](https://github.com/SamGod16/pulse-crowd/releases)
+[![CI](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SamuelCoreLabs/pulse-crowd?color=green)](https://github.com/SamuelCoreLabs/pulse-crowd/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python: 3.9+ stdlib](https://img.shields.io/badge/Python-3.9%2B%20stdlib-informational.svg)
 
-**[📊 Demo Interattiva Live](https://samgod16.github.io/pulse-crowd/)** · **[📦 Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
+**[📊 Demo Interattiva Live](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 Releases](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
 
 ![Anteprima CLI PulseCrowd](../../assets/demo-preview.svg)
 
@@ -35,10 +35,10 @@
 
 ```bash
 # Opzione 1: Multi-Agente con npx skills
-npx skills add SamGod16/pulse-crowd -g
+npx skills add SamuelCoreLabs/pulse-crowd -g
 
 # Opzione 2: Python CLI con pip
-pip install git+https://github.com/SamGod16/pulse-crowd.git
+pip install git+https://github.com/SamuelCoreLabs/pulse-crowd.git
 pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
 ```
 

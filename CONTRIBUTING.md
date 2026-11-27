@@ -29,4 +29,4 @@ python3 -m http.server --directory docs 8080
 1. Fork the repository and create a topic branch from `main`.
 2. Make focused changes and add unit tests in [tests/test_pulse_crowd_sim.py](tests/test_pulse_crowd_sim.py) for behavioral updates.
 3. Verify both `validate_skill.py` and `unittest` exit with code `0` before opening a pull request.
-4. Check our [good first issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) if you are looking for a place to start.
+4. Check our [good first issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) if you are looking for a place to start.

@@ -4,14 +4,14 @@
 
 **English** · [Español](docs/i18n/README.es.md) · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Português](docs/i18n/README.pt-BR.md) · [Italiano](docs/i18n/README.it.md) · [हिन्दी](docs/i18n/README.hi.md) · [Русский](docs/i18n/README.ru.md)
 
-[![CI](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/SamGod16/pulse-crowd?color=green)](https://github.com/SamGod16/pulse-crowd/releases)
+[![CI](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SamuelCoreLabs/pulse-crowd?color=green)](https://github.com/SamuelCoreLabs/pulse-crowd/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Agent Skills Standard](https://img.shields.io/badge/Agent_Skills-agentskills.io-green.svg)
 ![Python: 3.9+ stdlib](https://img.shields.io/badge/Python-3.9%2B%20stdlib-informational.svg)
-[![GitHub Stars](https://img.shields.io/github/stars/SamGod16/pulse-crowd?style=social)](https://github.com/SamGod16/pulse-crowd)
+[![GitHub Stars](https://img.shields.io/github/stars/SamuelCoreLabs/pulse-crowd?style=social)](https://github.com/SamuelCoreLabs/pulse-crowd)
 
-**[📊 Live Interactive Demo](https://samgod16.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[🐛 Report Bug](https://github.com/SamGod16/pulse-crowd/issues)**
+**[📊 Live Interactive Demo](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[🐛 Report Bug](https://github.com/SamuelCoreLabs/pulse-crowd/issues)**
 
 ![PulseCrowd Adaptive Crowd Simulation CLI Preview](assets/demo-preview.svg)
 
@@ -37,7 +37,7 @@ Simulated directly via `scripts/simulate_crowd.py` (`--runs 3 --seed 42`) on a t
 | **Retained vs. Rejected** | `22` active · `832` stalled · `5,838` distrust rejections | `6,583` active/advocates · `1` stalled · `0` distrust rejections |
 | **Verdict** | **NO-GO** *(Critical Blockers Trigger Rejection Spiral)* | **GO** *(Conditional or Phase-1 Launch Ready)* |
 
-> Try tuning those exact parameters yourself right in the browser: **[Live Interactive Demo →](https://samgod16.github.io/pulse-crowd/)**
+> Try tuning those exact parameters yourself right in the browser: **[Live Interactive Demo →](https://samuelcorelabs.github.io/pulse-crowd/)**
 
 ### The Problem
 
@@ -124,7 +124,7 @@ pulse-crowd/
 
 ## Installation
 
-Replace `SamGod16` with your GitHub username or organization if forking.
+Replace `SamuelCoreLabs` with your GitHub username or organization if forking.
 
 ### Option 1: Install Globally via `npx skills` (Multi-Agent CLI)
 
@@ -132,12 +132,12 @@ Per Vercel Labs' [`skills`](https://github.com/vercel-labs/skills) CLI documenta
 
 ```bash
 # Interactive multi-agent global install
-npx skills add SamGod16/pulse-crowd -g
+npx skills add SamuelCoreLabs/pulse-crowd -g
 
 # Target specific agents non-interactively
-npx skills add SamGod16/pulse-crowd -a claude-code -g -y
-npx skills add SamGod16/pulse-crowd -a codex -g -y
-npx skills add SamGod16/pulse-crowd -a opencode -g -y
+npx skills add SamuelCoreLabs/pulse-crowd -a claude-code -g -y
+npx skills add SamuelCoreLabs/pulse-crowd -a codex -g -y
+npx skills add SamuelCoreLabs/pulse-crowd -a opencode -g -y
 ```
 
 ### Option 2: Manual Global Installation (Clone / Symlink)
@@ -145,7 +145,7 @@ npx skills add SamGod16/pulse-crowd -a opencode -g -y
 Clone the repository once, then link or copy it to the shared standard path (`~/.agents/skills/`) and any agent-native directories you use:
 
 ```bash
-git clone https://github.com/SamGod16/pulse-crowd.git ~/skills/pulse-crowd
+git clone https://github.com/SamuelCoreLabs/pulse-crowd.git ~/skills/pulse-crowd
 mkdir -p ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.config/opencode/skills
 
 # Shared Agent Skills path (scanned by Codex, OpenCode, Gemini CLI, Cursor)
@@ -162,7 +162,7 @@ For workspace-only installation inside a single repository instead of global ins
 ### Option 3: Install Python CLI via `pip` (from GitHub)
 
 ```bash
-pip install git+https://github.com/SamGod16/pulse-crowd.git
+pip install git+https://github.com/SamuelCoreLabs/pulse-crowd.git
 pulse-crowd-size --spec examples/minimal-b2b-cli.json
 pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
 ```
@@ -283,7 +283,7 @@ When activated, a compatible agent will:
 
 ## Contributing
 
-Contributions are welcome! Check our **[Good First Issues](https://github.com/SamGod16/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**, review [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md), and run both checks before opening a pull request:
+Contributions are welcome! Check our **[Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**, review [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md), and run both checks before opening a pull request:
 
 ```bash
 python3 scripts/validate_skill.py
@@ -294,6 +294,6 @@ python3 -m unittest discover -s tests -v
 
 ## License
 
-Licensed under the **[MIT License](LICENSE)** — Copyright (c) 2026 SamGod16.
+Licensed under the **[MIT License](LICENSE)** — Copyright (c) 2026 SamuelCoreLabs.
 
 **Why MIT?** For an open-source Agent Skill targeting broad developer and multi-agent adoption (`npx skills`, Claude Code, Codex, OpenCode), the MIT License offers minimal legal friction for commercial teams, solo developers, and forks while requiring only preservation of the copyright and permission notice.

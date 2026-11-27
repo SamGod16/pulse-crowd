@@ -12,7 +12,7 @@ Only the latest release on the `main` branch (`v1.0.x`) is actively maintained a
 
 Please **do not** open public GitHub issues for suspected security vulnerabilities (such as path traversal, unsafe file parsing, workflow injection, or unintended secret exposure).
 
-Instead, report vulnerabilities privately through **[GitHub Private Vulnerability Reporting](https://github.com/SamGod16/pulse-crowd/security/advisories/new)** so they can be verified and patched before public disclosure.
+Instead, report vulnerabilities privately through **[GitHub Private Vulnerability Reporting](https://github.com/SamuelCoreLabs/pulse-crowd/security/advisories/new)** so they can be verified and patched before public disclosure.
 
 ### Security Design Notes
 

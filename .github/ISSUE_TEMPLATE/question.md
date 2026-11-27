@@ -13,7 +13,7 @@ labels: ["question"]
 
 - [ ] Read `README.md` and `SKILL.md`
 - [ ] Checked `references/methodology.md` and `references/spec-schema.json`
-- [ ] Tried the [live interactive demo](https://samgod16.github.io/pulse-crowd/)
+- [ ] Tried the [live interactive demo](https://samuelcorelabs.github.io/pulse-crowd/)
 
 ## Your question
 
