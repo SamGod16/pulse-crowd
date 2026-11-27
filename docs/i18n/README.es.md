@@ -59,6 +59,14 @@ Simulación real ejecutada con `scripts/simulate_crowd.py` (`--runs 3 --seed 42`
 
 Compatible con **cualquier stack tecnológico** del proyecto objetivo (TypeScript, Next.js, Python, Go, Rust, Java, móvil) y respuestas del agente en **cualquier idioma**.
 
+### Asistente guiado y adaptación por tipo de negocio
+Al invocar la skill (p. ej. *"usa pulse-crowd para probar mi negocio"*), el agente te pregunta primero en tu idioma **qué tipo de proyecto es** (*Tienda Dropshipping*, *E-Commerce / Marca DTC*, *Futura App móvil/web*, *Futura Web / Funnel de leads*, *SaaS B2B* o *Marketplace*) y si ya tienes código/tienda o es una idea previa al desarrollo, adaptando las audiencias ([audience-playbooks.md](../../references/audience-playbooks.md)) y pantallas UX a tu caso real.
+
+También puedes lanzar el asistente interactivo en terminal:
+```bash
+python3 scripts/scaffold_spec.py --interactive --lang es --out /tmp/mi_negocio.json
+```
+
 ---
 
 ## Instalación rápida

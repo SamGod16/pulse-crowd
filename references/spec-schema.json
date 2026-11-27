@@ -9,8 +9,10 @@
       "type": "string",
       "enum": [
         "developer_tool",
+        "website_funnel",
         "b2b_saas",
         "b2c_consumer",
+        "mobile_app",
         "community_network",
         "two_sided_marketplace",
         "regulated_platform",

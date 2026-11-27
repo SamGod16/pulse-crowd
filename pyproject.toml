@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pulse-crowd"
-version = "2.0.0"
+version = "2.1.0"
 description = "Adaptive virtual crowd & in-app UX funnel simulation (1,000-25,000+ personas) for SaaS, apps, e-commerce & dropshipping."
 readme = "README.md"
 license = { text = "MIT" }
@@ -44,6 +44,7 @@ Issues = "https://github.com/SamuelCoreLabs/pulse-crowd/issues"
 Changelog = "https://github.com/SamuelCoreLabs/pulse-crowd/blob/main/CHANGELOG.md"
 
 [project.scripts]
+pulse-crowd-init = "pulse_crowd.scaffold_spec:main"
 pulse-crowd-size = "pulse_crowd.size_swarm:main"
 pulse-crowd-sim = "pulse_crowd.simulate_crowd:main"
 

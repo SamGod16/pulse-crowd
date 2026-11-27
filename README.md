@@ -113,19 +113,22 @@ pulse-crowd/
 │   ├── ISSUE_TEMPLATE/               # Structured bug, feature & Q&A templates
 │   └── workflows/                    # CI matrix (Python 3.9–3.14) & PyPI release
 ├── scripts/
+│   ├── scaffold_spec.py              # Interactive & CLI business spec generator (6 verticals)
 │   ├── size_swarm.py                 # Adaptive >= 1,000 population sizing calculator
-│   ├── simulate_crowd.py             # 3-round agent-based crowd simulator + reporting
+│   ├── simulate_crowd.py             # 3-round + UX funnel crowd simulator + reporting
 │   └── validate_skill.py             # SKILL.md spec, link, schema, and secret checker
 ├── references/
+│   ├── audience-playbooks.md         # Vertical playbooks (dropshipping, DTC, future apps/webs, SaaS)
 │   ├── methodology.md                # Mathematical formulation, rubric, and scope limits
-│   └── spec-schema.json              # JSON Schema for project + cohort specifications
+│   └── spec-schema.json              # JSON Schema for project, UX journey & commerce specs
 ├── examples/
 │   ├── minimal-b2b-cli.json          # Lean dev-tool spec (sizes to 1,500 personas)
 │   ├── regulated-marketplace.json    # Complex regional marketplace spec (sizes to 6,750 personas)
 │   ├── dropshipping-store.json       # High-friction dropshipping + UX funnel (14.0 NO-GO)
-│   └── ecommerce-dtc-brand.json      # Hardened DTC store + unit economics (95.1 GO)
+│   ├── ecommerce-dtc-brand.json      # Hardened DTC store + unit economics (95.1 GO)
+│   └── website-lead-funnel.json      # Future website / lead-gen landing funnel concept
 └── tests/
-    └── test_pulse_crowd_sim.py       # Python unittest suite (10 tests)
+    └── test_pulse_crowd_sim.py       # Python unittest suite (11 tests)
 ```
 
 ---
@@ -192,7 +195,7 @@ python3 ~/.agents/skills/pulse-crowd/scripts/validate_skill.py
 python3 -m unittest discover -s ~/.agents/skills/pulse-crowd/tests -v
 ```
 
-Expected confirmation: `Skill validation PASSED` and `Ran 10 tests ... OK`.
+Expected confirmation: `Skill validation PASSED` and `Ran 11 tests ... OK`.
 
 ---
 
@@ -262,19 +265,23 @@ Generated output artifacts in `--out-dir`:
 
 ### 3. Prompting Your AI Agent Naturally
 
-Once installed globally, prompt your assistant inside any codebase or Shopify/e-commerce repo:
+Once installed globally, you can simply invoke the skill (`"run pulse-crowd"`) or describe your project:
 
+- *"Run pulse-crowd"* — the agent automatically asks what business you are building (*dropshipping, e-commerce, future app, future website, SaaS, marketplace*), asks 3–5 tailored questions, and runs the full simulation to help you!
 - *"Audit every screen of our onboarding and checkout flow, detect where users get stuck, distracted, or lost across >= 1,000 virtual personas, and pinpoint the exact React/Liquid components to fix."*
 - *"Simulate 4,000+ TikTok/Meta visitors on our dropshipping store (`aov`, shipping window, cart popups) and compute our break-even max CPC."*
-- *"Audit our current onboarding and pricing code, build a spec JSON for PulseCrowd, size the virtual crowd based on our project complexity (minimum 1,000 personas), and run a 3-round simulation."*
+- Or launch the interactive wizard directly in your terminal:
+  ```bash
+  python3 scripts/scaffold_spec.py --interactive --lang en --out /tmp/my_spec.json
+  ```
 
 ### Expected Agent Workflow
 
 When activated, a compatible agent will:
-1. Read `SKILL.md` via progressive disclosure and inspect the target repository's real code/copy.
-2. Construct a grounded JSON spec following [references/spec-schema.json](references/spec-schema.json).
+1. **Step 0 — Guided Business Intake:** Ask which business vertical & stage you are targeting (*Dropshipping Store*, *DTC E-Commerce*, *Future Mobile/Web App*, *Future Website / Lead Funnel*, *B2B SaaS*, or *Marketplace*) and ask tailored questions if details are missing.
+2. Inspect your real codebase/store routes (if available) or scaffold from [references/audience-playbooks.md](references/audience-playbooks.md) and `scripts/scaffold_spec.py` following [references/spec-schema.json](references/spec-schema.json).
 3. Run `scripts/size_swarm.py` to compute adaptive traffic (`>= 1,000`).
-4. Execute `scripts/simulate_crowd.py` across multiple seeds and present cohorts, friction drivers, and clear sensitivity disclaimers.
+4. Execute `scripts/simulate_crowd.py` across multiple seeds and present UX bottlenecks (`stuck`, `distracted`, `lost`), unit economics, and tailored fixes in your language.
 
 ---
 

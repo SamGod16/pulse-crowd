@@ -5,6 +5,14 @@ All notable changes to `pulse-crowd` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-11-27
+
+### Added
+- **Step 0 Guided Business & Audience Intake (`SKILL.md`):** Prompts users cleanly in their language to identify their exact project vertical (*Dropshipping Store*, *DTC E-Commerce Brand*, *Future Mobile/Web App*, *Future Website / Lead Funnel*, *B2B SaaS / DevTool*, *Two-Sided Marketplace / Regulated Platform*) and stage (existing repo/store vs. pre-code concept), then asks tailored follow-up questions to help directly.
+- **Audience Playbooks (`references/audience-playbooks.md`):** Calibrated cohort archetypes, UX funnel steps, and high-ROI fixes across all 6 business verticals.
+- **Interactive & CLI Spec Scaffolder (`scripts/scaffold_spec.py` & `pulse-crowd-init`):** Generates schema-valid, audience-tuned specs interactively (`--interactive --lang es|en`) or via CLI flags across all supported business types.
+- **New Business Verticals & Example:** Added `website_funnel` and `mobile_app` to `size_swarm.py` and `spec-schema.json`, plus `examples/website-lead-funnel.json` and a matching interactive demo preset.
+
 ## [2.0.0] - 2026-11-27
 
 ### Added

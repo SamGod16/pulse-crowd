@@ -42,13 +42,17 @@ jobs:
           python -m json.tool examples/regulated-marketplace.json > /dev/null
           python -m json.tool examples/dropshipping-store.json > /dev/null
           python -m json.tool examples/ecommerce-dtc-brand.json > /dev/null
+          python -m json.tool examples/website-lead-funnel.json > /dev/null
 
-      - name: Smoke test — adaptive sizing engine
+      - name: Smoke test — adaptive sizing & scaffold wizard
         run: |
+          python scripts/scaffold_spec.py --business-type future_app --name "Future App" --out /tmp/ci_app.json > /dev/null
+          python scripts/size_swarm.py --spec /tmp/ci_app.json
           python scripts/size_swarm.py --spec examples/minimal-b2b-cli.json
           python scripts/size_swarm.py --spec examples/regulated-marketplace.json
           python scripts/size_swarm.py --spec examples/dropshipping-store.json
           python scripts/size_swarm.py --spec examples/ecommerce-dtc-brand.json
+          python scripts/size_swarm.py --spec examples/website-lead-funnel.json
 
       - name: Smoke test — 3-round crowd & UX funnel simulation
         run: |
@@ -69,6 +73,7 @@ jobs:
         if: matrix.python-version == '3.12'
         run: |
           python -m pip install --no-deps .
-          pulse-crowd-size --spec examples/minimal-b2b-cli.json > /dev/null
+          pulse-crowd-init --business-type future_website --name "Smoke Site" --out /tmp/ci_site.json > /dev/null
+          pulse-crowd-size --spec /tmp/ci_site.json > /dev/null
           pulse-crowd-sim --spec examples/ecommerce-dtc-brand.json --out-dir /tmp/ci_pip_smoke --runs 1 --seed 42
           test -f /tmp/ci_pip_smoke/metrics.json

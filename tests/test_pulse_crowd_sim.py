@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from size_swarm import MIN_TOTAL_POPULATION, compute_sizing_plan  # noqa: E402
 from simulate_crowd import run_simulation, write_outputs  # noqa: E402
+from scaffold_spec import VALID_BUSINESS_TYPES, build_spec  # noqa: E402
 from validate_skill import validate_repo  # noqa: E402
 
 
@@ -162,6 +163,24 @@ class PulseCrowdSimTests(unittest.TestCase):
         bad_spec["ux_journey"] = [{"id": "only_one", "name": "Single Step"}]
         with self.assertRaises(ValueError):
             run_simulation(bad_spec, seed=42, runs=1)
+
+    def test_scaffold_spec_covers_all_business_audiences(self) -> None:
+        for btype in VALID_BUSINESS_TYPES:
+            spec = build_spec(
+                btype,
+                project_name=f"Test {btype}",
+                stage="concept",
+                hidden_shipping=(btype == "dropshipping"),
+                forced_signup_early=(btype == "future_app"),
+            )
+            res = run_simulation(spec, seed=42, runs=1)
+            self.assertGreaterEqual(res["primary_run_summary"]["total_population"], MIN_TOTAL_POPULATION)
+            self.assertIn("ux_funnel", res)
+
+        web_ex = json.loads((ROOT / "examples" / "website-lead-funnel.json").read_text(encoding="utf-8"))
+        web_res = run_simulation(web_ex, seed=42, runs=2)
+        self.assertEqual(web_res["sizing_plan"]["sizing_factors"]["product_type"], "website_funnel")
+        self.assertIn("ux_funnel", web_res)
 
     def test_write_outputs_and_cli_execution(self) -> None:
         metrics = run_simulation(self.dropship_spec, seed=7, runs=2)

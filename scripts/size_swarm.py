@@ -22,8 +22,10 @@ DEFAULT_MAX_POPULATION = 25000
 
 PRODUCT_TYPE_WEIGHTS = {
     "developer_tool": 100,
+    "website_funnel": 150,
     "b2b_saas": 200,
     "b2c_consumer": 300,
+    "mobile_app": 350,
     "community_network": 450,
     "ecommerce_brand": 500,
     "dropshipping_store": 600,

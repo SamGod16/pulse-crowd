@@ -249,6 +249,7 @@
     <div class="presets">
       <button type="button" class="preset-btn active" data-i18n="presetDropship" onclick="applyPreset('dropship', this)">Dropshipping Store (NO-GO)</button>
       <button type="button" class="preset-btn" data-i18n="presetDtc" onclick="applyPreset('dtc', this)">Hardened DTC Store (GO)</button>
+      <button type="button" class="preset-btn" data-i18n="presetFutureWeb" onclick="applyPreset('futureweb', this)">Future Website / App Idea</button>
       <button type="button" class="preset-btn" data-i18n="presetMarketplace" onclick="applyPreset('marketplace', this)">Regulated Marketplace (6,750)</button>
       <button type="button" class="preset-btn" data-i18n="presetMinimal" onclick="applyPreset('minimal', this)">Minimal B2B CLI (1,500)</button>
       <button type="button" class="preset-btn" data-i18n="presetFintech" onclick="applyPreset('fintech', this)">High-Friction Fintech (NO-GO)</button>
@@ -259,8 +260,10 @@
         <label for="productType" data-i18n="lblProductType">Product Architecture</label>
         <select id="productType" onchange="runSimulation()">
           <option value="developer_tool" data-i18n="optDev">Developer Tool (+100)</option>
+          <option value="website_funnel" data-i18n="optWeb">Future Website / Funnel (+150)</option>
           <option value="b2b_saas" data-i18n="optSaas">B2B SaaS (+200)</option>
           <option value="b2c_consumer" data-i18n="optB2c">B2C Consumer (+300)</option>
+          <option value="mobile_app" data-i18n="optApp">Future Mobile / Web App (+350)</option>
           <option value="community_network" data-i18n="optCommunity">Community Network (+450)</option>
           <option value="ecommerce_brand" data-i18n="optEcom">DTC E-Commerce Brand (+500)</option>
           <option value="dropshipping_store" selected data-i18n="optDrop">Dropshipping Store (+600)</option>
@@ -467,13 +470,16 @@ const I18N = {
     sec1Title: "1. Load a Preset or Configure Your App / Store",
     presetDropship: "Dropshipping Store (NO-GO)",
     presetDtc: "Hardened DTC Store (GO)",
+    presetFutureWeb: "Future Website / App Idea",
     presetMarketplace: "Regulated Marketplace (6,750)",
     presetMinimal: "Minimal B2B CLI (1,500)",
     presetFintech: "High-Friction Fintech (NO-GO)",
     lblProductType: "Product Architecture",
     optDev: "Developer Tool (+100)",
+    optWeb: "Future Website / Funnel (+150)",
     optSaas: "B2B SaaS (+200)",
     optB2c: "B2C Consumer (+300)",
+    optApp: "Future Mobile / Web App (+350)",
     optCommunity: "Community Network (+450)",
     optEcom: "DTC E-Commerce Brand (+500)",
     optDrop: "Dropshipping Store (+600)",
@@ -549,13 +555,16 @@ const I18N = {
     sec1Title: "1. Carga un Preset o Configura tu App / Tienda",
     presetDropship: "Tienda Dropshipping (NO-GO)",
     presetDtc: "Tienda DTC Optimizada (GO)",
+    presetFutureWeb: "Futura Web / App (Concepto)",
     presetMarketplace: "Marketplace Regulado (6,750)",
     presetMinimal: "CLI B2B Mínimo (1,500)",
     presetFintech: "Fintech Alta Fricción (NO-GO)",
     lblProductType: "Arquitectura de Producto",
     optDev: "Herramienta Dev (+100)",
+    optWeb: "Futura Web / Funnel Leads (+150)",
     optSaas: "SaaS B2B (+200)",
     optB2c: "Consumo B2C (+300)",
+    optApp: "Futura App Móvil / Web (+350)",
     optCommunity: "Red Comunitaria (+450)",
     optEcom: "Tienda E-Commerce DTC (+500)",
     optDrop: "Tienda Dropshipping (+600)",
@@ -691,7 +700,7 @@ function setLanguage(lang) {
 }
 
 const TYPE_WEIGHTS = {
-  developer_tool: 100, b2b_saas: 200, b2c_consumer: 300, community_network: 450,
+  developer_tool: 100, website_funnel: 150, b2b_saas: 200, b2c_consumer: 300, mobile_app: 350, community_network: 450,
   ecommerce_brand: 500, dropshipping_store: 600, two_sided_marketplace: 650, regulated_platform: 850
 };
 const SCOPE_WEIGHTS = { single_city: 0, regional: 500, national: 1300, multi_country: 2600 };
@@ -708,6 +717,11 @@ const PRESETS = {
     productType: 'ecommerce_brand', scope: 'national', regRisk: 'low', lifecycle: 'pre_launch',
     segments: 4, friction: 0.09, distraction: 0.09, confusion: 0.07, surprise: 0.0, blocker: 0.05, fairness: 0.48,
     runs: 3, seed: 42, tiers: 2, channels: 3, aov: 79.00, margin: 68, cpc: 0.85, shipDays: 4, hiddenShip: false
+  },
+  futureweb: {
+    productType: 'website_funnel', scope: 'national', regRisk: 'low', lifecycle: 'concept',
+    segments: 4, friction: 0.14, distraction: 0.14, confusion: 0.16, surprise: 0.02, blocker: 0.10, fairness: 0.42,
+    runs: 3, seed: 42, tiers: 2, channels: 2, aov: 49, margin: 80, cpc: 0.9, shipDays: 0, hiddenShip: false
   },
   marketplace: {
     productType: 'two_sided_marketplace', scope: 'regional', regRisk: 'high', lifecycle: 'pre_launch',
