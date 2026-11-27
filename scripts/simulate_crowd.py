@@ -9,7 +9,11 @@ Pure Python 3 stdlib agent-based crowd simulation modeling:
   4. Round 2: Asymmetric social contagion (peer clusters, skeptic negativity bias,
      influencer/legal amplifier spillovers).
   5. Round 3: Operational liquidity match, pricing/tier fairness, retention outcomes,
-     B2B payment willingness, and Monte Carlo confidence intervals across runs.
+     B2B/commerce payment willingness, and Monte Carlo confidence intervals across runs.
+  6. Optional In-App UX Journey Traversal (`ux_journey`): tracks step-by-step where
+     virtual personas get stuck, distracted, lost, or hit trust/price shocks.
+  7. Optional E-Commerce & Dropshipping Unit Economics (`commerce_profile`): computes
+     simulated funnel conversion, cart abandonment, CPA, and break-even max CPC.
 
 NOTE: Outputs are synthetic scenario-sensitivity metrics derived from the provided
 project assumptions and calibrated cohorts; they are NOT real-world user telemetry.
@@ -33,6 +37,8 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from size_swarm import DEFAULT_MAX_POPULATION, MIN_TOTAL_POPULATION, compute_sizing_plan  # noqa: E402
 
+DROP_REASONS = ("stuck", "distracted", "lost", "trust_or_price_shock")
+
 
 def clamp(val: float, low: float, high: float) -> float:
     return max(low, min(high, val))
@@ -52,6 +58,21 @@ def validate_spec(spec: dict[str, Any]) -> None:
         seen_ids.add(cid)
         if float(c.get("share", 0)) <= 0:
             raise ValueError(f"Cohort '{cid}' share must be > 0.")
+
+    ux_journey = spec.get("ux_journey")
+    if ux_journey is not None:
+        if not isinstance(ux_journey, list) or len(ux_journey) < 2:
+            raise ValueError("'ux_journey', when provided, must contain at least 2 sequential steps.")
+        seen_steps = set()
+        for idx, step in enumerate(ux_journey):
+            sid = step.get("id")
+            if not sid or not isinstance(sid, str):
+                raise ValueError(f"UX journey step index {idx} must include a non-empty string 'id'.")
+            if sid in seen_steps:
+                raise ValueError(f"Duplicate ux_journey step id: {sid}")
+            seen_steps.add(sid)
+            if not step.get("name") or not isinstance(step.get("name"), str):
+                raise ValueError(f"UX journey step '{sid}' must include a non-empty 'name'.")
 
 
 def _spawn_individuals(
@@ -78,6 +99,7 @@ def _spawn_individuals(
         susceptibility = clamp(float(c.get("social_susceptibility", 0.45)), 0.0, 1.0)
         voice_weight = max(0.2, float(c.get("social_voice_weight", 1.0)))
         is_buyer = bool(c.get("is_b2b_buyer", False))
+        is_commerce_buyer = bool(c.get("is_commerce_buyer", False))
         pro_fit = clamp(float(c.get("pro_value_fit", 0.35)), 0.0, 1.0)
         skeptic_bias = float(c.get("skepticism_bias", 0.0))
 
@@ -98,6 +120,7 @@ def _spawn_individuals(
                     "cohort_name": alloc["name"],
                     "role": alloc["role"],
                     "is_b2b_buyer": is_buyer,
+                    "is_commerce_buyer": is_commerce_buyer,
                     "ind_value": ind_value,
                     "ind_trust": ind_trust,
                     "onboarding_friction": onboarding_friction,
@@ -115,6 +138,243 @@ def _spawn_individuals(
                 }
             )
     return individuals
+
+
+def _simulate_ux_journey(
+    r3_records: list[dict[str, Any]],
+    ux_journey: list[dict[str, Any]],
+    commerce_profile: dict[str, Any] | None,
+    ux_rng: random.Random,
+) -> dict[str, Any]:
+    """
+    Traverse every virtual individual sequentially across each step in `ux_journey`
+    to measure where users get stuck, distracted, lost, or hit trust/price shocks.
+    Uses its own seeded RNG so v1 specs without `ux_journey` remain bit-identical.
+    """
+    shipping_days_max = int((commerce_profile or {}).get("shipping_days_max", 0) or 0)
+    hidden_shipping = bool((commerce_profile or {}).get("hidden_shipping_at_checkout", False))
+    return_days = (commerce_profile or {}).get("return_policy_days")
+    store_model = str((commerce_profile or {}).get("store_model", ""))
+
+    shipping_trust_hit = clamp((shipping_days_max - 7) * 0.028, 0.0, 0.38) if shipping_days_max > 7 else 0.0
+    if store_model == "dropshipping":
+        shipping_trust_hit = clamp(shipping_trust_hit + 0.06, 0.0, 0.42)
+    return_trust_hit = 0.08 if (return_days is not None and int(return_days) < 14) else 0.0
+
+    # Assign UX-specific cognitive traits deterministically per persona
+    active_personas: list[dict[str, Any]] = []
+    for rec in r3_records:
+        focus = clamp(ux_rng.gauss(0.74 - 0.25 * rec["susceptibility"], 0.14), 0.10, 1.0)
+        comprehension = clamp(
+            ux_rng.gauss(0.75 + 0.14 * rec["ind_value"] - 0.12 * rec["skeptic_bias"], 0.14),
+            0.10,
+            1.0,
+        )
+        rec["ux_dropped_step"] = None
+        rec["ux_drop_reason"] = None
+        rec["_ux_focus"] = focus
+        rec["_ux_comp"] = comprehension
+        active_personas.append(rec)
+
+    total_entered = len(active_personas)
+    drop_totals = {reason: 0 for reason in DROP_REASONS}
+    step_summaries: list[dict[str, Any]] = []
+
+    remaining = list(active_personas)
+    num_steps = len(ux_journey)
+
+    for idx, step in enumerate(ux_journey):
+        sid = str(step["id"])
+        sname = str(step["name"])
+        route = str(step.get("component_or_route") or "")
+        step_friction = clamp(float(step.get("step_friction", 0.15)), 0.0, 1.0)
+        distraction_load = clamp(float(step.get("distraction_load", 0.15)), 0.0, 1.0)
+        confusion_risk = clamp(float(step.get("confusion_risk", 0.15)), 0.0, 1.0)
+        trust_gap = clamp(float(step.get("trust_gap", 0.10)), 0.0, 1.0)
+        surprise_cost = clamp(float(step.get("surprise_cost", 0.0)), 0.0, 1.0)
+        clarity_gain = clamp(float(step.get("value_clarity_gain", 0.10)), 0.0, 1.0)
+
+        eff_trust_gap = clamp(trust_gap + shipping_trust_hit * 0.45 + return_trust_hit, 0.0, 1.0)
+        eff_surprise = surprise_cost
+        if hidden_shipping and idx == num_steps - 1 and eff_surprise < 0.40:
+            eff_surprise = 0.45
+
+        entered = len(remaining)
+        step_drops = {reason: 0 for reason in DROP_REASONS}
+        survivors: list[dict[str, Any]] = []
+
+        for rec in remaining:
+            # Mild cumulative cognitive fatigue on longer flows
+            fatigue = min(0.25, 0.035 * idx)
+            stuck_h = clamp(0.42 * step_friction * (1.20 - 0.65 * rec["patience"]), 0.0, 0.82)
+            distract_h = clamp(
+                0.40 * distraction_load * (1.18 - 0.60 * rec["_ux_focus"]) + fatigue * distraction_load,
+                0.0,
+                0.80,
+            )
+            lost_h = clamp(0.40 * confusion_risk * (1.20 - 0.62 * rec["_ux_comp"]), 0.0, 0.80)
+            shock_h = clamp(
+                0.48 * eff_surprise * (0.45 + 0.80 * rec["price_sensitivity"])
+                + 0.34 * eff_trust_gap * (0.52 + 0.65 * rec["privacy_sensitivity"] - 0.22 * rec["ind_trust"]),
+                0.0,
+                0.86,
+            )
+
+            p_survive = (1.0 - stuck_h) * (1.0 - distract_h) * (1.0 - lost_h) * (1.0 - shock_h)
+            p_drop = 1.0 - p_survive
+
+            if ux_rng.random() < p_drop:
+                weights = (stuck_h, distract_h, lost_h, shock_h)
+                total_w = sum(weights)
+                if total_w <= 0.0:
+                    chosen = "stuck"
+                else:
+                    pick = ux_rng.random() * total_w
+                    acc = 0.0
+                    chosen = DROP_REASONS[-1]
+                    for r_name, w in zip(DROP_REASONS, weights):
+                        acc += w
+                        if pick <= acc:
+                            chosen = r_name
+                            break
+                rec["ux_dropped_step"] = sid
+                rec["ux_drop_reason"] = chosen
+                step_drops[chosen] += 1
+                drop_totals[chosen] += 1
+            else:
+                rec["_ux_comp"] = clamp(rec["_ux_comp"] + clarity_gain * 0.12, 0.10, 1.0)
+                survivors.append(rec)
+
+        completed = len(survivors)
+        dropped = entered - completed
+        dominant_issue = max(step_drops.items(), key=lambda kv: kv[1])[0] if dropped > 0 else "none"
+
+        step_summaries.append(
+            {
+                "step_index": idx + 1,
+                "id": sid,
+                "name": sname,
+                "component_or_route": route,
+                "entered": entered,
+                "completed": completed,
+                "dropped": dropped,
+                "step_completion_rate": round((completed / entered) if entered > 0 else 0.0, 4),
+                "cumulative_retention_rate": round(completed / max(total_entered, 1), 4),
+                "drop_reasons": step_drops,
+                "dominant_issue": dominant_issue,
+            }
+        )
+        remaining = survivors
+
+    for rec in r3_records:
+        rec.pop("_ux_focus", None)
+        rec.pop("_ux_comp", None)
+
+    total_completed = len(remaining)
+    end_to_end_rate = round(total_completed / max(total_entered, 1), 4)
+    bottleneck = max(
+        step_summaries,
+        key=lambda s: (s["dropped"] / max(s["entered"], 1), s["dropped"]),
+    )
+    top_drop_mode = max(drop_totals.items(), key=lambda kv: kv[1])[0] if sum(drop_totals.values()) > 0 else "none"
+
+    return {
+        "total_entered": total_entered,
+        "total_completed": total_completed,
+        "end_to_end_completion_rate": end_to_end_rate,
+        "drop_breakdown": drop_totals,
+        "top_drop_mode": top_drop_mode,
+        "biggest_bottleneck": {
+            "id": bottleneck["id"],
+            "name": bottleneck["name"],
+            "component_or_route": bottleneck["component_or_route"],
+            "step_drop_rate": round(1.0 - bottleneck["step_completion_rate"], 4),
+            "dropped_personas": bottleneck["dropped"],
+            "dominant_issue": bottleneck["dominant_issue"],
+        },
+        "steps": step_summaries,
+    }
+
+
+def _compute_commerce_kpis(
+    spec: dict[str, Any],
+    r3_records: list[dict[str, Any]],
+    ux_funnel: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    commerce_profile = spec.get("commerce_profile")
+    product_type = str(spec.get("product_type", ""))
+    is_commerce = commerce_profile is not None or product_type in ("ecommerce_brand", "dropshipping_store")
+    if not is_commerce:
+        return None
+
+    cp = commerce_profile or {}
+    aov = float(cp.get("aov_usd", 45.0))
+    margin_pct = clamp(float(cp.get("gross_margin_pct", 60.0)), 1.0, 100.0)
+    cpc = max(0.0, float(cp.get("estimated_cpc_usd", 0.75)))
+    ship_max = int(cp.get("shipping_days_max", 5) or 0)
+    hidden_ship = bool(cp.get("hidden_shipping_at_checkout", False))
+
+    total_n = max(len(r3_records), 1)
+    engaged_count = 0
+    buyer_ready = 0
+    for rec in r3_records:
+        if rec["r1_intent"] in ("sign_up_immediately", "curious_cautious") and rec["r3_sent"] > -0.10:
+            engaged_count += 1
+        ux_survived = True if ux_funnel is None else (rec.get("ux_dropped_step") is None)
+        if ux_survived and rec["outcome"] in ("active_user", "vocal_advocate"):
+            ship_penalty = clamp((ship_max - 6) * 0.018, 0.0, 0.28) if ship_max > 6 else 0.0
+            hidden_penalty = 0.09 if hidden_ship else 0.0
+            propensity = clamp(
+                0.10
+                + 0.055 * max(0.0, rec["r3_sent"])
+                + 0.045 * clamp((rec["pricing_fairness"] + 1.0) / 2.0, 0.0, 1.0)
+                - 0.05 * rec["price_sensitivity"]
+                - ship_penalty * 0.22
+                - hidden_penalty * 0.25,
+                0.01,
+                0.24,
+            )
+            if rec["r3_sent"] >= (0.42 - propensity):
+                buyer_ready += 1
+
+    engaged_share = engaged_count / total_n
+    buyer_share = buyer_ready / total_n
+
+    if ux_funnel and len(ux_funnel["steps"]) >= 2:
+        step1_ret = ux_funnel["steps"][0]["cumulative_retention_rate"]
+        # Realistic cold-traffic Add-to-Cart baseline (~3%–14%) gated by first-impression UX survival
+        atc_rate = round(clamp(0.16 * step1_ret * (0.25 + 0.65 * engaged_share), 0.008, 0.22), 4)
+        checkout_survival_given_atc = ux_funnel["end_to_end_completion_rate"] / max(step1_ret, 0.05)
+        cvr = round(
+            clamp(atc_rate * checkout_survival_given_atc * (0.18 + 0.35 * buyer_share), 0.0015, 0.12),
+            4,
+        )
+    else:
+        atc_rate = round(clamp(0.14 * engaged_share, 0.008, 0.22), 4)
+        cvr = round(clamp(0.05 * buyer_share, 0.0015, 0.12), 4)
+
+    cart_abandonment = round(clamp(1.0 - (cvr / max(atc_rate, cvr, 0.0001)), 0.0, 0.995), 4)
+    gross_profit_order = round(aov * (margin_pct / 100.0), 2)
+    cpa = round(cpc / max(cvr, 0.0001), 2) if cpc > 0 else 0.0
+    unit_margin = round(gross_profit_order - cpa, 2) if cpc > 0 else gross_profit_order
+    break_even_cpc = round(gross_profit_order * cvr, 2)
+
+    return {
+        "store_model": str(cp.get("store_model", product_type)),
+        "aov_usd": round(aov, 2),
+        "gross_margin_pct": round(margin_pct, 1),
+        "estimated_cpc_usd": round(cpc, 2),
+        "shipping_days_max": ship_max,
+        "hidden_shipping_at_checkout": hidden_ship,
+        "simulated_add_to_cart_rate": round(atc_rate, 4),
+        "simulated_cart_abandonment_rate": cart_abandonment,
+        "simulated_conversion_rate": cvr,
+        "simulated_cpa_usd": cpa,
+        "gross_profit_per_order_usd": gross_profit_order,
+        "unit_margin_after_ad_spend_usd": unit_margin,
+        "break_even_max_cpc_usd": break_even_cpc,
+        "profitable_at_assumed_cpc": unit_margin > 0,
+    }
 
 
 def simulate_single_run(
@@ -321,6 +581,16 @@ def simulate_single_run(
 
         r3_records.append({**rec, "r3_sent": r3_sent, "outcome": outcome, "would_pay": pay_choice})
 
+    # Optional In-App UX Journey Funnel + Commerce Unit Economics
+    ux_journey = spec.get("ux_journey")
+    commerce_profile = spec.get("commerce_profile")
+    ux_funnel = (
+        _simulate_ux_journey(r3_records, ux_journey, commerce_profile, random.Random(seed + 10007))
+        if ux_journey
+        else None
+    )
+    commerce_kpis = _compute_commerce_kpis(spec, r3_records, ux_funnel)
+
     total_n = len(r3_records)
     avg_r1 = statistics.fmean(r["r1_sent"] for r in r3_records)
     avg_r2 = statistics.fmean(r["r2_sent"] for r in r3_records)
@@ -331,15 +601,26 @@ def simulate_single_run(
     distrust_share = outcomes["rejected_distrust"] / total_n
     b2b_conv_rate = (b2b_paid / b2b_total) if b2b_total > 0 else active_share
 
-    # Transparent weighted readiness score (0-100): 65%+ Day-14 B2B paid rate hits full B2B sub-score
+    # Transparent weighted readiness score (0-100):
+    # Preserves exact v1 equation when `ux_journey` is omitted; blends UX funnel completion when present.
     norm_sentiment = clamp((avg_r3 + 1.0) / 2.0, 0.0, 1.0)
     b2b_subscore = clamp(b2b_conv_rate / 0.65, 0.0, 1.0) if b2b_total > 0 else active_share
-    raw_score = 100.0 * (
-        0.40 * norm_sentiment
-        + 0.25 * active_share
-        + 0.20 * b2b_subscore
-        + 0.15 * clamp(1.0 - reject_stall_share, 0.0, 1.0)
-    )
+    if ux_funnel is not None:
+        ux_subscore = clamp(ux_funnel["end_to_end_completion_rate"] / 0.55, 0.0, 1.0)
+        raw_score = 100.0 * (
+            0.32 * norm_sentiment
+            + 0.20 * active_share
+            + 0.16 * b2b_subscore
+            + 0.12 * clamp(1.0 - reject_stall_share, 0.0, 1.0)
+            + 0.20 * ux_subscore
+        )
+    else:
+        raw_score = 100.0 * (
+            0.40 * norm_sentiment
+            + 0.25 * active_share
+            + 0.20 * b2b_subscore
+            + 0.15 * clamp(1.0 - reject_stall_share, 0.0, 1.0)
+        )
     if distrust_share > 0.15:
         raw_score = min(raw_score, 45.0)
     readiness_score = round(clamp(raw_score, 0.0, 100.0), 1)
@@ -373,22 +654,24 @@ def simulate_single_run(
         sorted_c = sorted(by_cid[cid], key=lambda x: x["r3_sent"])
         picks = [sorted_c[0], sorted_c[len(sorted_c) // 2], sorted_c[-1]] if len(sorted_c) >= 3 else sorted_c
         for item in picks[:per_cohort_sample]:
-            sample_records.append(
-                {
-                    "persona_id": item["persona_id"],
-                    "cohort_id": item["cohort_id"],
-                    "role": item["role"],
-                    "r1_sentiment": round(item["r1_sent"], 3),
-                    "r2_sentiment": round(item["r2_sent"], 3),
-                    "r3_sentiment": round(item["r3_sent"], 3),
-                    "r1_intent": item["r1_intent"],
-                    "top_friction": item["top_friction"],
-                    "outcome": item["outcome"],
-                    "would_pay": item["would_pay"],
-                }
-            )
+            sample_item: dict[str, Any] = {
+                "persona_id": item["persona_id"],
+                "cohort_id": item["cohort_id"],
+                "role": item["role"],
+                "r1_sentiment": round(item["r1_sent"], 3),
+                "r2_sentiment": round(item["r2_sent"], 3),
+                "r3_sentiment": round(item["r3_sent"], 3),
+                "r1_intent": item["r1_intent"],
+                "top_friction": item["top_friction"],
+                "outcome": item["outcome"],
+                "would_pay": item["would_pay"],
+            }
+            if ux_funnel is not None:
+                sample_item["ux_dropped_step"] = item.get("ux_dropped_step")
+                sample_item["ux_drop_reason"] = item.get("ux_drop_reason")
+            sample_records.append(sample_item)
 
-    return {
+    result: dict[str, Any] = {
         "seed": seed,
         "total_population": total_n,
         "avg_r1": avg_r1,
@@ -405,6 +688,11 @@ def simulate_single_run(
         "cohort_breakdown": cohort_breakdown,
         "personas_sample": sample_records,
     }
+    if ux_funnel is not None:
+        result["ux_funnel"] = ux_funnel
+    if commerce_kpis is not None:
+        result["commerce_kpis"] = commerce_kpis
+    return result
 
 
 def run_simulation(
@@ -447,23 +735,35 @@ def run_simulation(
         verdict = "NO-GO (Critical Blockers Trigger Rejection Spiral)"
 
     primary = run_outputs[0]
-    metrics = {
+    mc_block: dict[str, Any] = {
+        "runs": runs,
+        "base_seed": seed,
+        "mean_readiness_score": mean_score,
+        "score_ci95_half_width": ci95_half_score,
+        "mean_avg_r1": mean_r1,
+        "mean_avg_r2": mean_r2,
+        "mean_avg_r3": mean_r3,
+        "verdict": verdict,
+    }
+    if "ux_funnel" in primary:
+        mc_block["mean_ux_completion_rate"] = round(
+            statistics.fmean(r["ux_funnel"]["end_to_end_completion_rate"] for r in run_outputs),
+            4,
+        )
+    if "commerce_kpis" in primary:
+        mc_block["mean_simulated_conversion_rate"] = round(
+            statistics.fmean(r["commerce_kpis"]["simulated_conversion_rate"] for r in run_outputs),
+            4,
+        )
+
+    metrics: dict[str, Any] = {
         "project_name": spec.get("project_name", "Unnamed Project"),
         "simulation_disclaimer": (
             "Synthetic scenario-sensitivity simulation derived from grounded project "
             "assumptions and calibrated cohorts; not empirical live-user telemetry."
         ),
         "sizing_plan": sizing_plan,
-        "monte_carlo": {
-            "runs": runs,
-            "base_seed": seed,
-            "mean_readiness_score": mean_score,
-            "score_ci95_half_width": ci95_half_score,
-            "mean_avg_r1": mean_r1,
-            "mean_avg_r2": mean_r2,
-            "mean_avg_r3": mean_r3,
-            "verdict": verdict,
-        },
+        "monte_carlo": mc_block,
         "primary_run_summary": {
             "seed": primary["seed"],
             "total_population": primary["total_population"],
@@ -482,6 +782,10 @@ def run_simulation(
         "cohort_breakdown": primary["cohort_breakdown"],
         "personas_sample": primary["personas_sample"],
     }
+    if "ux_funnel" in primary:
+        metrics["ux_funnel"] = primary["ux_funnel"]
+    if "commerce_kpis" in primary:
+        metrics["commerce_kpis"] = primary["commerce_kpis"]
     return metrics
 
 
@@ -556,12 +860,54 @@ def write_outputs(metrics: dict[str, Any], out_dir: Path) -> None:
         f"- **Adaptive Swarm Size:** `{prim['total_population']:,}` virtual personas (`{metrics['sizing_plan']['complexity_tier']}` tier, floor `{MIN_TOTAL_POPULATION:,}`)",
         f"- **Sentiment Trajectory:** R1 `{mc['mean_avg_r1']:+.3f}` -> R2 `{mc['mean_avg_r2']:+.3f}` -> R3 `{mc['mean_avg_r3']:+.3f}`",
         f"- **Active / Advocate Retention:** `{prim['active_retention_rate'] * 100:.1f}%`",
-        f"- **B2B Paid Conversion (among B2B cohorts):** `{prim['b2b_paying_count']}/{prim['b2b_buyer_count']}` (`{(prim['b2b_conversion_rate'] or 0) * 100:.1f}%`)",
-        "",
-        "## Cohort Breakdown (Primary Run)",
-        "| Cohort | Personas | R1 | R2 | R3 | Active+Advocate | Pro | Basic |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
+    if prim["b2b_buyer_count"] > 0:
+        lines.append(
+            f"- **B2B Paid Conversion (among B2B cohorts):** `{prim['b2b_paying_count']}/{prim['b2b_buyer_count']}` (`{(prim['b2b_conversion_rate'] or 0) * 100:.1f}%`)"
+        )
+
+    if "ux_funnel" in metrics:
+        ux = metrics["ux_funnel"]
+        bn = ux["biggest_bottleneck"]
+        lines.extend(
+            [
+                f"- **End-to-End UX Completion:** `{ux['end_to_end_completion_rate'] * 100:.1f}%` ({ux['total_completed']}/{ux['total_entered']} completed; top drop mode: `{ux['top_drop_mode']}`)",
+                "",
+                "## In-App UX Journey Funnel (Where Users Get Stuck, Distracted, or Lost)",
+                f"> **Primary Bottleneck:** Step `{bn['name']}` (`{bn['component_or_route'] or bn['id']}`) dropped `{bn['dropped_personas']}` personas (`{bn['step_drop_rate'] * 100:.1f}%` step drop, dominant issue: `{bn['dominant_issue']}`).",
+                "",
+                "| Step | Screen / Route | Entered | Retained | Stuck | Distracted | Lost | Trust/Price |",
+                "| ---: | :--- | ---: | ---: | ---: | ---: | ---: | ---: |",
+            ]
+        )
+        for s in ux["steps"]:
+            dr = s["drop_reasons"]
+            label = f"{s['name']} (`{s['component_or_route']}`)" if s["component_or_route"] else s["name"]
+            lines.append(
+                f"| {s['step_index']} | {label} | {s['entered']} | {s['cumulative_retention_rate'] * 100:.1f}% | "
+                f"{dr['stuck']} | {dr['distracted']} | {dr['lost']} | {dr['trust_or_price_shock']} |"
+            )
+
+    if "commerce_kpis" in metrics:
+        ck = metrics["commerce_kpis"]
+        lines.extend(
+            [
+                "",
+                "## E-Commerce & Dropshipping Unit Economics Sensitivity",
+                f"- **Store Model / AOV / Margin:** `{ck['store_model']}` · `${ck['aov_usd']:.2f}` AOV · `{ck['gross_margin_pct']:.1f}%` gross margin (`${ck['gross_profit_per_order_usd']:.2f}` profit/order)",
+                f"- **Simulated Funnel:** Add-to-Cart `{ck['simulated_add_to_cart_rate'] * 100:.1f}%` · Cart Abandonment `{ck['simulated_cart_abandonment_rate'] * 100:.1f}%` · Conversion Rate `{ck['simulated_conversion_rate'] * 100:.2f}%`",
+                f"- **Ad Spend Sensitivity (Assumed CPC `${ck['estimated_cpc_usd']:.2f}`):** Simulated CPA `${ck['simulated_cpa_usd']:.2f}` · Unit Margin `${ck['unit_margin_after_ad_spend_usd']:+.2f}/order` · Break-Even Max CPC `${ck['break_even_max_cpc_usd']:.2f}`",
+            ]
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Cohort Breakdown (Primary Run)",
+            "| Cohort | Personas | R1 | R2 | R3 | Active+Advocate | Pro | Basic |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        ]
+    )
     for c in metrics["cohort_breakdown"]:
         act = c["outcomes"].get("active_user", 0) + c["outcomes"].get("vocal_advocate", 0)
         lines.append(
@@ -607,13 +953,17 @@ def main(argv: list[str] | None = None) -> int:
     )
     out_dir = Path(args.out_dir)
     write_outputs(metrics, out_dir)
-    summary = {
+    summary: dict[str, Any] = {
         "project_name": metrics["project_name"],
         "recommended_population": metrics["sizing_plan"]["recommended_population"],
         "complexity_tier": metrics["sizing_plan"]["complexity_tier"],
         "monte_carlo": metrics["monte_carlo"],
         "out_dir": str(out_dir),
     }
+    if "ux_funnel" in metrics:
+        summary["ux_biggest_bottleneck"] = metrics["ux_funnel"]["biggest_bottleneck"]
+    if "commerce_kpis" in metrics:
+        summary["commerce_kpis"] = metrics["commerce_kpis"]
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

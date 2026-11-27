@@ -1,6 +1,6 @@
 # 🎯 pulse-crowd
 
-> **Understand the market before you enter it.** Adaptive multi-round virtual crowd simulation (`1,000` to `25,000+` personas) for AI coding agents — stress-test product launches, onboarding gates, pricing fairness, and compliance risk before shipping.
+> **Understand the market—and your in-app UX—before you ship.** Adaptive multi-round virtual crowd & UX funnel simulation (`1,000` to `25,000+` personas) for AI coding agents — catch where users get **stuck**, **distracted**, or **lost** inside your app, stress-test **e-commerce & dropshipping** conversion, and validate pricing & compliance before launch.
 
 **English** · [Español](docs/i18n/README.es.md) · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Português](docs/i18n/README.pt-BR.md) · [Italiano](docs/i18n/README.it.md) · [हिन्दी](docs/i18n/README.hi.md) · [Русский](docs/i18n/README.ru.md)
 
@@ -25,7 +25,19 @@
 | **Static 10–15 persona script** | Fixed ~15 personas | Oversimplifies or wastes scale | Ad-hoc | Tool-locked |
 | **`pulse-crowd` (This Skill)** | **Adaptive `1,000` – `25,000+`** | **Stratified + Largest Remainder floor** | **Seeded Monte Carlo 95% CI** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
 
-### Real Before vs. After Case Study (`6,750` Virtual Personas)
+### Case Study 1: In-App UX + Dropshipping Store vs. Hardened DTC Store (`v2.0`)
+
+Simulated directly via `scripts/simulate_crowd.py --runs 3 --seed 42` across `4,800–4,900` virtual personas walking screen-by-screen (`Ad Landing → Cart Drawer → Account/Shipping → Checkout`):
+
+| Metric | Broken Dropshipping ([`dropshipping-store.json`](examples/dropshipping-store.json)) | Hardened DTC Brand ([`ecommerce-dtc-brand.json`](examples/ecommerce-dtc-brand.json)) |
+| :--- | :--- | :--- |
+| **Readiness Score** | **`14.0 / 100`** (`NO-GO`) | **`95.1 / 100`** (`GO`) |
+| **End-to-End UX Completion** | **`3.6%`** | **`74.9%`** |
+| **#1 UX Bottleneck Route** | `app/checkout/shipping-step.tsx` (`70.0%` drop · `trust_or_price_shock`) | `components/CartDrawer.tsx` (`10.3%` drop · `distracted`) |
+| **Add-to-Cart / Store CVR** | `2.2%` ATC · `0.15%` CVR (`93.3%` abandon) | `13.0%` ATC · `4.67%` CVR (`63.9%` abandon) |
+| **Ad Break-Even Max CPC** | **`$0.04`** *(burns money at `$0.95` CPC)* | **`$2.51`** *(profitable at `$0.85` CPC)* |
+
+### Case Study 2: Regulated Marketplace Launch (`6,750` Virtual Personas)
 
 Simulated directly via `scripts/simulate_crowd.py` (`--runs 3 --seed 42`) on a two-sided youth sports marketplace before vs. after fixing heavy KYC friction, minor/privacy compliance gaps, and negative pricing sentiment:
 
@@ -65,13 +77,15 @@ flowchart LR
     G -->|No| I["Readiness Score (0-100) + 95% CI"]
 ```
 
-1. **Pre-Dispatch Adaptive Swarm Sizing (`scripts/size_swarm.py`):** Evaluates project complexity across product architecture, target segments, geographic footprint, pricing tiers, acquisition channels, regulatory risk, lifecycle stage, and desired depth. Enforces a strict **minimum floor of 1,000 virtual personas** and scales dynamically up to **25,000+** for complex, multi-sided, or regulated platforms.
-2. **Stratified Cohort Allocation:** Uses Largest Remainder allocation with a per-cohort statistical power floor so critical minority cohorts (such as compliance reviewers or rural provinces) remain measurable.
+1. **Pre-Dispatch Adaptive Swarm Sizing (`scripts/size_swarm.py`):** Evaluates project complexity across product architecture (including `ecommerce_brand` & `dropshipping_store`), target segments, geographic footprint, pricing tiers, acquisition channels, regulatory risk, UX journey steps, lifecycle stage, and desired depth. Enforces a strict **minimum floor of 1,000 virtual personas** up to **25,000+**.
+2. **Stratified Cohort Allocation:** Uses Largest Remainder allocation with a per-cohort statistical power floor so critical minority cohorts (such as compliance reviewers or skeptical price comparators) remain measurable.
 3. **Three-Round Agent-Based Contagion Simulation (`scripts/simulate_crowd.py`):**
    - **Round 1 — Discovery & Policy Gates:** Models onboarding friction, regulatory/privacy barriers, pricing fairness, and baseline value fit per virtual individual.
-   - **Round 2 — Asymmetric Social Contagion:** Simulates peer-cluster alignment and public discourse spillovers, applying higher negative weight when unresolved compliance or pay-to-rank complaints arise.
-   - **Round 3 — Week-2 Equilibrium & B2B Conversion:** Simulates regional liquidity gaps, retention outcomes (`vocal_advocate`, `active_user`, `stalled_in_onboarding`, `churned_low_liquidity`, `rejected_distrust`), B2B Basic/Pro conversion hurdles, and Monte Carlo 95% confidence intervals across seeds.
-4. **Transparent Readiness Scoring:** Produces a `0–100` Readiness Score with an explicit regulatory distrust safety gate (`rejected_distrust > 15%` caps verdict at `NO-GO`).
+   - **Round 2 — Asymmetric Social Contagion:** Simulates peer-cluster alignment and public discourse spillovers, applying higher negative weight when unresolved compliance or trust complaints arise.
+   - **Round 3 — Week-2 Equilibrium & Conversion:** Simulates regional liquidity gaps, retention outcomes, B2B Basic/Pro conversion hurdles, and Monte Carlo 95% confidence intervals across seeds.
+4. **In-App UX Journey Traversal (`ux_journey`):** Simulates every virtual user walking screen-by-screen through your real app routes (`Landing → Signup/PDP → Cart → Checkout`) to pinpoint exact bottlenecks where users get **stuck** (`step_friction`), **distracted** (`distraction_load`), **lost** (`confusion_risk`), or hit **trust/price shocks** (`surprise_cost`).
+5. **E-Commerce & Dropshipping Unit Economics (`commerce_profile`):** Models delivery-window penalties, hidden checkout shipping shocks, Add-to-Cart %, Cart Abandonment %, Store CVR, Simulated CPA, and Break-Even Max CPC.
+6. **Transparent Readiness Scoring:** Produces a `0–100` Readiness Score with an explicit regulatory distrust safety gate (`rejected_distrust > 15%` caps verdict at `NO-GO`).
 
 ---
 
@@ -107,9 +121,11 @@ pulse-crowd/
 │   └── spec-schema.json              # JSON Schema for project + cohort specifications
 ├── examples/
 │   ├── minimal-b2b-cli.json          # Lean dev-tool spec (sizes to 1,500 personas)
-│   └── regulated-marketplace.json    # Complex regional marketplace spec (sizes to 6,750 personas)
+│   ├── regulated-marketplace.json    # Complex regional marketplace spec (sizes to 6,750 personas)
+│   ├── dropshipping-store.json       # High-friction dropshipping + UX funnel (14.0 NO-GO)
+│   └── ecommerce-dtc-brand.json      # Hardened DTC store + unit economics (95.1 GO)
 └── tests/
-    └── test_pulse_crowd_sim.py       # Python unittest suite
+    └── test_pulse_crowd_sim.py       # Python unittest suite (10 tests)
 ```
 
 ---
@@ -176,7 +192,7 @@ python3 ~/.agents/skills/pulse-crowd/scripts/validate_skill.py
 python3 -m unittest discover -s ~/.agents/skills/pulse-crowd/tests -v
 ```
 
-Expected confirmation: `Skill validation PASSED` and `Ran 6 tests ... OK`.
+Expected confirmation: `Skill validation PASSED` and `Ran 10 tests ... OK`.
 
 ---
 
@@ -227,19 +243,30 @@ Verified output observed on `Python 3.9.6`:
 
 And on the minimal tool (`examples/minimal-b2b-cli.json`): `recommended_population: 1500` (`lean_1k`), `mean_readiness_score: 90.0` (`±0.07`).
 
+Run the v2.0 **Dropshipping & In-App UX Funnel** simulation:
+
+```bash
+python3 scripts/simulate_crowd.py \
+  --spec examples/dropshipping-store.json \
+  --out-dir /tmp/pulse_crowd_dropship \
+  --runs 3 \
+  --seed 42
+```
+
 Generated output artifacts in `--out-dir`:
 - `sizing_plan.json` — weighted complexity drivers and proportional cohort allocations
-- `metrics.json` — Monte Carlo summary, outcomes distribution, B2B conversion counts, top friction counts
+- `metrics.json` — Monte Carlo summary, outcomes distribution, optional `ux_funnel` bottleneck breakdown (`stuck`/`distracted`/`lost`/`trust_or_price_shock`), and optional `commerce_kpis`
 - `cohorts_summary.csv` — tabular breakdown per cohort
-- `personas_sample.json` — stratified individual trace sample across extreme and median cases
-- `report.md` — structured human-readable launch report
+- `personas_sample.json` — stratified individual trace sample including per-step drop locations
+- `report.md` — structured launch report with screen-by-screen UX drop-off table & unit economics
 
 ### 3. Prompting Your AI Agent Naturally
 
-Once installed globally, prompt your assistant inside any codebase:
+Once installed globally, prompt your assistant inside any codebase or Shopify/e-commerce repo:
 
+- *"Audit every screen of our onboarding and checkout flow, detect where users get stuck, distracted, or lost across >= 1,000 virtual personas, and pinpoint the exact React/Liquid components to fix."*
+- *"Simulate 4,000+ TikTok/Meta visitors on our dropshipping store (`aov`, shipping window, cart popups) and compute our break-even max CPC."*
 - *"Audit our current onboarding and pricing code, build a spec JSON for PulseCrowd, size the virtual crowd based on our project complexity (minimum 1,000 personas), and run a 3-round simulation."*
-- *"Compare our current v1 authentication flow against a non-biometric alternative across at least 2,000 virtual users."*
 
 ### Expected Agent Workflow
 

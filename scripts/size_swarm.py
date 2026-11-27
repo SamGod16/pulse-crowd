@@ -4,7 +4,7 @@ Adaptive Swarm Sizing Engine for pulse-crowd.
 
 Determines the appropriate virtual persona population (always >= 1,000) based on
 project complexity drivers (segments, product model, geography, pricing tiers,
-regulatory risk, lifecycle stage, and requested evaluation depth) BEFORE
+regulatory risk, lifecycle stage, UX journey depth, and evaluation depth) BEFORE
 launching any virtual crowd simulation.
 """
 
@@ -25,6 +25,8 @@ PRODUCT_TYPE_WEIGHTS = {
     "b2b_saas": 200,
     "b2c_consumer": 300,
     "community_network": 450,
+    "ecommerce_brand": 500,
+    "dropshipping_store": 600,
     "two_sided_marketplace": 650,
     "regulated_platform": 850,
 }
@@ -82,6 +84,7 @@ def compute_sizing_plan(
         raise ValueError(f"Unsupported evaluation_depth: {evaluation_depth}")
 
     cohorts = project.get("cohorts") or []
+    ux_journey = project.get("ux_journey") or []
     target_segments = int(project.get("target_segments") or max(len(cohorts), 2))
     pricing_tiers = int(project.get("pricing_tiers", 2))
     acquisition_channels = int(project.get("acquisition_channels", 2))
@@ -93,6 +96,11 @@ def compute_sizing_plan(
     if acquisition_channels < 1:
         raise ValueError("acquisition_channels must be >= 1")
 
+    segment_component = max(0, target_segments - 2) * 220
+    pricing_component = pricing_tiers * 150
+    channel_component = max(0, acquisition_channels - 1) * 140
+    journey_component = max(0, len(ux_journey) - 4) * 90
+
     if population_override is not None:
         if population_override < MIN_TOTAL_POPULATION:
             raise ValueError(
@@ -100,13 +108,7 @@ def compute_sizing_plan(
             )
         recommended_population = min(int(population_override), max_population)
         raw_estimate = recommended_population
-        segment_component = max(0, target_segments - 2) * 220
-        pricing_component = pricing_tiers * 150
-        channel_component = max(0, acquisition_channels - 1) * 140
     else:
-        segment_component = max(0, target_segments - 2) * 220
-        pricing_component = pricing_tiers * 150
-        channel_component = max(0, acquisition_channels - 1) * 140
         additive_score = (
             MIN_TOTAL_POPULATION
             + PRODUCT_TYPE_WEIGHTS[product_type]
@@ -115,6 +117,7 @@ def compute_sizing_plan(
             + segment_component
             + pricing_component
             + channel_component
+            + journey_component
         )
         raw_estimate = int(
             round(
@@ -156,6 +159,8 @@ def compute_sizing_plan(
             "pricing_weight": pricing_component,
             "acquisition_channels": acquisition_channels,
             "channel_weight": channel_component,
+            "ux_journey_steps": len(ux_journey),
+            "journey_weight": journey_component,
             "lifecycle_stage": lifecycle_stage,
             "lifecycle_multiplier": LIFECYCLE_MULTIPLIERS[lifecycle_stage],
             "evaluation_depth": evaluation_depth,

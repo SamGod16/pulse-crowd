@@ -4,14 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pulse-crowd"
-version = "1.0.0"
-description = "Adaptive multi-round virtual crowd simulation (1,000-25,000+ personas) for AI coding agents."
+version = "2.0.0"
+description = "Adaptive virtual crowd & in-app UX funnel simulation (1,000-25,000+ personas) for SaaS, apps, e-commerce & dropshipping."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 authors = [{ name = "SamuelCoreLabs" }]
 keywords = [
     "crowd-simulation",
+    "ux-funnel",
+    "ecommerce",
+    "dropshipping",
     "ai-agents",
     "agent-skills",
     "market-research",

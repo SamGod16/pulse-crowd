@@ -13,7 +13,9 @@
         "b2c_consumer",
         "community_network",
         "two_sided_marketplace",
-        "regulated_platform"
+        "regulated_platform",
+        "ecommerce_brand",
+        "dropshipping_store"
       ]
     },
     "lifecycle_stage": {
@@ -39,6 +41,44 @@
     "target_segments": { "type": "integer", "minimum": 1 },
     "pricing_tiers": { "type": "integer", "minimum": 0 },
     "acquisition_channels": { "type": "integer", "minimum": 1 },
+    "commerce_profile": {
+      "type": "object",
+      "description": "Optional economics and fulfillment profile for e-commerce and dropshipping stores.",
+      "properties": {
+        "store_model": {
+          "type": "string",
+          "enum": ["dtc_brand", "dropshipping", "digital_products", "marketplace_seller"]
+        },
+        "aov_usd": { "type": "number", "exclusiveMinimum": 0 },
+        "gross_margin_pct": { "type": "number", "minimum": 1, "maximum": 100 },
+        "estimated_cpc_usd": { "type": "number", "minimum": 0 },
+        "shipping_days_min": { "type": "integer", "minimum": 0 },
+        "shipping_days_max": { "type": "integer", "minimum": 0 },
+        "free_shipping_threshold_usd": { "type": ["number", "null"], "minimum": 0 },
+        "hidden_shipping_at_checkout": { "type": "boolean", "default": false },
+        "return_policy_days": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "ux_journey": {
+      "type": "array",
+      "description": "Optional sequential in-app user journey steps to pinpoint where users get stuck, distracted, or lost.",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "component_or_route": { "type": "string" },
+          "step_friction": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.15 },
+          "distraction_load": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.15 },
+          "confusion_risk": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.15 },
+          "trust_gap": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.10 },
+          "surprise_cost": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.0 },
+          "value_clarity_gain": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.10 }
+        }
+      }
+    },
     "cohorts": {
       "type": "array",
       "minItems": 2,
@@ -51,6 +91,7 @@
           "role": { "type": "string", "minLength": 1 },
           "share": { "type": "number", "exclusiveMinimum": 0 },
           "is_b2b_buyer": { "type": "boolean", "default": false },
+          "is_commerce_buyer": { "type": "boolean", "default": false },
           "value_fit": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
           "initial_trust": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
           "onboarding_friction": { "type": "number", "minimum": 0.0, "maximum": 1.0 },

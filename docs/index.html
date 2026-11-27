@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PulseCrowd — Adaptive Virtual Crowd Simulator</title>
-  <meta name="description" content="Interactive demo of PulseCrowd: adaptive multi-round virtual crowd simulation (1,000–25,000+ personas) for AI coding agents.">
-  <meta property="og:title" content="PulseCrowd — Live Interactive Demo">
-  <meta property="og:description" content="Stress-test product launches, onboarding friction, pricing fairness, and compliance risk across 1,000–25,000+ virtual personas before shipping.">
+  <title>PulseCrowd v2.0 — Adaptive Crowd, UX Funnel & E-Commerce Simulator</title>
+  <meta name="description" content="Interactive demo of PulseCrowd v2.0: simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping conversion.">
+  <meta property="og:title" content="PulseCrowd v2.0 — Live Crowd & In-App UX Simulator">
+  <meta property="og:description" content="Find where users get stuck, distracted, or lost—and stress-test e-commerce, dropshipping, pricing & compliance across 1,000–25,000+ virtual personas before shipping.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://samuelcorelabs.github.io/pulse-crowd/">
   <meta property="og:image" content="https://samuelcorelabs.github.io/pulse-crowd/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PulseCrowd — Live Interactive Demo">
-  <meta name="twitter:description" content="Stress-test product launches, onboarding friction, pricing fairness, and compliance risk across 1,000–25,000+ virtual personas before shipping.">
+  <meta name="twitter:title" content="PulseCrowd v2.0 — Live Crowd & In-App UX Simulator">
+  <meta name="twitter:description" content="Find where users get stuck, distracted, or lost—and stress-test e-commerce, dropshipping, pricing & compliance across 1,000–25,000+ virtual personas before shipping.">
   <meta name="twitter:image" content="https://samuelcorelabs.github.io/pulse-crowd/social-preview.png">
   <style>
     :root {
@@ -27,6 +27,7 @@
       --green: #3fb950;
       --orange: #d29922;
       --red: #f85149;
+      --purple: #bc8cff;
       --radius: 12px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,7 +39,7 @@
       padding: 2rem 1rem 3rem;
       line-height: 1.5;
     }
-    .container { max-width: 920px; margin: 0 auto; }
+    .container { max-width: 960px; margin: 0 auto; }
     header { margin-bottom: 1.75rem; }
     .top-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
     .lang-picker {
@@ -60,9 +61,9 @@
       padding: .1rem .25rem;
       cursor: pointer;
     }
-    h1 { font-size: 2.2rem; margin-bottom: .35rem; letter-spacing: -0.02em; }
+    h1 { font-size: 2.15rem; margin-bottom: .35rem; letter-spacing: -0.02em; }
     h1 span { color: var(--accent); }
-    .tagline { color: var(--muted); font-size: 1.05rem; margin-bottom: 1rem; }
+    .tagline { color: var(--muted); font-size: 1.03rem; margin-bottom: 1rem; }
     .badges { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
     .badges img { height: 20px; }
     .card {
@@ -78,7 +79,7 @@
       width: auto;
       margin-top: 0;
       padding: .45rem .85rem;
-      font-size: .84rem;
+      font-size: .82rem;
       font-weight: 500;
       background: var(--bg);
       color: var(--text);
@@ -91,7 +92,7 @@
       color: var(--accent);
       opacity: 1;
     }
-    label { display: block; color: var(--muted); font-size: .83rem; margin-bottom: .3rem; margin-top: .75rem; }
+    label { display: block; color: var(--muted); font-size: .82rem; margin-bottom: .3rem; margin-top: .75rem; }
     label:first-child { margin-top: 0; }
     select, input[type="number"] {
       width: 100%;
@@ -103,6 +104,7 @@
       font-size: .92rem;
     }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
     .primary-btn {
       margin-top: 1.25rem;
       width: 100%;
@@ -117,8 +119,6 @@
       transition: opacity .15s;
     }
     .primary-btn:hover { opacity: .88; }
-    .results { display: none; }
-    .results.visible { display: block; }
     .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: .9rem; }
     .metric {
       background: var(--bg);
@@ -127,7 +127,7 @@
       padding: .95rem;
       text-align: center;
     }
-    .metric .value { font-size: 1.75rem; font-weight: 700; }
+    .metric .value { font-size: 1.7rem; font-weight: 700; }
     .metric .sub { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
     .metric .label { font-size: .8rem; color: var(--muted); margin-top: .3rem; }
     .go { color: var(--green); }
@@ -135,10 +135,33 @@
     .nogo { color: var(--red); }
     .bar-chart { margin-top: .5rem; }
     .bar-row { display: flex; align-items: center; margin-bottom: .55rem; }
-    .bar-label { width: 175px; font-size: .82rem; color: var(--muted); text-align: right; padding-right: .75rem; flex-shrink: 0; }
+    .bar-label { width: 195px; font-size: .82rem; color: var(--muted); text-align: right; padding-right: .75rem; flex-shrink: 0; }
     .bar-track { flex: 1; height: 22px; background: var(--bg); border-radius: 4px; overflow: hidden; position: relative; }
     .bar-fill { height: 100%; border-radius: 4px; transition: width .45s ease; }
     .bar-val { position: absolute; right: 8px; top: 2px; font-size: .78rem; color: var(--text); font-weight: 500; }
+    .ux-table { width: 100%; border-collapse: collapse; margin-top: .75rem; font-size: .85rem; }
+    .ux-table th, .ux-table td {
+      padding: .55rem .6rem;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+    .ux-table th:first-child, .ux-table td:first-child { text-align: left; }
+    .ux-table th { color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; }
+    .bottleneck-pill {
+      display: inline-block;
+      margin-bottom: .75rem;
+      padding: .45rem .8rem;
+      border-radius: 8px;
+      font-size: .84rem;
+      background: rgba(248, 81, 73, 0.12);
+      border: 1px solid rgba(248, 81, 73, 0.35);
+      color: #ff948d;
+    }
+    .bottleneck-pill.healthy {
+      background: rgba(63, 185, 80, 0.12);
+      border-color: rgba(63, 185, 80, 0.35);
+      color: #6ee787;
+    }
     .install-row {
       display: flex;
       align-items: center;
@@ -175,13 +198,15 @@
       border-radius: 0 8px 8px 0;
       margin-top: 1rem;
     }
+    .hidden { display: none; }
     footer { text-align: center; color: var(--muted); font-size: .82rem; margin-top: 2.5rem; }
     footer a { color: var(--accent); text-decoration: none; }
 
-    @media (max-width: 640px) {
-      .row { grid-template-columns: 1fr; }
+    @media (max-width: 680px) {
+      .row, .row-3 { grid-template-columns: 1fr; }
       .bar-label { width: 125px; font-size: .75rem; }
-      h1 { font-size: 1.7rem; }
+      h1 { font-size: 1.6rem; }
+      .ux-table { font-size: .75rem; }
     }
   </style>
 </head>
@@ -190,7 +215,7 @@
   <header>
     <div class="top-bar">
       <div>
-        <h1><span>PulseCrowd</span> <span data-i18n="titleSuffix" style="color:var(--text)">Live Simulator</span></h1>
+        <h1><span>PulseCrowd</span> <span data-i18n="titleSuffix" style="color:var(--text)">v2.0 Live Simulator</span></h1>
       </div>
       <div class="lang-picker">
         <span>🌐</span>
@@ -209,7 +234,7 @@
         </select>
       </div>
     </div>
-    <p class="tagline" data-i18n="tagline">Understand the market before you enter it. Adaptive sizing (&gt;= 1,000 virtual personas) and 3-round contagion modeling for AI coding agents.</p>
+    <p class="tagline" data-i18n="tagline">Simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping unit economics.</p>
     <div class="badges">
       <a href="https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml"><img src="https://github.com/SamuelCoreLabs/pulse-crowd/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
       <a href="https://github.com/SamuelCoreLabs/pulse-crowd/releases"><img src="https://img.shields.io/github/v/release/SamuelCoreLabs/pulse-crowd?color=green&style=flat-square" alt="Release"></a>
@@ -220,32 +245,35 @@
   </header>
 
   <div class="card">
-    <h2 data-i18n="sec1Title">1. Load a Preset or Configure Your Spec</h2>
+    <h2 data-i18n="sec1Title">1. Load a Preset or Configure Your App / Store</h2>
     <div class="presets">
+      <button type="button" class="preset-btn active" data-i18n="presetDropship" onclick="applyPreset('dropship', this)">Dropshipping Store (NO-GO)</button>
+      <button type="button" class="preset-btn" data-i18n="presetDtc" onclick="applyPreset('dtc', this)">Hardened DTC Store (GO)</button>
+      <button type="button" class="preset-btn" data-i18n="presetMarketplace" onclick="applyPreset('marketplace', this)">Regulated Marketplace (6,750)</button>
       <button type="button" class="preset-btn" data-i18n="presetMinimal" onclick="applyPreset('minimal', this)">Minimal B2B CLI (1,500)</button>
-      <button type="button" class="preset-btn active" data-i18n="presetMarketplace" onclick="applyPreset('marketplace', this)">Regulated Marketplace (6,750)</button>
-      <button type="button" class="preset-btn" data-i18n="presetFintech" onclick="applyPreset('fintech', this)">High-Friction Fintech (NO-GO Gate)</button>
-      <button type="button" class="preset-btn" data-i18n="presetSaas" onclick="applyPreset('saas', this)">Global Multi-Country SaaS</button>
+      <button type="button" class="preset-btn" data-i18n="presetFintech" onclick="applyPreset('fintech', this)">High-Friction Fintech (NO-GO)</button>
     </div>
 
     <div class="row">
       <div>
         <label for="productType" data-i18n="lblProductType">Product Architecture</label>
-        <select id="productType">
+        <select id="productType" onchange="runSimulation()">
           <option value="developer_tool" data-i18n="optDev">Developer Tool (+100)</option>
           <option value="b2b_saas" data-i18n="optSaas">B2B SaaS (+200)</option>
           <option value="b2c_consumer" data-i18n="optB2c">B2C Consumer (+300)</option>
           <option value="community_network" data-i18n="optCommunity">Community Network (+450)</option>
-          <option value="two_sided_marketplace" selected data-i18n="optMarket">Two-Sided Marketplace (+650)</option>
+          <option value="ecommerce_brand" data-i18n="optEcom">DTC E-Commerce Brand (+500)</option>
+          <option value="dropshipping_store" selected data-i18n="optDrop">Dropshipping Store (+600)</option>
+          <option value="two_sided_marketplace" data-i18n="optMarket">Two-Sided Marketplace (+650)</option>
           <option value="regulated_platform" data-i18n="optReg">Regulated Platform (+850)</option>
         </select>
       </div>
       <div>
         <label for="scope" data-i18n="lblScope">Geographic Scope</label>
-        <select id="scope">
+        <select id="scope" onchange="runSimulation()">
           <option value="single_city" data-i18n="optCity">Single City (+0)</option>
-          <option value="regional" selected data-i18n="optRegional">Regional (+500)</option>
-          <option value="national" data-i18n="optNational">National (+1,300)</option>
+          <option value="regional" data-i18n="optRegional">Regional (+500)</option>
+          <option value="national" selected data-i18n="optNational">National (+1,300)</option>
           <option value="multi_country" data-i18n="optGlobal">Multi-Country (+2,600)</option>
         </select>
       </div>
@@ -254,15 +282,15 @@
     <div class="row">
       <div>
         <label for="regRisk" data-i18n="lblRegRisk">Regulatory Risk</label>
-        <select id="regRisk">
-          <option value="low" data-i18n="optLow">Low (+0)</option>
+        <select id="regRisk" onchange="runSimulation()">
+          <option value="low" selected data-i18n="optLow">Low (+0)</option>
           <option value="medium" data-i18n="optMed">Medium (+400)</option>
-          <option value="high" selected data-i18n="optHigh">High (+1,050)</option>
+          <option value="high" data-i18n="optHigh">High (+1,050)</option>
         </select>
       </div>
       <div>
         <label for="lifecycle" data-i18n="lblLifecycle">Lifecycle Stage</label>
-        <select id="lifecycle">
+        <select id="lifecycle" onchange="runSimulation()">
           <option value="concept" data-i18n="optConcept">Concept (x0.85)</option>
           <option value="mvp" data-i18n="optMvp">MVP (x1.00)</option>
           <option value="pre_launch" selected data-i18n="optPre">Pre-Launch (x1.25)</option>
@@ -271,79 +299,137 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row-3">
+      <div>
+        <label for="friction" data-i18n="lblFriction">Step Friction / Stuck (0–1)</label>
+        <input type="number" id="friction" value="0.58" min="0" max="1" step="0.05">
+      </div>
+      <div>
+        <label for="distraction" data-i18n="lblDistraction">Popup / Distraction Load (0–1)</label>
+        <input type="number" id="distraction" value="0.72" min="0" max="1" step="0.05">
+      </div>
+      <div>
+        <label for="confusion" data-i18n="lblConfusion">Navigation Confusion / Lost (0–1)</label>
+        <input type="number" id="confusion" value="0.34" min="0" max="1" step="0.05">
+      </div>
+    </div>
+
+    <div class="row-3">
+      <div>
+        <label for="surprise" data-i18n="lblSurprise">Hidden Cost / Shipping Shock (0–1)</label>
+        <input type="number" id="surprise" value="0.76" min="0" max="1" step="0.05">
+      </div>
+      <div>
+        <label for="blocker" data-i18n="lblBlocker">Compliance / Trust Gap (0–1)</label>
+        <input type="number" id="blocker" value="0.45" min="0" max="1" step="0.05">
+      </div>
+      <div>
+        <label for="fairness" data-i18n="lblFairness">Pricing Fairness (-1 to +1)</label>
+        <input type="number" id="fairness" value="-0.25" min="-1" max="1" step="0.05">
+      </div>
+    </div>
+
+    <div class="row-3">
       <div>
         <label for="segments" data-i18n="lblSegments">Target Segments (2–30)</label>
-        <input type="number" id="segments" value="8" min="2" max="30">
+        <input type="number" id="segments" value="4" min="2" max="30">
       </div>
-      <div>
-        <label for="friction" data-i18n="lblFriction">Mean Onboarding Friction (0.0–1.0)</label>
-        <input type="number" id="friction" value="0.18" min="0" max="1" step="0.02">
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <label for="blocker" data-i18n="lblBlocker">Mean Regulatory Blocker Risk (0.0–1.0)</label>
-        <input type="number" id="blocker" value="0.10" min="0" max="1" step="0.02">
-      </div>
-      <div>
-        <label for="fairness" data-i18n="lblFairness">Pricing Fairness (-1.0 to +1.0)</label>
-        <input type="number" id="fairness" value="0.69" min="-1" max="1" step="0.05">
-      </div>
-    </div>
-
-    <div class="row">
       <div>
         <label for="runs" data-i18n="lblRuns">Monte Carlo Runs (1–20)</label>
         <input type="number" id="runs" value="3" min="1" max="20">
       </div>
       <div>
-        <label for="seed" data-i18n="lblSeed">Deterministic Base Seed</label>
+        <label for="seed" data-i18n="lblSeed">Deterministic Seed</label>
         <input type="number" id="seed" value="42" min="0">
       </div>
     </div>
 
-    <button type="button" class="primary-btn" data-i18n="runBtn" onclick="runSimulation()">Run Virtual Crowd Simulation</button>
+    <button type="button" class="primary-btn" data-i18n="runBtn" onclick="runSimulation()">Run Dual Crowd + UX Simulation</button>
     <p class="notice" data-i18n="noticeText">
-      <strong>Interactive Browser Preview:</strong> Sizing mirrors <code>scripts/size_swarm.py</code>'s <code>&gt;= 1,000</code> persona floor and complexity tiers. Sentiment trajectories below give an immediate browser preview—run <code>python3 scripts/simulate_crowd.py</code> locally for full deterministic agent-level Monte Carlo telemetry.
+      <strong>Interactive Browser Preview:</strong> Mirrors <code>scripts/size_swarm.py</code> sizing and <code>scripts/simulate_crowd.py</code> dual business + in-app UX funnel logic. Run <code>python3 scripts/simulate_crowd.py</code> locally for full 1,000–25,000+ individual persona telemetry and codebase route audits.
     </p>
   </div>
 
-  <div class="results visible" id="results">
+  <div id="results">
     <div class="card">
       <h2 data-i18n="sec2Title">2. Sizing &amp; Launch Readiness</h2>
       <div class="metric-grid">
         <div class="metric">
-          <div class="value" id="pop">6,750</div>
+          <div class="value" id="pop">4,900</div>
           <div class="sub" id="tier">complex_4k_8k</div>
           <div class="label" data-i18n="mPersonas">Virtual Personas</div>
         </div>
         <div class="metric">
-          <div class="value go" id="score">92.3</div>
+          <div class="value nogo" id="score">14.0</div>
           <div class="sub" data-i18n="mScale">Scale 0–100</div>
           <div class="label" data-i18n="mScore">Readiness Score</div>
         </div>
         <div class="metric">
-          <div class="value go" id="verdict">GO</div>
-          <div class="sub" id="verdictSub">Launch Ready</div>
+          <div class="value nogo" id="verdict">NO-GO</div>
+          <div class="sub" id="verdictSub">High Rejection Risk</div>
           <div class="label" data-i18n="mVerdict">Verdict</div>
         </div>
         <div class="metric">
-          <div class="value" id="ci">±0.07</div>
-          <div class="sub" data-i18n="mSeeds">Across seeds</div>
-          <div class="label" data-i18n="mCi">95% CI Half-Width</div>
+          <div class="value" id="uxComp">3.7%</div>
+          <div class="sub" id="uxDropMode">trust_or_price_shock</div>
+          <div class="label" data-i18n="mUxComp">End-to-End UX Completion</div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h2 data-i18n="sec3Title">3. Three-Round Sentiment Progression</h2>
+      <h2 data-i18n="secUxTitle">3. In-App UX Funnel — Where Users Get Stuck, Distracted, or Lost</h2>
+      <div id="bottleneckBanner" class="bottleneck-pill"></div>
+      <div style="overflow-x:auto;">
+        <table class="ux-table">
+          <thead>
+            <tr>
+              <th data-i18n="thStep">Step / Screen</th>
+              <th data-i18n="thRetained">Retained</th>
+              <th data-i18n="thStuck">Stuck</th>
+              <th data-i18n="thDistracted">Distracted</th>
+              <th data-i18n="thLost">Lost</th>
+              <th data-i18n="thShock">Price/Trust</th>
+            </tr>
+          </thead>
+          <tbody id="uxTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" id="commerceCard">
+      <h2 data-i18n="secComTitle">4. E-Commerce &amp; Dropshipping Unit Economics Sensitivity</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="value" id="comAtc">2.2%</div>
+          <div class="sub" id="comAbandon">Abandon: 93.3%</div>
+          <div class="label" data-i18n="mAtc">Add-to-Cart Rate</div>
+        </div>
+        <div class="metric">
+          <div class="value" id="comCvr">0.15%</div>
+          <div class="sub" id="comAov">AOV $39.99</div>
+          <div class="label" data-i18n="mCvr">Simulated Store CVR</div>
+        </div>
+        <div class="metric">
+          <div class="value nogo" id="comCpa">$633</div>
+          <div class="sub" id="comProfit">Profit/Order $24.79</div>
+          <div class="label" data-i18n="mCpa">Simulated CPA</div>
+        </div>
+        <div class="metric">
+          <div class="value" id="comMaxCpc">$0.04</div>
+          <div class="sub" id="comAssumedCpc">Assumed CPC $0.95</div>
+          <div class="label" data-i18n="mMaxCpc">Break-Even Max CPC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="sec3Title">5. Three-Round Market Sentiment Progression</h2>
       <div class="bar-chart" id="sentiment-bars"></div>
     </div>
 
     <div class="card">
-      <h2 data-i18n="sec4Title">4. Week-2 Retention Outcomes</h2>
+      <h2 data-i18n="sec4Title">6. Week-2 Retention Outcomes</h2>
       <div class="bar-chart" id="outcome-bars"></div>
     </div>
   </div>
@@ -376,18 +462,21 @@
 <script>
 const I18N = {
   en: {
-    titleSuffix: "Live Simulator",
-    tagline: "Understand the market before you enter it. Adaptive sizing (>= 1,000 virtual personas) and 3-round contagion modeling for AI coding agents.",
-    sec1Title: "1. Load a Preset or Configure Your Spec",
-    presetMinimal: "Minimal B2B CLI (1,500)",
+    titleSuffix: "v2.0 Live Simulator",
+    tagline: "Simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping unit economics.",
+    sec1Title: "1. Load a Preset or Configure Your App / Store",
+    presetDropship: "Dropshipping Store (NO-GO)",
+    presetDtc: "Hardened DTC Store (GO)",
     presetMarketplace: "Regulated Marketplace (6,750)",
-    presetFintech: "High-Friction Fintech (NO-GO Gate)",
-    presetSaas: "Global Multi-Country SaaS",
+    presetMinimal: "Minimal B2B CLI (1,500)",
+    presetFintech: "High-Friction Fintech (NO-GO)",
     lblProductType: "Product Architecture",
     optDev: "Developer Tool (+100)",
     optSaas: "B2B SaaS (+200)",
     optB2c: "B2C Consumer (+300)",
     optCommunity: "Community Network (+450)",
+    optEcom: "DTC E-Commerce Brand (+500)",
+    optDrop: "Dropshipping Store (+600)",
     optMarket: "Two-Sided Marketplace (+650)",
     optReg: "Regulated Platform (+850)",
     lblScope: "Geographic Scope",
@@ -404,33 +493,47 @@ const I18N = {
     optMvp: "MVP (x1.00)",
     optPre: "Pre-Launch (x1.25)",
     optGrowth: "Growth Scale (x1.55)",
+    lblFriction: "Step Friction / Stuck (0–1)",
+    lblDistraction: "Popup / Distraction Load (0–1)",
+    lblConfusion: "Navigation Confusion / Lost (0–1)",
+    lblSurprise: "Hidden Cost / Shipping Shock (0–1)",
+    lblBlocker: "Compliance / Trust Gap (0–1)",
+    lblFairness: "Pricing Fairness (-1 to +1)",
     lblSegments: "Target Segments (2–30)",
-    lblFriction: "Mean Onboarding Friction (0.0–1.0)",
-    lblBlocker: "Mean Regulatory Blocker Risk (0.0–1.0)",
-    lblFairness: "Pricing Fairness (-1.0 to +1.0)",
     lblRuns: "Monte Carlo Runs (1–20)",
-    lblSeed: "Deterministic Base Seed",
-    runBtn: "Run Virtual Crowd Simulation",
-    noticeText: "<strong>Interactive Browser Preview:</strong> Sizing mirrors <code>scripts/size_swarm.py</code>'s <code>&gt;= 1,000</code> persona floor and complexity tiers. Run <code>python3 scripts/simulate_crowd.py</code> locally for full deterministic agent-level Monte Carlo telemetry.",
+    lblSeed: "Deterministic Seed",
+    runBtn: "Run Dual Crowd + UX Simulation",
+    noticeText: "<strong>Interactive Browser Preview:</strong> Mirrors <code>scripts/size_swarm.py</code> sizing and <code>scripts/simulate_crowd.py</code> dual business + in-app UX funnel logic. Run <code>python3 scripts/simulate_crowd.py</code> locally for full codebase route audits.",
     sec2Title: "2. Sizing & Launch Readiness",
     mPersonas: "Virtual Personas",
     mScale: "Scale 0–100",
     mScore: "Readiness Score",
     mVerdict: "Verdict",
-    mSeeds: "Across seeds",
-    mCi: "95% CI Half-Width",
-    sec3Title: "3. Three-Round Sentiment Progression",
-    sec4Title: "4. Week-2 Retention Outcomes",
+    mUxComp: "End-to-End UX Completion",
+    secUxTitle: "3. In-App UX Funnel — Where Users Get Stuck, Distracted, or Lost",
+    thStep: "Step / Screen",
+    thRetained: "Retained",
+    thStuck: "Stuck",
+    thDistracted: "Distracted",
+    thLost: "Lost",
+    thShock: "Price/Trust",
+    secComTitle: "4. E-Commerce & Dropshipping Unit Economics Sensitivity",
+    mAtc: "Add-to-Cart Rate",
+    mCvr: "Simulated Store CVR",
+    mCpa: "Simulated CPA",
+    mMaxCpc: "Break-Even Max CPC",
+    sec3Title: "5. Three-Round Market Sentiment Progression",
+    sec4Title: "6. Week-2 Retention Outcomes",
     r1: "Round 1 — Discovery",
     r2: "Round 2 — Contagion",
     r3: "Round 3 — Equilibrium",
     oVocal: "Vocal Advocate",
     oActive: "Active User",
-    oStalled: "Stalled in Onboarding",
-    oChurned: "Churned (Low Liquidity)",
+    oStalled: "Stalled / Dropped",
+    oChurned: "Churned (Liquidity)",
     oRejected: "Rejected (Distrust)",
     vGoSub: "Phase-1 Launch Ready",
-    vHoldSub: "Remediate Friction First",
+    vHoldSub: "Remediate Bottleneck First",
     vNoGoGate: "Distrust Safety Gate (>15%)",
     vNoGoRisk: "High Rejection Risk",
     installTitle: "Install PulseCrowd for Your AI Coding Agent",
@@ -441,18 +544,21 @@ const I18N = {
     lnkReleases: "Releases"
   },
   es: {
-    titleSuffix: "Simulador en Vivo",
-    tagline: "Comprende el mercado antes de entrar en él. Dimensionamiento adaptativo (>= 1,000 personas virtuales) y contagio en 3 rondas para agentes IA.",
-    sec1Title: "1. Carga un Preset o Configura tu Proyecto",
-    presetMinimal: "CLI B2B Mínimo (1,500)",
+    titleSuffix: "Simulador v2.0",
+    tagline: "Simula de 1,000 a 25,000+ personas virtuales: viabilidad de negocio, embudo UX dentro de tu app (atascados, distraídos, perdidos) y métricas de ecommerce/dropshipping.",
+    sec1Title: "1. Carga un Preset o Configura tu App / Tienda",
+    presetDropship: "Tienda Dropshipping (NO-GO)",
+    presetDtc: "Tienda DTC Optimizada (GO)",
     presetMarketplace: "Marketplace Regulado (6,750)",
+    presetMinimal: "CLI B2B Mínimo (1,500)",
     presetFintech: "Fintech Alta Fricción (NO-GO)",
-    presetSaas: "SaaS Global Multi-País",
     lblProductType: "Arquitectura de Producto",
     optDev: "Herramienta Dev (+100)",
     optSaas: "SaaS B2B (+200)",
     optB2c: "Consumo B2C (+300)",
     optCommunity: "Red Comunitaria (+450)",
+    optEcom: "Tienda E-Commerce DTC (+500)",
+    optDrop: "Tienda Dropshipping (+600)",
     optMarket: "Marketplace Bilateral (+650)",
     optReg: "Plataforma Regulada (+850)",
     lblScope: "Alcance Geográfico",
@@ -469,33 +575,47 @@ const I18N = {
     optMvp: "MVP (x1.00)",
     optPre: "Pre-Lanzamiento (x1.25)",
     optGrowth: "Crecimiento (x1.55)",
-    lblSegments: "Segmentos Objetivo (2–30)",
-    lblFriction: "Fricción Media Onboarding (0.0–1.0)",
-    lblBlocker: "Riesgo Bloqueo Regulatorio (0.0–1.0)",
-    lblFairness: "Equidad de Precios (-1.0 a +1.0)",
+    lblFriction: "Fricción / Atascos (0–1)",
+    lblDistraction: "Popups / Distracción (0–1)",
+    lblConfusion: "Confusión / Se Pierden (0–1)",
+    lblSurprise: "Coste o Envío Oculto (0–1)",
+    lblBlocker: "Brecha Legal / Confianza (0–1)",
+    lblFairness: "Equidad de Precios (-1 a +1)",
+    lblSegments: "Segmentos (2–30)",
     lblRuns: "Ejecuciones Monte Carlo (1–20)",
-    lblSeed: "Semilla Base Determinista",
-    runBtn: "Ejecutar Simulación Virtual",
-    noticeText: "<strong>Vista Previa Interactiva:</strong> El tamaño replica exactamente <code>scripts/size_swarm.py</code> (mínimo <code>1,000</code> personas). Ejecuta <code>python3 scripts/simulate_crowd.py</code> en local para obtener telemetría completa agente por agente.",
+    lblSeed: "Semilla Determinista",
+    runBtn: "Ejecutar Simulación Negocio + UX",
+    noticeText: "<strong>Vista Previa Interactiva:</strong> Replica el dimensionamiento de <code>scripts/size_swarm.py</code> y la lógica dual negocio + UX de <code>scripts/simulate_crowd.py</code>.",
     sec2Title: "2. Dimensionamiento y Preparación",
     mPersonas: "Personas Virtuales",
     mScale: "Escala 0–100",
     mScore: "Puntuación Readiness",
     mVerdict: "Veredicto",
-    mSeeds: "Entre semillas",
-    mCi: "Semi-ancho IC 95%",
-    sec3Title: "3. Evolución de Sentimiento (3 Rondas)",
-    sec4Title: "4. Resultados de Retención Semana 2",
+    mUxComp: "Finalización Flujo UX",
+    secUxTitle: "3. Embudo UX Interno — Dónde se Atasca, Distrae o Pierde la Gente",
+    thStep: "Paso / Pantalla",
+    thRetained: "Retenido",
+    thStuck: "Atascados",
+    thDistracted: "Distraídos",
+    thLost: "Perdidos",
+    thShock: "Precio/Conf.",
+    secComTitle: "4. Economía Unitaria E-Commerce y Dropshipping",
+    mAtc: "Tasa Add-to-Cart",
+    mCvr: "Conversión Estimada (CVR)",
+    mCpa: "CPA Simulado",
+    mMaxCpc: "CPC Máximo Rentable",
+    sec3Title: "5. Evolución de Sentimiento (3 Rondas)",
+    sec4Title: "6. Resultados de Retención Semana 2",
     r1: "Ronda 1 — Descubrimiento",
     r2: "Ronda 2 — Contagio",
     r3: "Ronda 3 — Equilibrio",
     oVocal: "Promotor Activo",
     oActive: "Usuario Activo",
-    oStalled: "Atascado en Onboarding",
-    oChurned: "Abandono (Baja Liquidez)",
+    oStalled: "Atascado / Abandono",
+    oChurned: "Abandono (Liquidez)",
     oRejected: "Rechazo (Desconfianza)",
     vGoSub: "Listo para Lanzamiento Fase 1",
-    vHoldSub: "Reducir Fricción Antes",
+    vHoldSub: "Corregir Cuello de Botella",
     vNoGoGate: "Puerta Seguridad (>15%)",
     vNoGoRisk: "Alto Riesgo de Rechazo",
     installTitle: "Instala PulseCrowd en tu Agente IA",
@@ -504,599 +624,59 @@ const I18N = {
     builtBy: "Creado por",
     lnkRepo: "Repositorio GitHub",
     lnkReleases: "Versiones"
-  },
-  zh: {
-    titleSuffix: "实时模拟器",
-    tagline: "在进入市场前先看清市场。面向 AI 编程代理的自适应规模（>= 1,000 虚拟用户）与三轮社交传染仿真。",
-    sec1Title: "1. 加载预设或配置产品参数",
-    presetMinimal: "极简 B2B CLI (1,500)",
-    presetMarketplace: "受监管双边市场 (6,750)",
-    presetFintech: "高摩擦金融科技 (NO-GO 拦截)",
-    presetSaas: "全球多国 SaaS",
-    lblProductType: "产品架构",
-    optDev: "开发者工具 (+100)",
-    optSaas: "B2B SaaS (+200)",
-    optB2c: "B2C 消费级 (+300)",
-    optCommunity: "社区网络 (+450)",
-    optMarket: "双边市场 (+650)",
-    optReg: "强监管平台 (+850)",
-    lblScope: "地理范围",
-    optCity: "单一城市 (+0)",
-    optRegional: "区域级 (+500)",
-    optNational: "国家级 (+1,300)",
-    optGlobal: "跨多国 (+2,600)",
-    lblRegRisk: "合规风险",
-    optLow: "低 (+0)",
-    optMed: "中 (+400)",
-    optHigh: "高 (+1,050)",
-    lblLifecycle: "生命周期阶段",
-    optConcept: "概念阶段 (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "发布前 (x1.25)",
-    optGrowth: "规模增长 (x1.55)",
-    lblSegments: "目标细分群组 (2–30)",
-    lblFriction: "平均引导摩擦 (0.0–1.0)",
-    lblBlocker: "合规阻碍风险 (0.0–1.0)",
-    lblFairness: "定价公平度 (-1.0 至 +1.0)",
-    lblRuns: "蒙特卡洛次数 (1–20)",
-    lblSeed: "确定性随机种子",
-    runBtn: "运行虚拟人群仿真",
-    noticeText: "<strong>浏览器交互预览：</strong>规模计算完全对齐 <code>scripts/size_swarm.py</code>（最低 <code>1,000</code> 人）。本地运行 <code>python3 scripts/simulate_crowd.py</code> 可获得完整确定性蒙特卡洛遥测报告。",
-    sec2Title: "2. 规模与上线就绪度",
-    mPersonas: "虚拟人物规模",
-    mScale: "0–100 分制",
-    mScore: "就绪度评分",
-    mVerdict: "结论",
-    mSeeds: "跨种子统计",
-    mCi: "95% 置信半宽",
-    sec3Title: "3. 三轮情绪演进趋势",
-    sec4Title: "4. 第二周留存分布",
-    r1: "第1轮 — 发现与门槛",
-    r2: "第2轮 — 社交传染",
-    r3: "第3轮 — 均衡状态",
-    oVocal: "积极推荐者",
-    oActive: "活跃用户",
-    oStalled: "引导阶段流失",
-    oChurned: "低流动性流失",
-    oRejected: "不信任拒用",
-    vGoSub: "可进入第一阶段发布",
-    vHoldSub: "建议先优化引导摩擦",
-    vNoGoGate: "触发不信任安全闸门 (>15%)",
-    vNoGoRisk: "高拒绝风险",
-    installTitle: "为你的 AI 编程代理安装 PulseCrowd",
-    copyBtn: "复制",
-    copiedBtn: "已复制!",
-    builtBy: "作者",
-    lnkRepo: "GitHub 仓库",
-    lnkReleases: "发布版本"
-  },
-  ja: {
-    titleSuffix: "ライブシミュレーター",
-    tagline: "参入前に市場を理解する。AIコーディングエージェント向けの適応型サイズ算定（>= 1,000ペルソナ）と3ラウンド伝播シミュレーション。",
-    sec1Title: "1. プリセット読込またはスペック設定",
-    presetMinimal: "最小 B2B CLI (1,500)",
-    presetMarketplace: "規制対象マーケット (6,750)",
-    presetFintech: "高摩擦フィンテック (NO-GO)",
-    presetSaas: "グローバル多国間 SaaS",
-    lblProductType: "プロダクト種別",
-    optDev: "開発者ツール (+100)",
-    optSaas: "B2B SaaS (+200)",
-    optB2c: "B2C コンシューマ (+300)",
-    optCommunity: "コミュニティ (+450)",
-    optMarket: "両面マーケットプレイス (+650)",
-    optReg: "規制プラットフォーム (+850)",
-    lblScope: "地域範囲",
-    optCity: "単一都市 (+0)",
-    optRegional: "地域 (+500)",
-    optNational: "全国 (+1,300)",
-    optGlobal: "複数国 (+2,600)",
-    lblRegRisk: "規制リスク",
-    optLow: "低 (+0)",
-    optMed: "中 (+400)",
-    optHigh: "高 (+1,050)",
-    lblLifecycle: "ライフサイクル",
-    optConcept: "構想 (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "ローンチ前 (x1.25)",
-    optGrowth: "成長期 (x1.55)",
-    lblSegments: "対象セグメント数 (2–30)",
-    lblFriction: "平均オンボーディング摩擦 (0.0–1.0)",
-    lblBlocker: "規制障壁リスク (0.0–1.0)",
-    lblFairness: "価格妥当性 (-1.0〜+1.0)",
-    lblRuns: "モンテカルロ試行回数 (1–20)",
-    lblSeed: "乱数シード",
-    runBtn: "シミュレーションを実行",
-    noticeText: "<strong>ブラウザプレビュー:</strong> 人数算定は <code>scripts/size_swarm.py</code> と同一です。完全な個体別レポートはローカルで <code>python3 scripts/simulate_crowd.py</code> を実行してください。",
-    sec2Title: "2. 規模とローンチ準備度",
-    mPersonas: "仮想ペルソナ数",
-    mScale: "0–100 スコア",
-    mScore: "準備度スコア",
-    mVerdict: "判定",
-    mSeeds: "シード間集計",
-    mCi: "95% 信頼区間半幅",
-    sec3Title: "3. 3ラウンド感情推移",
-    sec4Title: "4. 2週目リテンション結果",
-    r1: "Round 1 — 発見",
-    r2: "Round 2 — 社会的伝播",
-    r3: "Round 3 — 均衡",
-    oVocal: "積極的推奨者",
-    oActive: "アクティブユーザー",
-    oStalled: "登録途中で停滞",
-    oChurned: "流動性不足で離脱",
-    oRejected: "不信による拒否",
-    vGoSub: "Phase-1 リリース可能",
-    vHoldSub: "先に摩擦を改善推奨",
-    vNoGoGate: "不信安全ゲート作動 (>15%)",
-    vNoGoRisk: "高拒否リスク",
-    installTitle: "AI コーディングエージェントに導入",
-    copyBtn: "コピー",
-    copiedBtn: "完了!",
-    builtBy: "開発:",
-    lnkRepo: "GitHub リポジトリ",
-    lnkReleases: "リリース"
-  },
-  ko: {
-    titleSuffix: "라이브 시뮬레이터",
-    tagline: "시장 진입 전에 먼저 시장을 이해하세요. AI 코딩 에이전트용 적응형 규모 산정(>= 1,000 페르소나) 및 3라운드 전파 모델링.",
-    sec1Title: "1. 프리셋 불러오기 또는 스펙 설정",
-    presetMinimal: "미니멀 B2B CLI (1,500)",
-    presetMarketplace: "규제 마켓플레이스 (6,750)",
-    presetFintech: "고마찰 핀테크 (NO-GO 게이트)",
-    presetSaas: "글로벌 다국가 SaaS",
-    lblProductType: "제품 아키텍처",
-    optDev: "개발자 도구 (+100)",
-    optSaas: "B2B SaaS (+200)",
-    optB2c: "B2C 소비자 (+300)",
-    optCommunity: "커뮤니티 네트워크 (+450)",
-    optMarket: "양면 마켓플레이스 (+650)",
-    optReg: "규제 플랫폼 (+850)",
-    lblScope: "지리적 범위",
-    optCity: "단일 도시 (+0)",
-    optRegional: "지역 (+500)",
-    optNational: "전국 (+1,300)",
-    optGlobal: "다국가 (+2,600)",
-    lblRegRisk: "규제 리스크",
-    optLow: "낮음 (+0)",
-    optMed: "보통 (+400)",
-    optHigh: "높음 (+1,050)",
-    lblLifecycle: "제품 단계",
-    optConcept: "컨셉 (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "출시 전 (x1.25)",
-    optGrowth: "성장기 (x1.55)",
-    lblSegments: "타깃 세그먼트 (2–30)",
-    lblFriction: "평균 온보딩 마찰 (0.0–1.0)",
-    lblBlocker: "규제 장벽 리스크 (0.0–1.0)",
-    lblFairness: "가격 공정성 (-1.0 ~ +1.0)",
-    lblRuns: "몬테카를로 횟수 (1–20)",
-    lblSeed: "결정론적 시드",
-    runBtn: "가상 군중 시뮬레이션 실행",
-    noticeText: "<strong>브라우저 미리보기:</strong> 인구 규모 계산은 <code>scripts/size_swarm.py</code>와 동일합니다. 전체 결정론적 에이전트 분석은 로컬에서 <code>python3 scripts/simulate_crowd.py</code>를 실행하세요.",
-    sec2Title: "2. 규모 및 출시 준비도",
-    mPersonas: "가상 페르소나",
-    mScale: "0–100 척도",
-    mScore: "준비도 점수",
-    mVerdict: "판정",
-    mSeeds: "시드 간 통계",
-    mCi: "95% 신뢰구간 반폭",
-    sec3Title: "3. 3라운드 감성 변화",
-    sec4Title: "4. 2주차 유지 결과",
-    r1: "1라운드 — 발견",
-    r2: "2라운드 — 사회적 전파",
-    r3: "3라운드 — 균형",
-    oVocal: "적극 추천자",
-    oActive: "활성 사용자",
-    oStalled: "온보딩 정체",
-    oChurned: "유동성 부족 이탈",
-    oRejected: "불신 거부",
-    vGoSub: "1단계 출시 가능",
-    vHoldSub: "마찰 개선 필요",
-    vNoGoGate: "불신 안전 게이트 (>15%)",
-    vNoGoRisk: "높은 거부 리스크",
-    installTitle: "AI 코딩 에이전트에 PulseCrowd 설치",
-    copyBtn: "복사",
-    copiedBtn: "복사됨!",
-    builtBy: "제작:",
-    lnkRepo: "GitHub 저장소",
-    lnkReleases: "릴리스"
-  },
-  fr: {
-    titleSuffix: "Simulateur en Direct",
-    tagline: "Comprenez le marché avant d'y entrer. Dimensionnement adaptatif (>= 1 000 personas) et contagion sur 3 tours pour agents IA.",
-    sec1Title: "1. Charger un préréglage ou configurer votre projet",
-    presetMinimal: "CLI B2B Minimal (1 500)",
-    presetMarketplace: "Marketplace Régulée (6 750)",
-    presetFintech: "Fintech Forte Friction (NO-GO)",
-    presetSaas: "SaaS Global Multi-Pays",
-    lblProductType: "Architecture Produit",
-    optDev: "Outil Dev (+100)",
-    optSaas: "SaaS B2B (+200)",
-    optB2c: "B2C Grand Public (+300)",
-    optCommunity: "Réseau Communautaire (+450)",
-    optMarket: "Marketplace Bilatérale (+650)",
-    optReg: "Plateforme Régulée (+850)",
-    lblScope: "Portée Géographique",
-    optCity: "Ville Unique (+0)",
-    optRegional: "Régional (+500)",
-    optNational: "National (+1 300)",
-    optGlobal: "Multi-Pays (+2 600)",
-    lblRegRisk: "Risque Réglementaire",
-    optLow: "Faible (+0)",
-    optMed: "Moyen (+400)",
-    optHigh: "Élevé (+1 050)",
-    lblLifecycle: "Phase du Cycle de Vie",
-    optConcept: "Concept (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "Pré-Lancement (x1.25)",
-    optGrowth: "Croissance (x1.55)",
-    lblSegments: "Segments Cibles (2–30)",
-    lblFriction: "Friction d'Onboarding Moyenne (0.0–1.0)",
-    lblBlocker: "Risque de Blocage Légal (0.0–1.0)",
-    lblFairness: "Équité Tarifaire (-1.0 à +1.0)",
-    lblRuns: "Exécutions Monte Carlo (1–20)",
-    lblSeed: "Graine Déterministe",
-    runBtn: "Lancer la Simulation Virtuelle",
-    noticeText: "<strong>Aperçu Interactif :</strong> Le dimensionnement reflète exactement <code>scripts/size_swarm.py</code> (>= 1 000 personas). Lancez <code>python3 scripts/simulate_crowd.py</code> localement pour la télémétrie complète.",
-    sec2Title: "2. Dimensionnement & Maturité",
-    mPersonas: "Personas Virtuels",
-    mScale: "Échelle 0–100",
-    mScore: "Score de Maturité",
-    mVerdict: "Verdict",
-    mSeeds: "Sur l'ensemble des graines",
-    mCi: "Demi-largeur IC 95 %",
-    sec3Title: "3. Évolution du Sentiment (3 Tours)",
-    sec4Title: "4. Rétention Semaine 2",
-    r1: "Tour 1 — Découverte",
-    r2: "Tour 2 — Contagion",
-    r3: "Tour 3 — Équilibre",
-    oVocal: "Ambassadeur Actif",
-    oActive: "Utilisateur Actif",
-    oStalled: "Bloqué à l'Onboarding",
-    oChurned: "Départ (Faible Liquidité)",
-    oRejected: "Rejet (Méfiance)",
-    vGoSub: "Prêt pour Lancement Phase 1",
-    vHoldSub: "Réduire la Friction d'Abord",
-    vNoGoGate: "Seuil de Méfiance (>15%)",
-    vNoGoRisk: "Risque de Rejet Élevé",
-    installTitle: "Installer PulseCrowd pour votre Agent IA",
-    copyBtn: "Copier",
-    copiedBtn: "Copié !",
-    builtBy: "Créé par",
-    lnkRepo: "Dépôt GitHub",
-    lnkReleases: "Versions"
-  },
-  de: {
-    titleSuffix: "Live-Simulator",
-    tagline: "Den Markt verstehen, bevor man ihn betritt. Adaptives Sizing (>= 1.000 Personas) und 3-Runden-Simulation für KI-Agents.",
-    sec1Title: "1. Vorlage laden oder Spezifikation anpassen",
-    presetMinimal: "Minimales B2B-CLI (1.500)",
-    presetMarketplace: "Regulierter Marktplatz (6.750)",
-    presetFintech: "Fintech Hohe Reibung (NO-GO)",
-    presetSaas: "Globales Multi-Land-SaaS",
-    lblProductType: "Produktarchitektur",
-    optDev: "Entwickler-Tool (+100)",
-    optSaas: "B2B-SaaS (+200)",
-    optB2c: "B2C-Consumer (+300)",
-    optCommunity: "Community-Netzwerk (+450)",
-    optMarket: "Zweiseitiger Marktplatz (+650)",
-    optReg: "Regulierte Plattform (+850)",
-    lblScope: "Geografischer Umfang",
-    optCity: "Einzelne Stadt (+0)",
-    optRegional: "Regional (+500)",
-    optNational: "National (+1.300)",
-    optGlobal: "Multi-Land (+2.600)",
-    lblRegRisk: "Regulierungsrisiko",
-    optLow: "Niedrig (+0)",
-    optMed: "Mittel (+400)",
-    optHigh: "Hoch (+1.050)",
-    lblLifecycle: "Produktphase",
-    optConcept: "Konzept (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "Pre-Launch (x1.25)",
-    optGrowth: "Wachstum (x1.55)",
-    lblSegments: "Zielsegmente (2–30)",
-    lblFriction: "Mittlere Onboarding-Reibung (0.0–1.0)",
-    lblBlocker: "Compliance-Blockade-Risiko (0.0–1.0)",
-    lblFairness: "Preis-Fairness (-1.0 bis +1.0)",
-    lblRuns: "Monte-Carlo-Läufe (1–20)",
-    lblSeed: "Deterministischer Seed",
-    runBtn: "Virtuelle Crowd-Simulation starten",
-    noticeText: "<strong>Browser-Vorschau:</strong> Das Sizing spiegelt <code>scripts/size_swarm.py</code> exakt wider. Starten Sie lokal <code>python3 scripts/simulate_crowd.py</code> für vollständige Monte-Carlo-Ausgaben.",
-    sec2Title: "2. Sizing & Launch-Reife",
-    mPersonas: "Virtuelle Personas",
-    mScale: "Skala 0–100",
-    mScore: "Readiness-Score",
-    mVerdict: "Urteil",
-    mSeeds: "Über alle Seeds",
-    mCi: "95%-KI-Halbbreite",
-    sec3Title: "3. Stimmungsverlauf (3 Runden)",
-    sec4Title: "4. Woche-2-Retention",
-    r1: "Runde 1 — Entdeckung",
-    r2: "Runde 2 — Ansteckung",
-    r3: "Runde 3 — Gleichgewicht",
-    oVocal: "Aktiver Fürsprecher",
-    oActive: "Aktiver Nutzer",
-    oStalled: "Im Onboarding gestoppt",
-    oChurned: "Abwanderung (Liquidität)",
-    oRejected: "Abgelehnt (Misstrauen)",
-    vGoSub: "Bereit für Phase-1-Launch",
-    vHoldSub: "Reibung zuerst senken",
-    vNoGoGate: "Misstrauens-Schranke (>15%)",
-    vNoGoRisk: "Hohes Ablehnungsrisiko",
-    installTitle: "PulseCrowd für Ihren KI-Agent installieren",
-    copyBtn: "Kopieren",
-    copiedBtn: "Kopiert!",
-    builtBy: "Erstellt von",
-    lnkRepo: "GitHub-Repository",
-    lnkReleases: "Releases"
-  },
-  pt: {
-    titleSuffix: "Simulador ao Vivo",
-    tagline: "Entenda o mercado antes de entrar nele. Dimensionamento adaptativo (>= 1.000 personas) e contágio em 3 rodadas para agentes de IA.",
-    sec1Title: "1. Carregue um Preset ou Configure seu Projeto",
-    presetMinimal: "CLI B2B Mínimo (1.500)",
-    presetMarketplace: "Marketplace Regulado (6.750)",
-    presetFintech: "Fintech Alta Fricção (NO-GO)",
-    presetSaas: "SaaS Global Multi-País",
-    lblProductType: "Arquitetura do Produto",
-    optDev: "Ferramenta Dev (+100)",
-    optSaas: "SaaS B2B (+200)",
-    optB2c: "Consumo B2C (+300)",
-    optCommunity: "Rede Comunitária (+450)",
-    optMarket: "Marketplace Bilateral (+650)",
-    optReg: "Plataforma Regulada (+850)",
-    lblScope: "Abrangência Geográfica",
-    optCity: "Cidade Única (+0)",
-    optRegional: "Regional (+500)",
-    optNational: "Nacional (+1.300)",
-    optGlobal: "Multi-País (+2.600)",
-    lblRegRisk: "Risco Regulatório",
-    optLow: "Baixo (+0)",
-    optMed: "Médio (+400)",
-    optHigh: "Alto (+1.050)",
-    lblLifecycle: "Estágio do Produto",
-    optConcept: "Conceito (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "Pré-Lançamento (x1.25)",
-    optGrowth: "Crescimento (x1.55)",
-    lblSegments: "Segmentos-Alvo (2–30)",
-    lblFriction: "Atrito Médio Onboarding (0.0–1.0)",
-    lblBlocker: "Risco Bloqueio Legal (0.0–1.0)",
-    lblFairness: "Justiça de Preço (-1.0 a +1.0)",
-    lblRuns: "Execuções Monte Carlo (1–20)",
-    lblSeed: "Semente Determinística",
-    runBtn: "Executar Simulação Virtual",
-    noticeText: "<strong>Prévia Interativa:</strong> O dimensionamento segue <code>scripts/size_swarm.py</code> (>= 1.000 pessoas). Execute <code>python3 scripts/simulate_crowd.py</code> localmente para telemetria completa.",
-    sec2Title: "2. Dimensionamento e Prontidão",
-    mPersonas: "Personas Virtuais",
-    mScale: "Escala 0–100",
-    mScore: "Nota de Prontidão",
-    mVerdict: "Veredicto",
-    mSeeds: "Entre sementes",
-    mCi: "Semi-largura IC 95%",
-    sec3Title: "3. Evolução de Sentimento (3 Rodadas)",
-    sec4Title: "4. Retenção na Semana 2",
-    r1: "Rodada 1 — Descoberta",
-    r2: "Rodada 2 — Contágio",
-    r3: "Rodada 3 — Equilíbrio",
-    oVocal: "Defensor Ativo",
-    oActive: "Usuário Ativo",
-    oStalled: "Travado no Onboarding",
-    oChurned: "Cancelou (Baixa Liquidez)",
-    oRejected: "Rejeitado (Desconfiança)",
-    vGoSub: "Pronto para Lançamento Fase 1",
-    vHoldSub: "Reduzir Atrito Primeiro",
-    vNoGoGate: "Trava de Segurança (>15%)",
-    vNoGoRisk: "Alto Risco de Rejeição",
-    installTitle: "Instale o PulseCrowd no seu Agente de IA",
-    copyBtn: "Copiar",
-    copiedBtn: "Copiado!",
-    builtBy: "Criado por",
-    lnkRepo: "Repositório GitHub",
-    lnkReleases: "Versões"
-  },
-  it: {
-    titleSuffix: "Simulatore Live",
-    tagline: "Comprendi il mercato prima di entrarci. Dimensionamento adattivo (>= 1.000 personas) e contagio a 3 round per agenti IA.",
-    sec1Title: "1. Carica un Preset o Configura le Specifiche",
-    presetMinimal: "CLI B2B Minimo (1.500)",
-    presetMarketplace: "Marketplace Regolato (6.750)",
-    presetFintech: "Fintech Alto Attrito (NO-GO)",
-    presetSaas: "SaaS Globale Multi-Paese",
-    lblProductType: "Architettura Prodotto",
-    optDev: "Tool Sviluppo (+100)",
-    optSaas: "SaaS B2B (+200)",
-    optB2c: "Consumer B2C (+300)",
-    optCommunity: "Community (+450)",
-    optMarket: "Marketplace Bilaterale (+650)",
-    optReg: "Piattaforma Regolata (+850)",
-    lblScope: "Copertura Geografica",
-    optCity: "Singola Città (+0)",
-    optRegional: "Regionale (+500)",
-    optNational: "Nazionale (+1.300)",
-    optGlobal: "Multi-Paese (+2.600)",
-    lblRegRisk: "Rischio Normativo",
-    optLow: "Basso (+0)",
-    optMed: "Medio (+400)",
-    optHigh: "Alto (+1.050)",
-    lblLifecycle: "Fase Prodotto",
-    optConcept: "Concept (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "Pre-Lancio (x1.25)",
-    optGrowth: "Crescita (x1.55)",
-    lblSegments: "Segmenti Target (2–30)",
-    lblFriction: "Attrito Medio Onboarding (0.0–1.0)",
-    lblBlocker: "Rischio Blocco Legale (0.0–1.0)",
-    lblFairness: "Equità Prezzi (-1.0 a +1.0)",
-    lblRuns: "Run Monte Carlo (1–20)",
-    lblSeed: "Seed Deterministico",
-    runBtn: "Avvia Simulazione Crowd",
-    noticeText: "<strong>Anteprima Browser:</strong> Il dimensionamento rispecchia <code>scripts/size_swarm.py</code> (>= 1.000 personas). Esegui <code>python3 scripts/simulate_crowd.py</code> in locale per l'analisi completa.",
-    sec2Title: "2. Dimensionamento e Prontezza",
-    mPersonas: "Personas Virtuali",
-    mScale: "Scala 0–100",
-    mScore: "Punteggio Readiness",
-    mVerdict: "Verdetto",
-    mSeeds: "Tra i seed",
-    mCi: "Semi-ampiezza IC 95%",
-    sec3Title: "3. Andamento Sentimento (3 Round)",
-    sec4Title: "4. Retention Settimana 2",
-    r1: "Round 1 — Scoperta",
-    r2: "Round 2 — Contagio",
-    r3: "Round 3 — Equilibrio",
-    oVocal: "Sostenitore Attivo",
-    oActive: "Utente Attivo",
-    oStalled: "Bloccato in Onboarding",
-    oChurned: "Abbandono (Bassa Liquidità)",
-    oRejected: "Rifiuto (Sfiducia)",
-    vGoSub: "Pronto per Lancio Fase 1",
-    vHoldSub: "Ridurre Prima l'Attrito",
-    vNoGoGate: "Blocco Sfiducia (>15%)",
-    vNoGoRisk: "Alto Rischio Rifiuto",
-    installTitle: "Installa PulseCrowd per il tuo Agente IA",
-    copyBtn: "Copia",
-    copiedBtn: "Copiato!",
-    builtBy: "Creato da",
-    lnkRepo: "Repository GitHub",
-    lnkReleases: "Rilasci"
-  },
-  hi: {
-    titleSuffix: "लाइव सिम्युलेटर",
-    tagline: "बाज़ार में उतरने से पहले बाज़ार को समझें। AI कोडिंग एजेंट्स के लिए अनुकूली आकार (>= 1,000 पर्सोना) और 3-राउंड सिमुलेशन।",
-    sec1Title: "1. प्रीसेट चुनें या प्रोजेक्ट सेट करें",
-    presetMinimal: "मिनिमल B2B CLI (1,500)",
-    presetMarketplace: "रेगुलेटेड मार्केटप्लेस (6,750)",
-    presetFintech: "हाई-फ्रिक्शन फिनटेक (NO-GO)",
-    presetSaas: "ग्लोबल मल्टी-कंट्री SaaS",
-    lblProductType: "प्रोडक्ट प्रकार",
-    optDev: "डेवलपर टूल (+100)",
-    optSaas: "B2B SaaS (+200)",
-    optB2c: "B2C कंज्यूमर (+300)",
-    optCommunity: "कम्युनिटी नेटवर्क (+450)",
-    optMarket: "टू-साइडेड मार्केटप्लेस (+650)",
-    optReg: "रेगुलेटेड प्लेटफॉर्म (+850)",
-    lblScope: "भौगोलिक दायरा",
-    optCity: "एक शहर (+0)",
-    optRegional: "क्षेत्रीय (+500)",
-    optNational: "राष्ट्रीय (+1,300)",
-    optGlobal: "बहु-देशीय (+2,600)",
-    lblRegRisk: "नियामक जोखिम",
-    optLow: "कम (+0)",
-    optMed: "मध्यम (+400)",
-    optHigh: "उच्च (+1,050)",
-    lblLifecycle: "प्रोडक्ट चरण",
-    optConcept: "कॉन्सेप्ट (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "प्री-लॉन्च (x1.25)",
-    optGrowth: "ग्रोथ (x1.55)",
-    lblSegments: "लक्ष्य सेगमेंट (2–30)",
-    lblFriction: "ऑनबोर्डिंग घर्षण (0.0–1.0)",
-    lblBlocker: "नियामक अवरोध जोखिम (0.0–1.0)",
-    lblFairness: "मूल्य निष्पक्षता (-1.0 से +1.0)",
-    lblRuns: "मोंटे कार्लो रन (1–20)",
-    lblSeed: "सीड (Seed)",
-    runBtn: "वर्चुअल क्राउड सिमुलेशन चलाएं",
-    noticeText: "<strong>ब्राउज़र पूर्वावलोकन:</strong> जनसंख्या आकार <code>scripts/size_swarm.py</code> पर आधारित है। पूर्ण परिणाम के लिए <code>python3 scripts/simulate_crowd.py</code> चलाएं।",
-    sec2Title: "2. आकार और लॉन्च तैयारी",
-    mPersonas: "वर्चुअल पर्सोना",
-    mScale: "स्केल 0–100",
-    mScore: "तैयारी स्कोर",
-    mVerdict: "निर्णय",
-    mSeeds: "सीड्स के बीच",
-    mCi: "95% CI हाफ-विड्थ",
-    sec3Title: "3. तीन-राउंड भावना प्रगति",
-    sec4Title: "4. सप्ताह-2 प्रतिधारण परिणाम",
-    r1: "राउंड 1 — खोज",
-    r2: "राउंड 2 — सामाजिक प्रभाव",
-    r3: "राउंड 3 — संतुलन",
-    oVocal: "सक्रिय समर्थक",
-    oActive: "सक्रिय उपयोगकर्ता",
-    oStalled: "ऑनबोर्डिंग में रुके",
-    oChurned: "कम तरलता से बाहर",
-    oRejected: "अविश्वास से अस्वीकृत",
-    vGoSub: "फेज़-1 लॉन्च के लिए तैयार",
-    vHoldSub: "पहले घर्षण कम करें",
-    vNoGoGate: "अविश्वास सुरक्षा गेट (>15%)",
-    vNoGoRisk: "उच्च अस्वीकृति जोखिम",
-    installTitle: "अपने AI एजेंट के लिए PulseCrowd इंस्टॉल करें",
-    copyBtn: "कॉपी",
-    copiedBtn: "कॉपी हुआ!",
-    builtBy: "निर्माता:",
-    lnkRepo: "GitHub रिपॉजिटरी",
-    lnkReleases: "रिलीज़"
-  },
-  ru: {
-    titleSuffix: "Интерактивный симулятор",
-    tagline: "Поймите рынок до выхода на него. Адаптивный подбор аудитории (>= 1 000 персон) и 3 раунда моделирования для ИИ-агентов.",
-    sec1Title: "1. Выберите пресет или настройте параметры",
-    presetMinimal: "Минимальный B2B CLI (1 500)",
-    presetMarketplace: "Регулируемый маркетплейс (6 750)",
-    presetFintech: "Финтех с высоким трением (NO-GO)",
-    presetSaas: "Глобальный SaaS",
-    lblProductType: "Архитектура продукта",
-    optDev: "Инструмент разработчика (+100)",
-    optSaas: "B2B SaaS (+200)",
-    optB2c: "B2C продукт (+300)",
-    optCommunity: "Сообщество (+450)",
-    optMarket: "Двусторонний маркетплейс (+650)",
-    optReg: "Регулируемая платформа (+850)",
-    lblScope: "Географический охват",
-    optCity: "Один город (+0)",
-    optRegional: "Региональный (+500)",
-    optNational: "Национальный (+1 300)",
-    optGlobal: "Международный (+2 600)",
-    lblRegRisk: "Регуляторный риск",
-    optLow: "Низкий (+0)",
-    optMed: "Средний (+400)",
-    optHigh: "Высокий (+1 050)",
-    lblLifecycle: "Стадия продукта",
-    optConcept: "Концепт (x0.85)",
-    optMvp: "MVP (x1.00)",
-    optPre: "Предрелиз (x1.25)",
-    optGrowth: "Масштабирование (x1.55)",
-    lblSegments: "Целевые сегменты (2–30)",
-    lblFriction: "Среднее трение онбординга (0.0–1.0)",
-    lblBlocker: "Риск регуляторных блоков (0.0–1.0)",
-    lblFairness: "Справедливость цены (-1.0 до +1.0)",
-    lblRuns: "Запуски Монте-Карло (1–20)",
-    lblSeed: "Фиксированный Seed",
-    runBtn: "Запустить симуляцию аудитории",
-    noticeText: "<strong>Предпросмотр в браузере:</strong> расчёт размера повторяет <code>scripts/size_swarm.py</code> (>= 1 000 персон). Для полного анализа запустите <code>python3 scripts/simulate_crowd.py</code> локально.",
-    sec2Title: "2. Размер выборки и готовность",
-    mPersonas: "Виртуальные персоны",
-    mScale: "Шкала 0–100",
-    mScore: "Индекс готовности",
-    mVerdict: "Вердикт",
-    mSeeds: "По запускам",
-    mCi: "Полуширина 95% ДИ",
-    sec3Title: "3. Динамика настроений (3 раунда)",
-    sec4Title: "4. Удержание ко 2-й неделе",
-    r1: "Раунд 1 — Знакомство",
-    r2: "Раунд 2 — Соц. заражение",
-    r3: "Раунд 3 — Равновесие",
-    oVocal: "Активный адвокат",
-    oActive: "Активный пользователь",
-    oStalled: "Застрял в онбординге",
-    oChurned: "Ушёл (низкая ликвидность)",
-    oRejected: "Отказ (недоверие)",
-    vGoSub: "Готово к запуску Фазы 1",
-    vHoldSub: "Сначала снизьте трение",
-    vNoGoGate: "Барьер недоверия (>15%)",
-    vNoGoRisk: "Высокий риск отказа",
-    installTitle: "Установите PulseCrowd в ваш ИИ-агент",
-    copyBtn: "Копировать",
-    copiedBtn: "Готово!",
-    builtBy: "Автор:",
-    lnkRepo: "Репозиторий GitHub",
-    lnkReleases: "Релизы"
   }
 };
 
-let currentLang = 'en';
+// Reuse clean fallback strings for zh, ja, ko, fr, de, pt, it, hi, ru
+['zh','ja','ko','fr','de','pt','it','hi','ru'].forEach(l => { I18N[l] = { ...I18N.en }; });
+Object.assign(I18N.zh, {
+  titleSuffix: "v2.0 实时模拟器",
+  secUxTitle: "3. 应用内 UX 漏斗 — 卡住、分心与迷失位置",
+  secComTitle: "4. 电商与 Dropshipping 单位经济测算",
+  presetDropship: "Dropshipping 店铺 (NO-GO)",
+  presetDtc: "优化后 DTC 品牌店 (GO)",
+  thStuck: "卡住", thDistracted: "分心", thLost: "迷失", thShock: "价格/信任",
+  runBtn: "运行商业 + UX 双重仿真"
+});
+Object.assign(I18N.ja, {
+  titleSuffix: "v2.0 ライブシミュレーター",
+  secUxTitle: "3. アプリ内 UX ファネル（詰まり・気散り・迷子）",
+  secComTitle: "4. EC・ドロップシッピング採算シミュレーション",
+  presetDropship: "ドロップシッピング店 (NO-GO)",
+  presetDtc: "最適化済み DTC ストア (GO)",
+  thStuck: "詰まり", thDistracted: "気散り", thLost: "迷子", thShock: "価格/信頼",
+  runBtn: "ビジネス + UX シミュレーション実行"
+});
+Object.assign(I18N.fr, {
+  titleSuffix: "Simulateur v2.0",
+  secUxTitle: "3. Tunnel UX — Où les utilisateurs bloquent, se distraient ou se perdent",
+  secComTitle: "4. Économie Unitaire E-Commerce & Dropshipping",
+  presetDropship: "Boutique Dropshipping (NO-GO)",
+  presetDtc: "Boutique DTC Optimisée (GO)",
+  thStuck: "Bloqués", thDistracted: "Distraits", thLost: "Perdus", thShock: "Prix/Confiance",
+  runBtn: "Lancer la Simulation Duale"
+});
+Object.assign(I18N.de, {
+  titleSuffix: "v2.0 Live-Simulator",
+  secUxTitle: "3. In-App UX-Funnel — Wo Nutzer hängen bleiben, abgelenkt sind oder sich verlaufen",
+  secComTitle: "4. E-Commerce & Dropshipping Unit Economics",
+  presetDropship: "Dropshipping-Shop (NO-GO)",
+  presetDtc: "Optimierter DTC-Shop (GO)",
+  thStuck: "Festgesteckt", thDistracted: "Abgelenkt", thLost: "Verirrt", thShock: "Preis/Vertrauen",
+  runBtn: "Dual-Simulation starten"
+});
+Object.assign(I18N.pt, {
+  titleSuffix: "Simulador v2.0",
+  secUxTitle: "3. Funil UX Interno — Onde Usuários Travam, se Distraem ou se Perdem",
+  secComTitle: "4. Economia Unitária E-Commerce e Dropshipping",
+  presetDropship: "Loja Dropshipping (NO-GO)",
+  presetDtc: "Loja DTC Otimizada (GO)",
+  thStuck: "Travados", thDistracted: "Distraídos", thLost: "Perdidos", thShock: "Preço/Conf.",
+  runBtn: "Executar Simulação Negócio + UX"
+});
 
-function t(key) {
-  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
-}
+let currentLang = 'en';
+function t(key) { return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key; }
 
 function setLanguage(lang) {
   currentLang = I18N[lang] ? lang : 'en';
@@ -1111,91 +691,59 @@ function setLanguage(lang) {
 }
 
 const TYPE_WEIGHTS = {
-  developer_tool: 100,
-  b2b_saas: 200,
-  b2c_consumer: 300,
-  community_network: 450,
-  two_sided_marketplace: 650,
-  regulated_platform: 850
+  developer_tool: 100, b2b_saas: 200, b2c_consumer: 300, community_network: 450,
+  ecommerce_brand: 500, dropshipping_store: 600, two_sided_marketplace: 650, regulated_platform: 850
 };
 const SCOPE_WEIGHTS = { single_city: 0, regional: 500, national: 1300, multi_country: 2600 };
 const RISK_WEIGHTS = { low: 0, medium: 400, high: 1050 };
 const STAGE_MULT = { concept: 0.85, mvp: 1.0, pre_launch: 1.25, growth_scale: 1.55 };
 
 const PRESETS = {
-  minimal: {
-    productType: 'developer_tool',
-    scope: 'single_city',
-    regRisk: 'low',
-    lifecycle: 'mvp',
-    segments: 3,
-    friction: 0.13,
-    blocker: 0.06,
-    fairness: 0.42,
-    runs: 3,
-    seed: 42,
-    pricingTiers: 1,
-    channels: 1
+  dropship: {
+    productType: 'dropshipping_store', scope: 'national', regRisk: 'low', lifecycle: 'pre_launch',
+    segments: 4, friction: 0.58, distraction: 0.72, confusion: 0.34, surprise: 0.76, blocker: 0.45, fairness: -0.25,
+    runs: 3, seed: 42, tiers: 2, channels: 3, aov: 39.99, margin: 62, cpc: 0.95, shipDays: 21, hiddenShip: true
+  },
+  dtc: {
+    productType: 'ecommerce_brand', scope: 'national', regRisk: 'low', lifecycle: 'pre_launch',
+    segments: 4, friction: 0.09, distraction: 0.09, confusion: 0.07, surprise: 0.0, blocker: 0.05, fairness: 0.48,
+    runs: 3, seed: 42, tiers: 2, channels: 3, aov: 79.00, margin: 68, cpc: 0.85, shipDays: 4, hiddenShip: false
   },
   marketplace: {
-    productType: 'two_sided_marketplace',
-    scope: 'regional',
-    regRisk: 'high',
-    lifecycle: 'pre_launch',
-    segments: 8,
-    friction: 0.18,
-    blocker: 0.10,
-    fairness: 0.69,
-    runs: 3,
-    seed: 42,
-    pricingTiers: 3,
-    channels: 4
+    productType: 'two_sided_marketplace', scope: 'regional', regRisk: 'high', lifecycle: 'pre_launch',
+    segments: 8, friction: 0.18, distraction: 0.12, confusion: 0.14, surprise: 0.0, blocker: 0.10, fairness: 0.69,
+    runs: 3, seed: 42, tiers: 3, channels: 4, aov: 49, margin: 75, cpc: 1.2, shipDays: 0, hiddenShip: false
+  },
+  minimal: {
+    productType: 'developer_tool', scope: 'single_city', regRisk: 'low', lifecycle: 'mvp',
+    segments: 3, friction: 0.12, distraction: 0.08, confusion: 0.10, surprise: 0.0, blocker: 0.06, fairness: 0.42,
+    runs: 3, seed: 42, tiers: 1, channels: 1, aov: 29, margin: 85, cpc: 0.9, shipDays: 0, hiddenShip: false
   },
   fintech: {
-    productType: 'regulated_platform',
-    scope: 'national',
-    regRisk: 'high',
-    lifecycle: 'pre_launch',
-    segments: 9,
-    friction: 0.68,
-    blocker: 0.72,
-    fairness: -0.45,
-    runs: 5,
-    seed: 42,
-    pricingTiers: 4,
-    channels: 5
-  },
-  saas: {
-    productType: 'b2b_saas',
-    scope: 'multi_country',
-    regRisk: 'medium',
-    lifecycle: 'growth_scale',
-    segments: 10,
-    friction: 0.24,
-    blocker: 0.18,
-    fairness: 0.35,
-    runs: 5,
-    seed: 42,
-    pricingTiers: 4,
-    channels: 5
+    productType: 'regulated_platform', scope: 'national', regRisk: 'high', lifecycle: 'pre_launch',
+    segments: 9, friction: 0.68, distraction: 0.22, confusion: 0.36, surprise: 0.25, blocker: 0.72, fairness: -0.45,
+    runs: 5, seed: 42, tiers: 4, channels: 5, aov: 99, margin: 80, cpc: 2.5, shipDays: 0, hiddenShip: false
   }
 };
 
-let activePresetMeta = { pricingTiers: 3, channels: 4 };
+let activeMeta = { ...PRESETS.dropship };
 
 function applyPreset(key, btn) {
   const p = PRESETS[key];
+  activeMeta = { ...p };
   document.getElementById('productType').value = p.productType;
   document.getElementById('scope').value = p.scope;
   document.getElementById('regRisk').value = p.regRisk;
   document.getElementById('lifecycle').value = p.lifecycle;
   document.getElementById('segments').value = p.segments;
   document.getElementById('friction').value = p.friction;
+  document.getElementById('distraction').value = p.distraction;
+  document.getElementById('confusion').value = p.confusion;
+  document.getElementById('surprise').value = p.surprise;
   document.getElementById('blocker').value = p.blocker;
   document.getElementById('fairness').value = p.fairness;
   document.getElementById('runs').value = p.runs;
   document.getElementById('seed').value = p.seed;
-  activePresetMeta = { pricingTiers: p.pricingTiers, channels: p.channels };
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   runSimulation();
@@ -1210,10 +758,27 @@ function seededRandom(seed) {
 }
 
 function complexityTier(pop) {
-  if (pop < 2000) return 'lean_1k';
-  if (pop < 4000) return 'moderate_2k_4k';
-  if (pop < 8000) return 'complex_4k_8k';
-  return 'stress_8k_plus';
+  if (pop <= 1600) return 'lean_1k';
+  if (pop <= 4000) return 'moderate_2k_4k';
+  if (pop <= 8000) return 'complex_4k_8k';
+  return 'enterprise_8k_plus';
+}
+
+function stepLabelsFor(type) {
+  if (type === 'dropshipping_store' || type === 'ecommerce_brand') {
+    return [
+      { id: 'landing', name: '1. Ad Landing / Product Page', wF: 0.35, wD: 0.85, wC: 0.85, wS: 0.05 },
+      { id: 'cart', name: '2. Cart Drawer & Upsells', wF: 0.65, wD: 1.05, wC: 0.90, wS: 0.25 },
+      { id: 'account', name: '3. Registration / Shipping Info', wF: 1.25, wD: 0.45, wC: 0.80, wS: 0.15 },
+      { id: 'checkout', name: '4. Payment & Final Total', wF: 0.80, wD: 0.35, wC: 0.70, wS: 1.15 }
+    ];
+  }
+  return [
+    { id: 'landing', name: '1. Landing / Value Hook', wF: 0.30, wD: 0.90, wC: 0.90, wS: 0.05 },
+    { id: 'signup', name: '2. Signup / KYC Verification', wF: 1.30, wD: 0.45, wC: 0.75, wS: 0.20 },
+    { id: 'onboarding', name: '3. First Core Action Setup', wF: 0.85, wD: 1.05, wC: 1.10, wS: 0.15 },
+    { id: 'paywall', name: '4. Pricing / Upgrade Gate', wF: 0.60, wD: 0.40, wC: 0.65, wS: 1.15 }
+  ];
 }
 
 function runSimulation() {
@@ -1223,76 +788,147 @@ function runSimulation() {
   const lifecycle = document.getElementById('lifecycle').value;
   const segments = Math.max(2, +document.getElementById('segments').value || 2);
   const friction = Math.min(1, Math.max(0, +document.getElementById('friction').value || 0));
+  const distraction = Math.min(1, Math.max(0, +document.getElementById('distraction').value || 0));
+  const confusion = Math.min(1, Math.max(0, +document.getElementById('confusion').value || 0));
+  const surprise = Math.min(1, Math.max(0, +document.getElementById('surprise').value || 0));
   const blocker = Math.min(1, Math.max(0, +document.getElementById('blocker').value || 0));
   const fairness = Math.min(1, Math.max(-1, +document.getElementById('fairness').value || 0));
   const mcRuns = Math.min(20, Math.max(1, +document.getElementById('runs').value || 3));
   const seed = +document.getElementById('seed').value || 42;
 
+  const isCommerce = productType === 'dropshipping_store' || productType === 'ecommerce_brand';
   const raw = 1000
     + TYPE_WEIGHTS[productType]
     + SCOPE_WEIGHTS[scope]
     + RISK_WEIGHTS[regRisk]
-    + Math.max(0, segments - 2) * 140
-    + Math.max(0, activePresetMeta.pricingTiers - 1) * 120
-    + Math.max(0, activePresetMeta.channels - 1) * 100;
-  const scaled = raw * STAGE_MULT[lifecycle];
-  const pop = Math.min(25000, Math.max(1000, Math.round(scaled / 50) * 50));
+    + Math.max(0, segments - 2) * 220
+    + (activeMeta.tiers || 2) * 150
+    + Math.max(0, (activeMeta.channels || 2) - 1) * 140;
+  const pop = Math.min(25000, Math.max(1000, Math.ceil((raw * STAGE_MULT[lifecycle]) / 50) * 50));
 
-  const scores = [];
-  const r1s = [], r2s = [], r3s = [], distrusts = [];
+  // Build 4-step UX funnel
+  const templateSteps = stepLabelsFor(productType);
+  let remaining = pop;
+  let totalDroppedByMode = { stuck: 0, distracted: 0, lost: 0, shock: 0 };
+  let bottleneck = null;
+  const stepRows = [];
 
+  templateSteps.forEach((st, idx) => {
+    const fH = Math.min(0.68, 0.34 * friction * st.wF);
+    const dH = Math.min(0.68, 0.34 * distraction * st.wD);
+    const lH = Math.min(0.65, 0.32 * confusion * st.wC);
+    const sH = Math.min(0.76, 0.38 * surprise * st.wS + 0.22 * blocker * (idx === 0 || idx === 3 ? 1.1 : 0.6));
+    const pSurv = (1 - fH) * (1 - dH) * (1 - lH) * (1 - sH);
+    const dropped = Math.min(remaining, Math.round(remaining * (1 - pSurv)));
+    const wSum = Math.max(0.0001, fH + dH + lH + sH);
+    const stuckD = Math.round(dropped * (fH / wSum));
+    const distD = Math.round(dropped * (dH / wSum));
+    const lostD = Math.round(dropped * (lH / wSum));
+    const shockD = Math.max(0, dropped - stuckD - distD - lostD);
+
+    totalDroppedByMode.stuck += stuckD;
+    totalDroppedByMode.distracted += distD;
+    totalDroppedByMode.lost += lostD;
+    totalDroppedByMode.shock += shockD;
+
+    const dropRate = remaining > 0 ? dropped / remaining : 0;
+    remaining -= dropped;
+    const row = {
+      name: st.name, retainedPct: (remaining / pop) * 100,
+      stuckD, distD, lostD, shockD, dropped, dropRate
+    };
+    stepRows.push(row);
+    if (!bottleneck || dropRate > bottleneck.dropRate) {
+      const modes = [['stuck', stuckD], ['distracted', distD], ['lost', lostD], ['trust_or_price_shock', shockD]];
+      modes.sort((a, b) => b[1] - a[1]);
+      bottleneck = { ...row, dominant: modes[0][0] };
+    }
+  });
+
+  const uxCompRate = remaining / pop;
+  const topMode = Object.entries(totalDroppedByMode).sort((a, b) => b[1] - a[1])[0][0];
+
+  const scores = [], r1s = [], r2s = [], r3s = [], distrusts = [];
   for (let i = 0; i < mcRuns; i++) {
     const rng = seededRandom(seed + i * 7919);
-    const jitter = () => (rng() - 0.5) * 0.03;
-
-    const r1 = Math.max(-1, Math.min(1, 0.58 - friction * 0.72 - blocker * 0.55 + fairness * 0.14 + jitter()));
-    const r2 = Math.max(-1, Math.min(1, r1 + 0.06 - blocker * 0.18 + (fairness > 0 ? 0.03 : -0.08) + jitter()));
-    const r3 = Math.max(-1, Math.min(1, r2 + 0.13 + fairness * 0.06 - friction * 0.12 + jitter()));
-
-    const distrust = Math.max(0, Math.min(0.65, (blocker - 0.16) * 0.58 + (friction - 0.35) * 0.22 + (fairness < 0 ? -fairness * 0.15 : 0) + jitter() * 0.3));
-    let score = Math.max(0, Math.min(100, 66 + r3 * 38 - distrust * 110 + fairness * 6 - friction * 14));
-    if (distrust > 0.15) {
-      score = Math.min(score, 44.5);
-    }
-
-    r1s.push(r1); r2s.push(r2); r3s.push(r3);
-    distrusts.push(distrust);
-    scores.push(score);
+    const j = () => (rng() - 0.5) * 0.03;
+    const r1 = Math.max(-1, Math.min(1, 0.56 - friction * 0.55 - distraction * 0.25 - blocker * 0.48 + fairness * 0.22 + j()));
+    const r2 = Math.max(-1, Math.min(1, r1 + 0.05 - blocker * 0.20 + (fairness > 0 ? 0.03 : -0.09) + j()));
+    const r3 = Math.max(-1, Math.min(1, r2 + 0.12 + fairness * 0.08 - friction * 0.12 - surprise * 0.10 + j()));
+    const distrust = Math.max(0, Math.min(0.70, (blocker - 0.15) * 0.62 + (surprise - 0.35) * 0.20 + (fairness < 0 ? -fairness * 0.22 : 0) + j() * 0.25));
+    const uxSub = Math.min(1, uxCompRate / 0.55);
+    let score = Math.max(0, Math.min(100, 48 + r3 * 34 + uxSub * 22 - distrust * 95 + fairness * 7));
+    if (distrust > 0.15) score = Math.min(score, 44.5);
+    r1s.push(r1); r2s.push(r2); r3s.push(r3); distrusts.push(distrust); scores.push(score);
   }
 
   const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
-  const std = a => {
-    const m = mean(a);
-    return a.length > 1 ? Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)) : 0;
-  };
-
-  const avgScore = mean(scores);
-  const ci = mcRuns > 1 ? (1.96 * std(scores) / Math.sqrt(mcRuns)) : 0.0;
-  const avgR1 = mean(r1s), avgR2 = mean(r2s), avgR3 = mean(r3s), avgDistrust = mean(distrusts);
+  const avgScore = mean(scores), avgR1 = mean(r1s), avgR2 = mean(r2s), avgR3 = mean(r3s), avgDistrust = mean(distrusts);
 
   let verdict = 'GO', verdictSub = t('vGoSub'), verdictClass = 'go';
-  if (avgDistrust > 0.15 || avgScore < 55) {
-    verdict = 'NO-GO';
-    verdictSub = avgDistrust > 0.15 ? t('vNoGoGate') : t('vNoGoRisk');
-    verdictClass = 'nogo';
-  } else if (avgScore < 75) {
-    verdict = 'HOLD';
-    verdictSub = t('vHoldSub');
-    verdictClass = 'caution';
+  if (avgDistrust > 0.15 || avgScore < 58) {
+    verdict = 'NO-GO'; verdictSub = avgDistrust > 0.15 ? t('vNoGoGate') : t('vNoGoRisk'); verdictClass = 'nogo';
+  } else if (avgScore < 78) {
+    verdict = 'HOLD'; verdictSub = t('vHoldSub'); verdictClass = 'caution';
   }
 
   document.getElementById('pop').textContent = pop.toLocaleString();
   document.getElementById('tier').textContent = complexityTier(pop);
-
-  const scoreEl = document.getElementById('score');
-  scoreEl.textContent = avgScore.toFixed(1);
-  scoreEl.className = 'value ' + verdictClass;
-
-  const vEl = document.getElementById('verdict');
-  vEl.textContent = verdict;
-  vEl.className = 'value ' + verdictClass;
+  const sEl = document.getElementById('score'); sEl.textContent = avgScore.toFixed(1); sEl.className = 'value ' + verdictClass;
+  const vEl = document.getElementById('verdict'); vEl.textContent = verdict; vEl.className = 'value ' + verdictClass;
   document.getElementById('verdictSub').textContent = verdictSub;
-  document.getElementById('ci').textContent = '±' + ci.toFixed(2);
+  const uEl = document.getElementById('uxComp');
+  uEl.textContent = (uxCompRate * 100).toFixed(1) + '%';
+  uEl.className = 'value ' + (uxCompRate >= 0.45 ? 'go' : uxCompRate >= 0.2 ? 'caution' : 'nogo');
+  document.getElementById('uxDropMode').textContent = topMode;
+
+  const bnEl = document.getElementById('bottleneckBanner');
+  bnEl.className = 'bottleneck-pill' + (bottleneck.dropRate < 0.18 ? ' healthy' : '');
+  bnEl.textContent = `Bottleneck: ${bottleneck.name} — ${(bottleneck.dropRate * 100).toFixed(1)}% step drop (${bottleneck.dropped} users · ${bottleneck.dominant})`;
+
+  document.getElementById('uxTableBody').innerHTML = stepRows.map(r => `
+    <tr>
+      <td>${r.name}</td>
+      <td>${r.retainedPct.toFixed(1)}%</td>
+      <td>${r.stuckD}</td>
+      <td>${r.distD}</td>
+      <td>${r.lostD}</td>
+      <td>${r.shockD}</td>
+    </tr>
+  `).join('');
+
+  // E-Commerce card
+  const comCard = document.getElementById('commerceCard');
+  if (isCommerce) {
+    comCard.classList.remove('hidden');
+    const step1Ret = stepRows[0].retainedPct / 100;
+    const engaged = Math.max(0.05, Math.min(1, (avgR3 + 1) / 2));
+    const atc = Math.max(0.008, Math.min(0.22, 0.16 * step1Ret * (0.25 + 0.65 * engaged)));
+    const survGivenAtc = uxCompRate / Math.max(step1Ret, 0.05);
+    const cvr = Math.max(0.0015, Math.min(0.12, atc * survGivenAtc * (0.18 + 0.35 * engaged)));
+    const abandon = Math.max(0, Math.min(0.995, 1 - (cvr / Math.max(atc, cvr))));
+    const aov = productType === 'dropshipping_store' ? 39.99 : 79.00;
+    const marginPct = productType === 'dropshipping_store' ? 0.62 : 0.68;
+    const cpc = productType === 'dropshipping_store' ? 0.95 : 0.85;
+    const profit = aov * marginPct;
+    const cpa = cpc / cvr;
+    const maxCpc = profit * cvr;
+
+    document.getElementById('comAtc').textContent = (atc * 100).toFixed(1) + '%';
+    document.getElementById('comAbandon').textContent = `Abandon: ${(abandon * 100).toFixed(1)}%`;
+    document.getElementById('comCvr').textContent = (cvr * 100).toFixed(2) + '%';
+    document.getElementById('comAov').textContent = `AOV $${aov.toFixed(2)}`;
+    const cpaEl = document.getElementById('comCpa');
+    cpaEl.textContent = '$' + cpa.toFixed(0);
+    cpaEl.className = 'value ' + (cpa < profit ? 'go' : 'nogo');
+    document.getElementById('comProfit').textContent = `Profit/Order $${profit.toFixed(2)}`;
+    const mCpcEl = document.getElementById('comMaxCpc');
+    mCpcEl.textContent = '$' + maxCpc.toFixed(2);
+    mCpcEl.className = 'value ' + (maxCpc > cpc ? 'go' : 'nogo');
+    document.getElementById('comAssumedCpc').textContent = `Assumed CPC $${cpc.toFixed(2)}`;
+  } else {
+    comCard.classList.add('hidden');
+  }
 
   renderSignedBars('sentiment-bars', [
     { label: t('r1'), value: avgR1 },
@@ -1301,7 +937,7 @@ function runSimulation() {
   ]);
 
   const vocal = Math.max(0.01, Math.min(0.35, 0.04 + Math.max(0, avgR3) * 0.18 - avgDistrust * 0.25));
-  const stalled = Math.max(0.0, Math.min(0.45, Math.max(0, friction - 0.15) * 0.42));
+  const stalled = Math.max(0.0, Math.min(0.45, Math.max(0, friction - 0.12) * 0.42));
   const rejected = avgDistrust;
   const churned = Math.max(0.01, Math.min(0.40, 0.04 + (1 - Math.max(0, avgR3)) * 0.09));
   const active = Math.max(0.05, 1.0 - vocal - stalled - rejected - churned);
@@ -1313,8 +949,6 @@ function runSimulation() {
     { label: t('oChurned'), value: churned, color: '#8b949e' },
     { label: t('oRejected'), value: rejected, color: '#f85149' }
   ]);
-
-  document.getElementById('results').classList.add('visible');
 }
 
 function renderSignedBars(id, items) {

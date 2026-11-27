@@ -1,6 +1,6 @@
 # 🎯 pulse-crowd
 
-> **Comprende el mercado antes de entrar en él.** Simulación adaptativa multi-ronda de multitudes virtuales (`1,000` a `25,000+` personas) para agentes de programación con IA — pon a prueba lanzamientos de productos, barreras de *onboarding*, equidad de precios y riesgos regulatorios antes de publicar.
+> **Comprende el mercado y la UX dentro de tu app antes de lanzar.** Simulación adaptativa multi-ronda de multitudes virtuales (`1,000` a `25,000+` personas) para agentes IA — detecta en qué pantalla se **atasca**, **distrae** o **pierde** la gente, pon a prueba tiendas **e-commerce y dropshipping**, y valida precios o riesgos legales antes de publicar.
 
 [English](../../README.md) · **Español** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português](README.pt-BR.md) · [Italiano](README.it.md) · [हिन्दी](README.hi.md) · [Русский](README.ru.md)
 
@@ -23,7 +23,19 @@
 | **Script fijo de 10–15 personas** | ~15 personas fijas | Simplifica en exceso o desperdicia escala | Ad-hoc | Atado a una herramienta |
 | **`pulse-crowd` (Esta Skill)** | **Adaptativo `1,000` – `25,000+`** | **Estratificado con mínimo estadístico** | **Monte Carlo con IC 95%** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
 
-### Caso Real Antes vs. Después (`6,750` Personas Virtuales)
+### Caso 1: Dropshipping con Fricción UX vs. Marca DTC Optimizada (`v2.0`)
+
+Simulación directa con `scripts/simulate_crowd.py --runs 3 --seed 42` paso a paso por las pantallas reales (`Landing → Carrito → Registro/Envío → Checkout`):
+
+| Métrica | Tienda Dropshipping ([`dropshipping-store.json`](../../examples/dropshipping-store.json)) | Marca DTC Optimizada ([`ecommerce-dtc-brand.json`](../../examples/ecommerce-dtc-brand.json)) |
+| :--- | :--- | :--- |
+| **Puntuación Readiness** | **`14.0 / 100`** (`NO-GO`) | **`95.1 / 100`** (`GO`) |
+| **Finalización Embudo UX** | **`3.6%`** | **`74.9%`** |
+| **Cuello de Botella #1** | `app/checkout/shipping-step.tsx` (`70.0%` caída · `trust_or_price_shock`) | `components/CartDrawer.tsx` (`10.3%` caída · `distracted`) |
+| **Add-to-Cart / Conversión** | `2.2%` ATC · `0.15%` CVR (`93.3%` abandono) | `13.0%` ATC · `4.67%` CVR (`63.9%` abandono) |
+| **CPC Máximo Rentable** | **`$0.04`** *(quema dinero a `$0.95` CPC)* | **`$2.51`** *(rentable a `$0.85` CPC)* |
+
+### Caso 2: Marketplace Regulado (`6,750` Personas Virtuales)
 
 Simulación real ejecutada con `scripts/simulate_crowd.py` (`--runs 3 --seed 42`) sobre un marketplace regulado antes y después de corregir fricción KYC, riesgos de privacidad de menores y percepción de precios:
 
@@ -41,7 +53,9 @@ Simulación real ejecutada con `scripts/simulate_crowd.py` (`--runs 3 --seed 42`
    - **Ronda 1 — Descubrimiento y barreras:** Modela fricción de *onboarding*, bloqueos legales/privacidad, percepción de precios y encaje de valor.
    - **Ronda 2 — Contagio social asimétrico:** Simula influencia entre pares y altavoces públicos con mayor peso negativo ante quejas regulatorias o de pago.
    - **Ronda 3 — Equilibrio en la semana 2 y conversión B2B:** Estima brechas de liquidez regional, retención y conversión B2B con intervalos de confianza Monte Carlo al 95%.
-4. **Puntuación de preparación (`0–100`):** Incluye puerta de seguridad regulatoria explícita (`rejected_distrust > 15%` limita el veredicto a `NO-GO`).
+4. **Embudo UX dentro de la aplicación (`ux_journey`):** Simula paso a paso por qué pantalla abandona la gente: **atascados** (`step_friction`), **distraídos** (`distraction_load`), **perdidos** (`confusion_risk`) o **shock de precio/envío** (`surprise_cost`).
+5. **E-Commerce y Dropshipping (`commerce_profile`):** Estima tasa Add-to-Cart, abandono de carrito, conversión (CVR), CPA simulado y CPC máximo rentable según AOV, margen y días de envío.
+6. **Puntuación de preparación (`0–100`):** Incluye puerta de seguridad regulatoria explícita (`rejected_distrust > 15%` limita el veredicto a `NO-GO`).
 
 Compatible con **cualquier stack tecnológico** del proyecto objetivo (TypeScript, Next.js, Python, Go, Rust, Java, móvil) y respuestas del agente en **cualquier idioma**.
 
