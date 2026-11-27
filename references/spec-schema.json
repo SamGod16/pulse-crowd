@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "MiroFish Crowd Sim Project Specification",
+  "title": "PulseCrowd Project Specification",
   "type": "object",
   "required": ["project_name", "product_type", "cohorts"],
   "properties": {

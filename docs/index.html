@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseCrowd — Live Demo</title>
+  <meta name="description" content="Interactive demo of PulseCrowd: adaptive virtual crowd simulation for AI coding agents.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 2.2rem; margin-bottom: .3rem; }
+    h1 span { color: var(--accent); }
+    .tagline { color: var(--muted); font-size: 1.1rem; margin-bottom: 2rem; }
+    .badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .badges img { height: 22px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--accent); }
+    label { display: block; color: var(--muted); font-size: .85rem; margin-bottom: .3rem; margin-top: .8rem; }
+    label:first-child { margin-top: 0; }
+    select, input[type="number"] {
+      width: 100%;
+      padding: .5rem .75rem;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .95rem;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: .75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--bg);
+      transition: opacity .15s;
+    }
+    button:hover { opacity: .85; }
+    .results { display: none; }
+    .results.visible { display: block; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .metric {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .metric .value { font-size: 2rem; font-weight: 700; }
+    .metric .label { font-size: .8rem; color: var(--muted); margin-top: .3rem; }
+    .go { color: var(--green); }
+    .caution { color: var(--orange); }
+    .nogo { color: var(--red); }
+    .bar-chart { margin-top: 1rem; }
+    .bar-row { display: flex; align-items: center; margin-bottom: .5rem; }
+    .bar-label { width: 160px; font-size: .82rem; color: var(--muted); text-align: right; padding-right: .75rem; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 22px; background: var(--bg); border-radius: 4px; overflow: hidden; position: relative; }
+    .bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+    .bar-val { position: absolute; right: 8px; top: 2px; font-size: .78rem; color: var(--text); }
+    footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 3rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .row { grid-template-columns: 1fr; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🎯 <span>PulseCrowd</span></h1>
+  <p class="tagline">Understand the market before you enter it. Simulate 1,000–25,000+ virtual personas.</p>
+  <div class="badges">
+    <img src="https://img.shields.io/github/actions/workflow/status/SamGod16/pulse-crowd/ci.yml?label=CI&style=flat-square" alt="CI">
+    <img src="https://img.shields.io/badge/Python-3.9%2B-informational?style=flat-square" alt="Python">
+    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
+    <img src="https://img.shields.io/github/v/release/SamGod16/pulse-crowd?style=flat-square&color=green" alt="Release">
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Configure Your Simulation</h2>
+    <div class="row">
+      <div>
+        <label for="complexity">Product Complexity</label>
+        <select id="complexity">
+          <option value="lean">Lean — Single-region dev tool</option>
+          <option value="moderate">Moderate — Multi-segment SaaS</option>
+          <option value="complex" selected>Complex — Regulated marketplace</option>
+          <option value="extreme">Extreme — Multi-country, high-regulation</option>
+        </select>
+      </div>
+      <div>
+        <label for="segments">Number of Segments</label>
+        <input type="number" id="segments" value="8" min="2" max="30">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="regions">Geographic Regions</label>
+        <input type="number" id="regions" value="4" min="1" max="20">
+      </div>
+      <div>
+        <label for="regulatory">Regulatory Exposure (0–10)</label>
+        <input type="number" id="regulatory" value="7" min="0" max="10">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="runs">Monte Carlo Runs</label>
+        <input type="number" id="runs" value="5" min="1" max="20">
+      </div>
+      <div>
+        <label for="seed">Random Seed</label>
+        <input type="number" id="seed" value="42" min="0">
+      </div>
+    </div>
+    <button onclick="runSimulation()">🚀 Run Simulation</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <h2>📊 Simulation Results</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="value" id="pop">—</div>
+          <div class="label">Virtual Personas</div>
+        </div>
+        <div class="metric">
+          <div class="value" id="score">—</div>
+          <div class="label">Readiness Score</div>
+        </div>
+        <div class="metric">
+          <div class="value" id="verdict">—</div>
+          <div class="label">Verdict</div>
+        </div>
+        <div class="metric">
+          <div class="value" id="ci">—</div>
+          <div class="label">95% CI Half-Width</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📈 Sentiment Progression (3 Rounds)</h2>
+      <div class="bar-chart" id="sentiment-bars"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎭 Retention Outcomes</h2>
+      <div class="bar-chart" id="outcome-bars"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 Top Friction Drivers</h2>
+      <div class="bar-chart" id="friction-bars"></div>
+    </div>
+  </div>
+
+  <footer>
+    Built by <a href="https://github.com/SamGod16">SamGod16</a> · 
+    <a href="https://github.com/SamGod16/pulse-crowd">View on GitHub</a> · 
+    MIT License
+  </footer>
+</div>
+
+<script>
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+function runSimulation() {
+  const complexity = document.getElementById('complexity').value;
+  const segments = +document.getElementById('segments').value;
+  const regions = +document.getElementById('regions').value;
+  const regulatory = +document.getElementById('regulatory').value;
+  const mcRuns = +document.getElementById('runs').value;
+  const seed = +document.getElementById('seed').value;
+
+  // Sizing
+  const bases = { lean: 1200, moderate: 2500, complex: 5000, extreme: 12000 };
+  let pop = bases[complexity] || 5000;
+  pop += segments * 80 + regions * 150 + regulatory * 120;
+  pop = Math.max(1000, Math.round(pop / 50) * 50);
+
+  // Monte Carlo
+  const rng = seededRandom(seed);
+  let scores = [];
+  let allR1 = [], allR2 = [], allR3 = [];
+
+  for (let r = 0; r < mcRuns; r++) {
+    const rng2 = seededRandom(seed + r * 7919);
+    const friction = 0.08 + regulatory * 0.025 + rng2() * 0.06;
+    const r1 = 0.35 + rng2() * 0.15;
+    const contagion = rng2() * 0.08 - 0.02;
+    const r2 = r1 + contagion + 0.05;
+    const retention = rng2() * 0.1;
+    const r3 = r2 + retention + 0.08;
+
+    allR1.push(r1); allR2.push(r2); allR3.push(r3);
+
+    const distrust = Math.max(0, 0.05 + regulatory * 0.015 - rng2() * 0.04);
+    let score = Math.min(100, Math.max(0, 50 + r3 * 40 - friction * 60 - distrust * 100));
+    if (distrust > 0.15) score = Math.min(score, 45);
+    scores.push(score);
+  }
+
+  const mean = arr => arr.reduce((a,b) => a+b, 0) / arr.length;
+  const std = arr => { const m = mean(arr); return Math.sqrt(arr.reduce((s,x) => s + (x-m)*(x-m), 0) / arr.length); };
+
+  const avgScore = mean(scores);
+  const ci = 1.96 * std(scores) / Math.sqrt(mcRuns);
+  const avgR1 = mean(allR1), avgR2 = mean(allR2), avgR3 = mean(allR3);
+
+  // Verdict
+  let verdictText, verdictClass;
+  if (avgScore >= 75) { verdictText = 'GO'; verdictClass = 'go'; }
+  else if (avgScore >= 50) { verdictText = 'CONDITIONAL'; verdictClass = 'caution'; }
+  else { verdictText = 'NO-GO'; verdictClass = 'nogo'; }
+
+  // Display
+  document.getElementById('pop').textContent = pop.toLocaleString();
+  const scoreEl = document.getElementById('score');
+  scoreEl.textContent = avgScore.toFixed(1);
+  scoreEl.className = 'value ' + verdictClass;
+  const verdictEl = document.getElementById('verdict');
+  verdictEl.textContent = verdictText;
+  verdictEl.className = 'value ' + verdictClass;
+  document.getElementById('ci').textContent = '±' + ci.toFixed(2);
+
+  // Sentiment bars
+  renderBars('sentiment-bars', [
+    { label: 'Round 1 — Discovery', value: avgR1, color: '#58a6ff' },
+    { label: 'Round 2 — Contagion', value: avgR2, color: '#d29922' },
+    { label: 'Round 3 — Equilibrium', value: avgR3, color: '#3fb950' },
+  ], 1);
+
+  // Outcome bars
+  const vocal = 0.12 + avgR3 * 0.15;
+  const active = 0.25 + avgR3 * 0.2;
+  const stalled = Math.max(0.05, 0.2 - avgR3 * 0.1);
+  const churned = Math.max(0.03, 0.15 - avgR3 * 0.08);
+  const rejected = Math.max(0.02, regulatory * 0.02 - 0.03);
+  renderBars('outcome-bars', [
+    { label: 'Vocal Advocate', value: vocal, color: '#3fb950' },
+    { label: 'Active User', value: active, color: '#58a6ff' },
+    { label: 'Stalled in Onboarding', value: stalled, color: '#d29922' },
+    { label: 'Churned (Low Liquidity)', value: churned, color: '#f85149' },
+    { label: 'Rejected (Distrust)', value: rejected, color: '#f85149' },
+  ], 1);
+
+  // Friction bars
+  const frictions = [
+    { label: 'Onboarding Friction', value: 0.1 + regulatory * 0.05 + segments * 0.01 },
+    { label: 'Pricing Fairness', value: 0.08 + segments * 0.015 },
+    { label: 'Regional Cold-Start', value: 0.05 + regions * 0.03 },
+    { label: 'Regulatory Distrust', value: regulatory * 0.04 },
+    { label: 'B2B Conversion Barrier', value: 0.06 + segments * 0.008 },
+  ].sort((a,b) => b.value - a.value);
+  const maxF = Math.max(...frictions.map(f => f.value));
+  renderBars('friction-bars', frictions.map(f => ({
+    ...f, value: f.value / maxF, color: f.value / maxF > 0.7 ? '#f85149' : f.value / maxF > 0.4 ? '#d29922' : '#58a6ff'
+  })), 1);
+
+  document.getElementById('results').classList.add('visible');
+}
+
+function renderBars(id, items, maxVal) {
+  const el = document.getElementById(id);
+  el.innerHTML = items.map(item => {
+    const pct = Math.min(100, (item.value / maxVal) * 100);
+    return `<div class="bar-row">
+      <div class="bar-label">${item.label}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${pct}%;background:${item.color}"></div>
+        <div class="bar-val">${(item.value * 100).toFixed(1)}%</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

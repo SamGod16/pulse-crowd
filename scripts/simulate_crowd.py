@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Adaptive 1,000+ Virtual Crowd Simulator for mirofish-crowd-sim.
+Adaptive 1,000+ Virtual Crowd Simulator for pulse-crowd.
 
 Pure Python 3 stdlib agent-based crowd simulation modeling:
   1. Adaptive population sizing (hard floor >= 1,000 virtual personas via size_swarm.py).

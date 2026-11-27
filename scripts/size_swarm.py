@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Adaptive Swarm Sizing Engine for mirofish-crowd-sim.
+Adaptive Swarm Sizing Engine for pulse-crowd.
 
 Determines the appropriate virtual persona population (always >= 1,000) based on
 project complexity drivers (segments, product model, geography, pricing tiers,

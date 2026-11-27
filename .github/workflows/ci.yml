@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test & Validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Validate SKILL.md & repo structure
+        run: python scripts/validate_skill.py
+
+      - name: Run test suite
+        run: python -m unittest discover -s tests -v
+
+      - name: Validate JSON examples
+        run: |
+          python -m json.tool examples/minimal-b2b-cli.json > /dev/null
+          python -m json.tool examples/regulated-marketplace.json > /dev/null
+
+      - name: Smoke test — sizing engine
+        run: python scripts/size_swarm.py --spec examples/minimal-b2b-cli.json
+
+      - name: Smoke test — full simulation
+        run: |
+          python scripts/simulate_crowd.py \
+            --spec examples/minimal-b2b-cli.json \
+            --out-dir /tmp/ci_smoke \
+            --runs 2 \
+            --seed 42
+          test -f /tmp/ci_smoke/metrics.json
+          test -f /tmp/ci_smoke/report.md

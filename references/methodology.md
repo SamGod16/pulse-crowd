@@ -1,6 +1,6 @@
 # Simulation Methodology & Calibration Reference
 
-`mirofish-crowd-sim` combines **AI-assisted ground-truth extraction** with a **deterministic Python Agent-Based Crowd Simulation (ABM)** scaling dynamically to **>= 1,000 virtual personas** based on project complexity.
+`pulse-crowd` combines **AI-assisted ground-truth extraction** with a **deterministic Python Agent-Based Crowd Simulation (ABM)** scaling dynamically to **>= 1,000 virtual personas** based on project complexity.
 
 ---
 

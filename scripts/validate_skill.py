@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Skill Package & Agent Skills Specification Validator for mirofish-crowd-sim.
+Skill Package & Agent Skills Specification Validator for pulse-crowd.
 
 Verifies:
 1. SKILL.md YAML frontmatter obeys agentskills.io naming, length, and required fields.

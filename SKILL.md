@@ -19,7 +19,7 @@ metadata:
   category: product-validation
 ---
 
-# MiroFish Adaptive Crowd Simulator (`mirofish-crowd-sim`)
+# PulseCrowd Adaptive Crowd Simulator (`pulse-crowd`)
 
 Evaluate how a real market of **1,000 to 25,000+ virtual personas** reacts to a product across **Discovery**, **Social Contagion**, and **Week-2 Equilibrium** before spending acquisition budget.
 
@@ -69,13 +69,13 @@ Inspect `recommended_population`, `complexity_tier`, and `cohort_allocations`.
 Run the 3-round agent-based contagion simulator across multiple Monte Carlo seeds:
 
 ```bash
-python3 scripts/simulate_crowd.py --spec /path/to/project_spec.json --out-dir /tmp/mirofish_out --runs 5 --seed 42
+python3 scripts/simulate_crowd.py --spec /path/to/project_spec.json --out-dir /tmp/pulse_crowd_out --runs 5 --seed 42
 ```
 
 (Optional qualitative enrichment: if your host agent supports parallel subagents, you may run qualitative interviews with 6–12 anchor personas first to refine cohort parameters such as `onboarding_friction` and `pricing_fairness`, then expand via `simulate_crowd.py` across all `>= 1,000` personas.)
 
 ### Step 5: Analyze Outputs & Recommend Fixes
-Read `/tmp/mirofish_out/metrics.json` and `/tmp/mirofish_out/report.md`:
+Read `/tmp/pulse_crowd_out/metrics.json` and `/tmp/pulse_crowd_out/report.md`:
 1. Summarize the adaptive population size chosen and why.
 2. Report the Readiness Score (`0–100`), 95% confidence interval across `--runs`, sentiment shift (`R1 -> R2 -> R3`), B2B paid conversion rate, and top friction categories.
 3. Compare baseline vs remediated specs whenever iterating on fixes.

@@ -1,10 +1,15 @@
-# pulse-crowd
+# 🎯 pulse-crowd
 
-> Adaptive multi-round virtual crowd simulation (`1,000` to `25,000+` personas) for AI coding agents — stress-test product launches, onboarding gates, pricing fairness, and compliance risk before shipping.
+> **Understand the market before you enter it.** Adaptive multi-round virtual crowd simulation (`1,000` to `25,000+` personas) for AI coding agents — stress-test product launches, onboarding gates, pricing fairness, and compliance risk before shipping.
 
+[![CI](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SamGod16/pulse-crowd?color=green)](https://github.com/SamGod16/pulse-crowd/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Agent Skills Standard](https://img.shields.io/badge/Agent_Skills-agentskills.io-green.svg)
 ![Python: 3.9+ stdlib](https://img.shields.io/badge/Python-3.9%2B%20stdlib-informational.svg)
+[![GitHub Stars](https://img.shields.io/github/stars/SamGod16/pulse-crowd?style=social)](https://github.com/SamGod16/pulse-crowd)
+
+**[📊 Live Interactive Demo](https://samgod16.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamGod16/pulse-crowd/releases)** · **[🐛 Report Bug](https://github.com/SamGod16/pulse-crowd/issues)**
 
 ---
 
@@ -68,7 +73,7 @@ pulse-crowd/
 
 ## Installation
 
-Replace `<OWNER>` with your GitHub username or organization once published.
+Replace `SamGod16` with your GitHub username or organization if forking.
 
 ### Option 1: Install Globally via `npx skills` (Multi-Agent CLI)
 
@@ -76,22 +81,22 @@ Per Vercel Labs' [`skills`](https://github.com/vercel-labs/skills) CLI documenta
 
 ```bash
 # Interactive multi-agent global install
-npx skills add <OWNER>/pulse-crowd -g
+npx skills add SamGod16/pulse-crowd -g
 
 # Target specific agents non-interactively
-npx skills add <OWNER>/pulse-crowd -a claude-code -g -y
-npx skills add <OWNER>/pulse-crowd -a codex -g -y
-npx skills add <OWNER>/pulse-crowd -a opencode -g -y
+npx skills add SamGod16/pulse-crowd -a claude-code -g -y
+npx skills add SamGod16/pulse-crowd -a codex -g -y
+npx skills add SamGod16/pulse-crowd -a opencode -g -y
 ```
 
-> **Verification note:** `npx skills add` syntax reflects documented CLI flags; remote fetch from `<OWNER>/pulse-crowd` requires the repository to be published on GitHub first.
+> **Verification note:** `npx skills add` syntax reflects documented CLI flags; remote fetch from `SamGod16/pulse-crowd` requires the repository to be published on GitHub first.
 
 ### Option 2: Manual Global Installation (Clone / Symlink)
 
 Clone the repository once, then link or copy it to the shared standard path (`~/.agents/skills/`) and any agent-native directories you use:
 
 ```bash
-git clone https://github.com/<OWNER>/pulse-crowd.git ~/skills/pulse-crowd
+git clone https://github.com/SamGod16/pulse-crowd.git ~/skills/pulse-crowd
 mkdir -p ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.config/opencode/skills
 
 # Shared Agent Skills path (scanned by Codex, OpenCode, Gemini CLI, Cursor)
@@ -137,7 +142,7 @@ python3 scripts/size_swarm.py --spec examples/regulated-marketplace.json
 ```bash
 python3 scripts/simulate_crowd.py \
   --spec examples/regulated-marketplace.json \
-  --out-dir /tmp/mirofish_demo_reg \
+  --out-dir /tmp/pulse_crowd_demo_reg \
   --runs 3 \
   --seed 42
 ```
@@ -159,7 +164,7 @@ Verified output observed on `Python 3.9.6`:
     "mean_avg_r3": 0.649,
     "verdict": "GO (Conditional or Phase-1 Launch Ready)"
   },
-  "out_dir": "/tmp/mirofish_demo_reg"
+  "out_dir": "/tmp/pulse_crowd_demo_reg"
 }
 ```
 
@@ -176,7 +181,7 @@ Generated output artifacts in `--out-dir`:
 
 Once installed globally, prompt your assistant inside any codebase:
 
-- *"Audit our current onboarding and pricing code, build a spec JSON for MiroFish, size the virtual crowd based on our project complexity (minimum 1,000 personas), and run a 3-round simulation."*
+- *"Audit our current onboarding and pricing code, build a spec JSON for PulseCrowd, size the virtual crowd based on our project complexity (minimum 1,000 personas), and run a 3-round simulation."*
 - *"Compare our current v1 authentication flow against a non-biometric alternative across at least 2,000 virtual users."*
 
 ### Expected Agent Workflow
@@ -232,6 +237,6 @@ python3 -m unittest discover -s tests -v
 
 ## License
 
-Licensed under the **[MIT License](LICENSE)** — Copyright (c) 2026 Samu.
+Licensed under the **[MIT License](LICENSE)** — Copyright (c) 2026 SamGod16.
 
 **Why MIT?** For an open-source Agent Skill targeting broad developer and multi-agent adoption (`npx skills`, Claude Code, Codex, OpenCode), the MIT License offers minimal legal friction for commercial teams, solo developers, and forks while requiring only preservation of the copyright and permission notice.

@@ -1,4 +1,4 @@
-# Contributing to `mirofish-crowd-sim`
+# Contributing to `pulse-crowd`
 
 Contributions, bug reports, calibration improvements, and documentation fixes are welcome.
 
