@@ -2,6 +2,8 @@
 
 > **Understand the market before you enter it.** Adaptive multi-round virtual crowd simulation (`1,000` to `25,000+` personas) for AI coding agents — stress-test product launches, onboarding gates, pricing fairness, and compliance risk before shipping.
 
+**English** · [Español](docs/i18n/README.es.md) · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Português](docs/i18n/README.pt-BR.md) · [Italiano](docs/i18n/README.it.md) · [हिन्दी](docs/i18n/README.hi.md) · [Русский](docs/i18n/README.ru.md)
+
 [![CI](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml/badge.svg)](https://github.com/SamGod16/pulse-crowd/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/SamGod16/pulse-crowd?color=green)](https://github.com/SamGod16/pulse-crowd/releases)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
@@ -31,7 +33,7 @@ Asking an AI assistant to "simulate a launch" in a single prompt—or testing a 
 - Fixed, oversized test runs waste compute on simple developer utilities that only need a focused cohort mix.
 - Proprietary single-tool orchestration scripts break across other AI assistants.
 
-`pulse-crowd` packages a **portable Agent Skill** (`SKILL.md` + zero-dependency Python 3 stdlib tooling) that sizes the virtual crowd automatically **before** dispatch and runs deterministic multi-round simulations across **at least 1,000 virtual personas**.
+`pulse-crowd` packages a **portable Agent Skill** (`SKILL.md` + zero-dependency Python 3 stdlib tooling) that sizes the virtual crowd automatically **before** dispatch and runs deterministic multi-round simulations across **at least 1,000 virtual personas**. It works on codebases in **any programming language** (TypeScript, Next.js, Python, Go, Rust, Java, Swift, PHP) and responds in **any human language** you prompt your AI assistant in.
 
 ---
 
@@ -70,14 +72,17 @@ pulse-crowd/
 ├── CHANGELOG.md                      # Release history
 ├── CONTRIBUTING.md                   # Contribution and testing guidelines
 ├── CODE_OF_CONDUCT.md                # Contributor Covenant Code of Conduct
+├── SECURITY.md                       # Private vulnerability reporting policy
 ├── assets/
 │   └── demo-preview.svg              # Architecture & observed benchmark preview
 ├── docs/
-│   └── index.html                    # Interactive GitHub Pages web demo
+│   ├── index.html                    # Interactive GitHub Pages web demo
+│   └── i18n/                         # README translations (ES, ZH, JA, KO, FR, DE, PT-BR, IT, HI, RU)
 ├── .github/
+│   ├── CODEOWNERS                    # Maintainer review enforcement
 │   ├── dependabot.yml                # Automated GitHub Actions updates
 │   ├── PULL_REQUEST_TEMPLATE.md      # Pull request checklist
-│   ├── ISSUE_TEMPLATE/               # Structured bug & feature templates
+│   ├── ISSUE_TEMPLATE/               # Structured bug, feature & Q&A templates
 │   └── workflows/                    # CI matrix (Python 3.9–3.14) & PyPI release
 ├── scripts/
 │   ├── size_swarm.py                 # Adaptive >= 1,000 population sizing calculator

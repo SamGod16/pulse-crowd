@@ -80,5 +80,6 @@ Read `/tmp/pulse_crowd_out/metrics.json` and `/tmp/pulse_crowd_out/report.md`:
 2. Report the Readiness Score (`0–100`), 95% confidence interval across `--runs`, sentiment shift (`R1 -> R2 -> R3`), B2B paid conversion rate, and top friction categories.
 3. Compare baseline vs remediated specs whenever iterating on fixes.
 4. Clearly label all figures as **synthetic sensitivity simulation results** and outline empirical post-launch validation checks needed with real users.
+5. Deliver the final summary, risk breakdown, and remediation plan in the **same human language the user prompted in** (supporting any language seamlessly), regardless of whether the audited codebase uses TypeScript, Python, Go, Rust, Java, Swift, or any other stack.
 
 See [references/methodology.md](./references/methodology.md) for the exact scoring equations and contagion rules.
