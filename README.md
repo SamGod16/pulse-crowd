@@ -1,6 +1,6 @@
 # 🎯 pulse-crowd
 
-> **Understand the market—and your in-app UX—before you ship.** Adaptive multi-round virtual crowd & UX funnel simulation (`1,000` to `25,000+` personas) for AI coding agents — catch where users get **stuck**, **distracted**, or **lost** inside your app, stress-test **e-commerce & dropshipping** conversion, and validate pricing & compliance before launch.
+> **Understand the market—and your in-app UX—before you ship.** Guided, adaptive multi-round virtual crowd & UX funnel simulation (`1,000` to `25,000+` personas) for AI coding agents — asks what business you're building (*dropshipping, e-commerce/DTC, future apps/websites pre-code, B2B SaaS, marketplaces, or custom projects*), catches where users get **stuck**, **distracted**, or **lost**, and stress-tests pricing, compliance, and Break-Even Max CPC before launch.
 
 **English** · [Español](docs/i18n/README.es.md) · [简体中文](docs/i18n/README.zh-CN.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Português](docs/i18n/README.pt-BR.md) · [Italiano](docs/i18n/README.it.md) · [हिन्दी](docs/i18n/README.hi.md) · [Русский](docs/i18n/README.ru.md)
 
@@ -24,6 +24,20 @@
 | **Single LLM launch prompt** | 1 generic persona | Hides compliance & cold-start edges | None | Prompt only |
 | **Static 10–15 persona script** | Fixed ~15 personas | Oversimplifies or wastes scale | Ad-hoc | Tool-locked |
 | **`pulse-crowd` (This Skill)** | **Adaptive `1,000` – `25,000+`** | **Stratified + Largest Remainder floor** | **Seeded Monte Carlo 95% CI** | **Claude, Codex, Gemini CLI, OpenCode, Cursor, Antigravity** |
+
+## Step 0: Guided Business Intake & 7 Supported Verticals (`v2.1` – `v2.2`)
+
+Invoke `"run pulse-crowd"` (or run `python3 scripts/scaffold_spec.py --interactive`) and the skill first asks **what you are building** and whether you are auditing an **existing codebase/Shopify theme** or validating a **pre-code concept before writing code**:
+
+| # | Business Vertical | Cohort & UX Funnel Focus | Key Metrics Tracked |
+| :--- | :--- | :--- | :--- |
+| **1** | **Dropshipping Store** | TikTok/Meta cold shoppers, price comparators, return skeptics, ad critics | Cart popups, shipping delivery window, hidden shipping shock, **Break-Even Max CPC** |
+| **2** | **E-Commerce / DTC Brand** | Repeat/brand buyers, spec & sizing researchers, express checkout (`Shop Pay` / wallet) | Add-to-Cart %, Cart Abandonment %, Simulated Store CVR, Simulated CPA |
+| **3** | **Future Mobile / Web App** *(Pre-Code)* | Early adopters vs. impatient visitors & privacy-cautious users | First-screen value hook, premature signup/KYC friction, paywall conversion |
+| **4** | **Future Website / Lead Funnel** *(Pre-Code)* | High-intent searchers, cold social traffic, skeptical evaluators | Hero clarity, pricing transparency, lead form / calendar booking drop-off |
+| **5** | **B2B SaaS / Developer Tool** | Solo devs, team buyers, security/procurement auditors, forum critics | Docs clarity, auth/trial friction, workspace/API setup, `Basic` vs `Pro` conversion |
+| **6** | **Two-Sided / Regulated Marketplace** | Supply vs. demand liquidity (metro vs. rural), minors/guardians, GDPR/KYC reviewers | Regional liquidity gaps, compliance spirals, `rejected_distrust > 15%` safety gate |
+| **7** | **Other / Custom Project** (`v2.2`) | Extensions, Discord/Telegram bots, courses, newsletters, indie games, hardware, local services | Freeform description tailored into bespoke cohorts + `ux_journey` screens |
 
 ### Case Study 1: In-App UX + Dropshipping Store vs. Hardened DTC Store (`v2.0`)
 
@@ -67,25 +81,25 @@ Asking an AI assistant to "simulate a launch" in a single prompt—or testing a 
 
 ```mermaid
 flowchart LR
-    A["1. Ground-Truth Code Audit"] --> B["2. Build Spec JSON"]
-    B --> C["3. size_swarm.py (>= 1,000 Personas)"]
-    C --> D["Round 1: Discovery & Policy Gates"]
-    D --> E["Round 2: Asymmetric Social Contagion"]
-    E --> F["Round 3: Week-2 Equilibrium & B2B Conversion"]
-    F --> G{"Distrust > 15%?"}
+    Z["0. Step-0 Business Intake (7 Verticals)"] --> A["1. Code Audit OR Pre-Code Scaffold"]
+    A --> C["2. size_swarm.py (>= 1,000 Personas)"]
+    C --> D["3. UX Funnel (Stuck / Distracted / Lost)"]
+    D --> E["4. 3-Round Contagion + Max CPC / B2B CVR"]
+    E --> G{"Distrust > 15%?"}
     G -->|Yes| H["Cap Verdict at NO-GO"]
     G -->|No| I["Readiness Score (0-100) + 95% CI"]
 ```
 
-1. **Pre-Dispatch Adaptive Swarm Sizing (`scripts/size_swarm.py`):** Evaluates project complexity across product architecture (including `ecommerce_brand` & `dropshipping_store`), target segments, geographic footprint, pricing tiers, acquisition channels, regulatory risk, UX journey steps, lifecycle stage, and desired depth. Enforces a strict **minimum floor of 1,000 virtual personas** up to **25,000+**.
-2. **Stratified Cohort Allocation:** Uses Largest Remainder allocation with a per-cohort statistical power floor so critical minority cohorts (such as compliance reviewers or skeptical price comparators) remain measurable.
-3. **Three-Round Agent-Based Contagion Simulation (`scripts/simulate_crowd.py`):**
+1. **Step-0 Guided Intake & Grounding (`SKILL.md` & `scripts/scaffold_spec.py`):** Identifies the exact business track (*Dropshipping*, *DTC E-Commerce*, *Future App*, *Future Website*, *B2B SaaS*, *Marketplace*, or *Custom Project*) and either audits existing repo/Shopify files or scaffolds tailored cohorts & `ux_journey` screens from pre-code answers.
+2. **Pre-Dispatch Adaptive Swarm Sizing (`scripts/size_swarm.py`):** Evaluates project complexity across product architecture (`11` supported `product_type` drivers including `mobile_app`, `website_funnel`, `ecommerce_brand`, `dropshipping_store`, `custom_project`), target segments, geographic footprint, pricing tiers, acquisition channels, regulatory risk, UX journey steps, lifecycle stage, and desired depth. Enforces a strict **minimum floor of 1,000 virtual personas** up to **25,000+**.
+3. **Stratified Cohort Allocation:** Uses Largest Remainder allocation with a per-cohort statistical power floor so critical minority cohorts (such as compliance reviewers or skeptical price comparators) remain measurable.
+4. **Three-Round Agent-Based Contagion Simulation (`scripts/simulate_crowd.py`):**
    - **Round 1 — Discovery & Policy Gates:** Models onboarding friction, regulatory/privacy barriers, pricing fairness, and baseline value fit per virtual individual.
    - **Round 2 — Asymmetric Social Contagion:** Simulates peer-cluster alignment and public discourse spillovers, applying higher negative weight when unresolved compliance or trust complaints arise.
    - **Round 3 — Week-2 Equilibrium & Conversion:** Simulates regional liquidity gaps, retention outcomes, B2B Basic/Pro conversion hurdles, and Monte Carlo 95% confidence intervals across seeds.
-4. **In-App UX Journey Traversal (`ux_journey`):** Simulates every virtual user walking screen-by-screen through your real app routes (`Landing → Signup/PDP → Cart → Checkout`) to pinpoint exact bottlenecks where users get **stuck** (`step_friction`), **distracted** (`distraction_load`), **lost** (`confusion_risk`), or hit **trust/price shocks** (`surprise_cost`).
-5. **E-Commerce & Dropshipping Unit Economics (`commerce_profile`):** Models delivery-window penalties, hidden checkout shipping shocks, Add-to-Cart %, Cart Abandonment %, Store CVR, Simulated CPA, and Break-Even Max CPC.
-6. **Transparent Readiness Scoring:** Produces a `0–100` Readiness Score with an explicit regulatory distrust safety gate (`rejected_distrust > 15%` caps verdict at `NO-GO`).
+5. **In-App UX Journey Traversal (`ux_journey`):** Simulates every virtual user walking screen-by-screen through your real app routes (`Landing → Signup/PDP → Cart → Checkout`) to pinpoint exact bottlenecks where users get **stuck** (`step_friction`), **distracted** (`distraction_load`), **lost** (`confusion_risk`), or hit **trust/price shocks** (`surprise_cost`).
+6. **E-Commerce & Dropshipping Unit Economics (`commerce_profile`):** Models delivery-window penalties, hidden checkout shipping shocks, Add-to-Cart %, Cart Abandonment %, Store CVR, Simulated CPA, and Break-Even Max CPC.
+7. **Transparent Readiness Scoring:** Produces a `0–100` Readiness Score with an explicit regulatory distrust safety gate (`rejected_distrust > 15%` caps verdict at `NO-GO`).
 
 ---
 
@@ -182,8 +196,9 @@ For workspace-only installation inside a single repository instead of global ins
 
 ```bash
 pip install git+https://github.com/SamuelCoreLabs/pulse-crowd.git
+pulse-crowd-init --interactive --lang en --out /tmp/my_project_spec.json
 pulse-crowd-size --spec examples/minimal-b2b-cli.json
-pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
+pulse-crowd-sim --spec examples/dropshipping-store.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
 ```
 
 ### Verify Your Installation

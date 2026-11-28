@@ -1,6 +1,6 @@
 # 🎯 pulse-crowd
 
-> **Comprende el mercado y la UX dentro de tu app antes de lanzar.** Simulación adaptativa multi-ronda de multitudes virtuales (`1,000` a `25,000+` personas) para agentes IA — detecta en qué pantalla se **atasca**, **distrae** o **pierde** la gente, pon a prueba tiendas **e-commerce y dropshipping**, y valida precios o riesgos legales antes de publicar.
+> **Comprende el mercado y la UX dentro de tu app antes de lanzar.** Asistente guiado Paso 0 y simulación adaptativa multi-ronda de multitudes virtuales (`1,000` a `25,000+` personas) para agentes IA — valida **dropshipping**, **e-commerce/DTC**, **futuras apps y webs antes de programar**, **SaaS**, **marketplaces** o **proyectos a medida**, detecta dónde se **atasca**, **distrae** o **pierde** la gente y calcula tu **Break-Even Max CPC** antes de invertir en anuncios.
 
 [English](../../README.md) · **Español** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português](README.pt-BR.md) · [Italiano](README.it.md) · [हिन्दी](README.hi.md) · [Русский](README.ru.md)
 
@@ -59,10 +59,18 @@ Simulación real ejecutada con `scripts/simulate_crowd.py` (`--runs 3 --seed 42`
 
 Compatible con **cualquier stack tecnológico** del proyecto objetivo (TypeScript, Next.js, Python, Go, Rust, Java, móvil) y respuestas del agente en **cualquier idioma**.
 
-### Asistente guiado y adaptación por tipo de negocio
-Al invocar la skill (p. ej. *"usa pulse-crowd para probar mi negocio"*), el agente te pregunta primero en tu idioma **qué tipo de proyecto es** (*Tienda Dropshipping*, *E-Commerce / Marca DTC*, *Futura App móvil/web*, *Futura Web / Funnel de leads*, *SaaS B2B*, *Marketplace* u **Otro proyecto personalizado** donde describes libremente lo que estás creando) y si ya tienes código/tienda o es una idea previa al desarrollo, adaptando las audiencias ([audience-playbooks.md](../../references/audience-playbooks.md)) y pantallas UX a tu caso real.
+### Asistente guiado (Paso 0) y 7 verticales de negocio (`v2.1` – `v2.2`)
+Al invocar la skill (`"usa pulse-crowd"` o *"run pulse-crowd"*), el agente te pregunta primero en tu idioma **qué tipo de negocio estás construyendo** y si ya tienes código/tienda Shopify o estás validando una **idea previa al desarrollo**:
 
-También puedes lanzar el asistente interactivo en terminal:
+1. **Tienda Dropshipping** (`dropshipping_store`) — tráfico frío TikTok/Meta, envío `10–25` días, popups, envío oculto y **CPC Máximo Rentable**.
+2. **E-Commerce / Marca DTC** (`ecommerce_brand`) — talla/materiales, política de devolución, carrito deslizante, checkout express y CVR/CPA.
+3. **Futura App Móvil o Web** *(pre-código)* (`mobile_app`) — gancho inicial, registro/KYC temprano, permisos, primera acción de valor y paywall.
+4. **Futura Web / Funnel de Leads o Infoproductos** *(pre-código)* (`website_funnel`) — hero, prueba social, transparencia de precios y formulario/reserva.
+5. **SaaS B2B / Herramienta Dev** (`b2b_saas` / `developer_tool`) — docs, trial/auth, primera llamada API/workspace y conversión *Basic* vs *Pro*.
+6. **Marketplace Bilateral o Plataforma Regulada** (`two_sided_marketplace` / `regulated_platform`) — liquidez regional, verificación/menores y puerta de seguridad `> 15%`.
+7. **Otro / Proyecto Personalizado (`v2.2`)** (`custom_project`) — extensiones, bots de Discord/Telegram, cursos, newsletters, juegos indie, hardware o servicios locales.
+
+Consulta [audience-playbooks.md](../../references/audience-playbooks.md) o lanza el asistente interactivo directamente en terminal:
 ```bash
 python3 scripts/scaffold_spec.py --interactive --lang es --out /tmp/mi_negocio.json
 ```
@@ -89,8 +97,9 @@ ln -sfn ~/skills/pulse-crowd ~/.config/opencode/skills/pulse-crowd
 ### Opción 3: CLI de Python vía `pip`
 ```bash
 pip install git+https://github.com/SamuelCoreLabs/pulse-crowd.git
+pulse-crowd-init --interactive --lang es --out /tmp/mi_negocio.json
 pulse-crowd-size --spec examples/minimal-b2b-cli.json
-pulse-crowd-sim --spec examples/regulated-marketplace.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
+pulse-crowd-sim --spec examples/dropshipping-store.json --out-dir /tmp/pulse_crowd_demo --runs 3 --seed 42
 ```
 
 ### Verificar instalación

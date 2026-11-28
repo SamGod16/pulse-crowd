@@ -5,6 +5,13 @@ All notable changes to `pulse-crowd` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Updated root `README.md` with the Step-0 Guided Business Intake & 7-Vertical table, modernized 5-step Mermaid architecture diagram, and `pulse-crowd-init` CLI quickstart.
+- Synchronized all 10 translated READMEs in `docs/i18n/` (`es`, `zh-CN`, `ja`, `ko`, `fr`, `de`, `pt-BR`, `it`, `hi`, `ru`) with full v2.0–v2.2 features (Step 0 intake, 7 verticals including pre-code & custom projects, UX funnel drop-offs, and e-commerce Break-Even Max CPC).
+- Refreshed `assets/demo-preview.svg` and `docs/index.html` (`v2.2`) across all 11 UI language packs, plus updated `pyproject.toml` and GitHub repository About description & topics.
+
 ## [2.2.0] - 2026-11-28
 
 ### Added

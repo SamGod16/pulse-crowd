@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PulseCrowd v2.0 — Adaptive Crowd, UX Funnel & E-Commerce Simulator</title>
-  <meta name="description" content="Interactive demo of PulseCrowd v2.0: simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping conversion.">
-  <meta property="og:title" content="PulseCrowd v2.0 — Live Crowd & In-App UX Simulator">
-  <meta property="og:description" content="Find where users get stuck, distracted, or lost—and stress-test e-commerce, dropshipping, pricing & compliance across 1,000–25,000+ virtual personas before shipping.">
+  <title>PulseCrowd v2.2 — Adaptive Crowd, UX Funnel & E-Commerce Simulator</title>
+  <meta name="description" content="Interactive demo of PulseCrowd v2.2: ask your business type, simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping conversion.">
+  <meta property="og:title" content="PulseCrowd v2.2 — Live Crowd & In-App UX Simulator">
+  <meta property="og:description" content="Find where users get stuck, distracted, or lost—and stress-test dropshipping, e-commerce, future apps/webs, SaaS, pricing & compliance across 1,000–25,000+ virtual personas before shipping.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://samuelcorelabs.github.io/pulse-crowd/">
   <meta property="og:image" content="https://samuelcorelabs.github.io/pulse-crowd/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PulseCrowd v2.0 — Live Crowd & In-App UX Simulator">
+  <meta name="twitter:title" content="PulseCrowd v2.2 — Live Crowd & In-App UX Simulator">
   <meta name="twitter:description" content="Find where users get stuck, distracted, or lost—and stress-test e-commerce, dropshipping, pricing & compliance across 1,000–25,000+ virtual personas before shipping.">
   <meta name="twitter:image" content="https://samuelcorelabs.github.io/pulse-crowd/social-preview.png">
   <style>
@@ -215,7 +215,7 @@
   <header>
     <div class="top-bar">
       <div>
-        <h1><span>PulseCrowd</span> <span data-i18n="titleSuffix" style="color:var(--text)">v2.0 Live Simulator</span></h1>
+        <h1><span>PulseCrowd</span> <span data-i18n="titleSuffix" style="color:var(--text)">v2.2 Live Simulator</span></h1>
       </div>
       <div class="lang-picker">
         <span>🌐</span>
@@ -466,8 +466,8 @@
 <script>
 const I18N = {
   en: {
-    titleSuffix: "v2.0 Live Simulator",
-    tagline: "Simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping unit economics.",
+    titleSuffix: "v2.2 Live Simulator",
+    tagline: "Ask your business type and simulate 1,000–25,000+ virtual personas across business viability, in-app UX drop-offs (stuck, distracted, lost), and e-commerce/dropshipping unit economics.",
     sec1Title: "1. Load a Preset or Configure Your App / Store",
     presetDropship: "Dropshipping Store (NO-GO)",
     presetDtc: "Hardened DTC Store (GO)",
@@ -552,8 +552,8 @@ const I18N = {
     lnkReleases: "Releases"
   },
   es: {
-    titleSuffix: "Simulador v2.0",
-    tagline: "Simula de 1,000 a 25,000+ personas virtuales: viabilidad de negocio, embudo UX dentro de tu app (atascados, distraídos, perdidos) y métricas de ecommerce/dropshipping.",
+    titleSuffix: "Simulador v2.2",
+    tagline: "Pregunta qué negocio construyes (dropshipping, e-commerce, futuras apps/webs, SaaS, marketplace o custom) y simula de 1,000 a 25,000+ personas virtuales.",
     sec1Title: "1. Carga un Preset o Configura tu App / Tienda",
     presetDropship: "Tienda Dropshipping (NO-GO)",
     presetDtc: "Tienda DTC Optimizada (GO)",
@@ -642,7 +642,7 @@ const I18N = {
 // Reuse clean fallback strings for zh, ja, ko, fr, de, pt, it, hi, ru
 ['zh','ja','ko','fr','de','pt','it','hi','ru'].forEach(l => { I18N[l] = { ...I18N.en }; });
 Object.assign(I18N.zh, {
-  titleSuffix: "v2.0 实时模拟器",
+  titleSuffix: "v2.2 实时模拟器",
   secUxTitle: "3. 应用内 UX 漏斗 — 卡住、分心与迷失位置",
   secComTitle: "4. 电商与 Dropshipping 单位经济测算",
   presetDropship: "Dropshipping 店铺 (NO-GO)",
@@ -651,7 +651,7 @@ Object.assign(I18N.zh, {
   runBtn: "运行商业 + UX 双重仿真"
 });
 Object.assign(I18N.ja, {
-  titleSuffix: "v2.0 ライブシミュレーター",
+  titleSuffix: "v2.2 ライブシミュレーター",
   secUxTitle: "3. アプリ内 UX ファネル（詰まり・気散り・迷子）",
   secComTitle: "4. EC・ドロップシッピング採算シミュレーション",
   presetDropship: "ドロップシッピング店 (NO-GO)",
@@ -659,8 +659,16 @@ Object.assign(I18N.ja, {
   thStuck: "詰まり", thDistracted: "気散り", thLost: "迷子", thShock: "価格/信頼",
   runBtn: "ビジネス + UX シミュレーション実行"
 });
+Object.assign(I18N.ko, {
+  titleSuffix: "v2.2 라이브 시뮬레이터",
+  secUxTitle: "3. 인앱 UX 퍼널 — 막힘·산만·이탈 지점 분석",
+  secComTitle: "4. 이커머스 및 드롭쉬핑 단위 경제성",
+  presetDropship: "드롭쉬핑 스토어 (NO-GO)",
+  presetDtc: "최적화 DTC 브랜드 (GO)",
+  runBtn: "비즈니스 + UX 시뮬레이션 실행"
+});
 Object.assign(I18N.fr, {
-  titleSuffix: "Simulateur v2.0",
+  titleSuffix: "Simulateur v2.2",
   secUxTitle: "3. Tunnel UX — Où les utilisateurs bloquent, se distraient ou se perdent",
   secComTitle: "4. Économie Unitaire E-Commerce & Dropshipping",
   presetDropship: "Boutique Dropshipping (NO-GO)",
@@ -669,7 +677,7 @@ Object.assign(I18N.fr, {
   runBtn: "Lancer la Simulation Duale"
 });
 Object.assign(I18N.de, {
-  titleSuffix: "v2.0 Live-Simulator",
+  titleSuffix: "v2.2 Live-Simulator",
   secUxTitle: "3. In-App UX-Funnel — Wo Nutzer hängen bleiben, abgelenkt sind oder sich verlaufen",
   secComTitle: "4. E-Commerce & Dropshipping Unit Economics",
   presetDropship: "Dropshipping-Shop (NO-GO)",
@@ -678,13 +686,35 @@ Object.assign(I18N.de, {
   runBtn: "Dual-Simulation starten"
 });
 Object.assign(I18N.pt, {
-  titleSuffix: "Simulador v2.0",
+  titleSuffix: "Simulador v2.2",
   secUxTitle: "3. Funil UX Interno — Onde Usuários Travam, se Distraem ou se Perdem",
   secComTitle: "4. Economia Unitária E-Commerce e Dropshipping",
   presetDropship: "Loja Dropshipping (NO-GO)",
   presetDtc: "Loja DTC Otimizada (GO)",
   thStuck: "Travados", thDistracted: "Distraídos", thLost: "Perdidos", thShock: "Preço/Conf.",
   runBtn: "Executar Simulação Negócio + UX"
+});
+Object.assign(I18N.it, {
+  titleSuffix: "Simulatore Live v2.2",
+  secUxTitle: "3. Funnel UX In-App — Dove gli utenti si bloccano, si distraggono o si perdono",
+  secComTitle: "4. Unit Economics E-Commerce e Dropshipping",
+  presetDropship: "Store Dropshipping (NO-GO)",
+  presetDtc: "Store DTC Ottimizzato (GO)",
+  runBtn: "Avvia Simulazione Business + UX"
+});
+Object.assign(I18N.hi, {
+  titleSuffix: "v2.2 लाइव सिमुलेटर",
+  secUxTitle: "3. इन-ऐप UX फ़नल — यूज़र कहाँ अटकते, भटकते या खोते हैं",
+  secComTitle: "4. ई-कॉमर्स और ड्रॉपशीपिंग यूनिट इकोनॉमिक्स",
+  runBtn: "बिज़नेस + UX सिमुलेशन चलाएँ"
+});
+Object.assign(I18N.ru, {
+  titleSuffix: "Симулятор v2.2",
+  secUxTitle: "3. UX-воронка — где пользователи застревают, отвлекаются или теряются",
+  secComTitle: "4. Юнит-экономика E-Commerce и Dropshipping",
+  presetDropship: "Dropshipping-магазин (NO-GO)",
+  presetDtc: "Оптимизированный DTC (GO)",
+  runBtn: "Запустить симуляцию Бизнес + UX"
 });
 
 let currentLang = 'en';

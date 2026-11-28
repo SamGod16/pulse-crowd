@@ -1,12 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="PulseCrowd Adaptive Crowd Simulation CLI Preview">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="PulseCrowd v2.2 Adaptive Crowd, UX Funnel & E-Commerce Simulation Preview">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0d1117"/>
       <stop offset="100%" stop-color="#131922"/>
-    </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#58a6ff"/>
-      <stop offset="100%" stop-color="#3fb950"/>
     </linearGradient>
   </defs>
 
@@ -20,103 +16,109 @@
   <circle cx="24" cy="20" r="6" fill="#f85149"/>
   <circle cx="44" cy="20" r="6" fill="#d29922"/>
   <circle cx="64" cy="20" r="6" fill="#3fb950"/>
-  <text x="440" y="25" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13" font-weight="600">pulse-crowd — Adaptive Multi-Round Virtual Crowd Simulator (Python 3 stdlib)</text>
+  <text x="440" y="25" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12.5" font-weight="600">pulse-crowd v2.2 — Guided 7-Vertical Crowd, UX Funnel &amp; E-Commerce Simulator</text>
 
-  <!-- Pipeline Flow Pills -->
-  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="600">
-    <rect x="28" y="58" width="175" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
-    <text x="115" y="79" text-anchor="middle" fill="#79c0ff">1. Codebase Audit</text>
+  <!-- 5-Step Pipeline Flow Pills -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600">
+    <rect x="28" y="58" width="154" height="34" rx="8" fill="#1f2937" stroke="#bc8cff" stroke-width="1"/>
+    <text x="105" y="79" text-anchor="middle" fill="#d2a8ff">0. Step-0 Intake (7)</text>
 
-    <path d="M 210 75 L 228 75" stroke="#8b949e" stroke-width="1.5"/>
-    <polygon points="228,71 236,75 228,79" fill="#8b949e"/>
+    <path d="M 185 75 L 195 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="195,71 201,75 195,79" fill="#8b949e"/>
 
-    <rect x="242" y="58" width="185" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
-    <text x="334" y="79" text-anchor="middle" fill="#79c0ff">2. Size Swarm (&gt;= 1,000)</text>
+    <rect x="204" y="58" width="152" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="280" y="79" text-anchor="middle" fill="#79c0ff">1. Code / Pre-Code</text>
 
-    <path d="M 434 75 L 452 75" stroke="#8b949e" stroke-width="1.5"/>
-    <polygon points="452,71 460,75 452,79" fill="#8b949e"/>
+    <path d="M 359 75 L 369 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="369,71 375,75 369,79" fill="#8b949e"/>
 
-    <rect x="466" y="58" width="195" height="34" rx="8" fill="#1f2937" stroke="#d29922" stroke-width="1"/>
-    <text x="563" y="79" text-anchor="middle" fill="#e3b341">3. 3-Round Contagion</text>
+    <rect x="378" y="58" width="148" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="452" y="79" text-anchor="middle" fill="#79c0ff">2. Size (&gt;= 1,000)</text>
 
-    <path d="M 668 75 L 686 75" stroke="#8b949e" stroke-width="1.5"/>
-    <polygon points="686,71 694,75 686,79" fill="#8b949e"/>
+    <path d="M 529 75 L 539 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="539,71 545,75 539,79" fill="#8b949e"/>
 
-    <rect x="700" y="58" width="152" height="34" rx="8" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
-    <text x="776" y="79" text-anchor="middle" fill="#56d364">4. Readiness Score</text>
+    <rect x="548" y="58" width="160" height="34" rx="8" fill="#1f2937" stroke="#d29922" stroke-width="1"/>
+    <text x="628" y="79" text-anchor="middle" fill="#e3b341">3. UX + 3 Rounds</text>
+
+    <path d="M 711 75 L 721 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="721,71 727,75 721,79" fill="#8b949e"/>
+
+    <rect x="730" y="58" width="122" height="34" rx="8" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="791" y="79" text-anchor="middle" fill="#56d364">4. Score &amp; CPC</text>
   </g>
 
-  <!-- Left Card: Minimal B2B CLI -->
+  <!-- Left Card: Dropshipping vs Hardened DTC -->
   <rect x="28" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-  <text x="46" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">$ simulate_crowd.py --spec minimal-b2b-cli.json</text>
+  <text x="46" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700">$ simulate_crowd.py --spec dropshipping-vs-dtc</text>
   <line x1="46" y1="150" x2="412" y2="150" stroke="#21262d" stroke-width="1"/>
 
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#c9d1d9">
-    <text x="46" y="176" fill="#8b949e">Population Tier:</text>
-    <text x="235" y="176" fill="#e6edf3" font-weight="700">1,500 personas (lean_1k)</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#c9d1d9">
+    <text x="46" y="176" fill="#8b949e">Population:</text>
+    <text x="195" y="176" fill="#e6edf3" font-weight="700">4,800–4,900 (complex_4k_8k)</text>
 
-    <text x="46" y="202" fill="#8b949e">Readiness Score:</text>
-    <text x="235" y="202" fill="#3fb950" font-weight="700">90.0 / 100 (±0.07 CI95)</text>
+    <text x="46" y="204" fill="#8b949e">Broken Dropship:</text>
+    <text x="195" y="204" fill="#f85149" font-weight="700">14.0/100 NO-GO · $0.04 MaxCPC</text>
 
-    <text x="46" y="228" fill="#8b949e">Sentiment Trajectory:</text>
-    <text x="235" y="228" fill="#79c0ff">+0.350 → +0.386 → +0.543</text>
+    <text x="46" y="230" fill="#8b949e">Hardened DTC:</text>
+    <text x="195" y="230" fill="#3fb950" font-weight="700">95.1/100 GO    · $2.51 MaxCPC</text>
 
-    <text x="46" y="254" fill="#8b949e">Verdict:</text>
-    <rect x="235" y="239" width="150" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
-    <text x="310" y="254" text-anchor="middle" fill="#56d364" font-size="11.5" font-weight="700">GO (Launch Ready)</text>
+    <text x="46" y="258" fill="#8b949e">#1 Bottleneck:</text>
+    <text x="195" y="258" fill="#e3b341">shipping-step (70% shock)</text>
   </g>
 
-  <!-- Mini Sentiment Bars Left -->
+  <!-- Mini UX Bars Left -->
   <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#8b949e">
-    <text x="46" y="294">R1 Discovery</text>
-    <rect x="145" y="284" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="145" y="284" width="128" height="12" rx="4" fill="#58a6ff"/>
+    <text x="46" y="296">UX Completion (Broken)</text>
+    <rect x="180" y="286" width="210" height="12" rx="4" fill="#0d1117"/>
+    <rect x="180" y="286" width="10" height="12" rx="4" fill="#f85149"/>
+    <text x="395" y="296" fill="#f85149" font-size="10.5" font-weight="700">3.6%</text>
 
-    <text x="46" y="320">R2 Contagion</text>
-    <rect x="145" y="310" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="145" y="310" width="142" height="12" rx="4" fill="#d29922"/>
+    <text x="46" y="322">UX Completion (DTC)</text>
+    <rect x="180" y="312" width="210" height="12" rx="4" fill="#0d1117"/>
+    <rect x="180" y="312" width="157" height="12" rx="4" fill="#3fb950"/>
+    <text x="395" y="322" fill="#3fb950" font-size="10.5" font-weight="700">74.9%</text>
 
-    <text x="46" y="346">R3 Equilibrium</text>
-    <rect x="145" y="336" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="145" y="336" width="186" height="12" rx="4" fill="#3fb950"/>
+    <text x="46" y="348">Store CVR Delta</text>
+    <text x="180" y="348" fill="#79c0ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" font-weight="700">0.15%  →  4.67% CVR</text>
 
-    <text x="46" y="376" fill="#6e7681" font-size="10.5">3 cohorts • single_city • low regulatory risk</text>
+    <text x="46" y="376" fill="#6e7681" font-size="10.5">stuck · distracted · lost · trust_or_price_shock</text>
   </g>
 
-  <!-- Right Card: Regulated Marketplace -->
+  <!-- Right Card: Regulated Marketplace / Pre-Code Apps -->
   <rect x="450" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-  <text x="468" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
+  <text x="468" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
   <line x1="468" y1="150" x2="834" y2="150" stroke="#21262d" stroke-width="1"/>
 
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#c9d1d9">
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#c9d1d9">
     <text x="468" y="176" fill="#8b949e">Population Tier:</text>
-    <text x="657" y="176" fill="#e6edf3" font-weight="700">6,750 (complex_4k_8k)</text>
+    <text x="645" y="176" fill="#e6edf3" font-weight="700">6,750 (complex_4k_8k)</text>
 
-    <text x="468" y="202" fill="#8b949e">Readiness Score:</text>
-    <text x="657" y="202" fill="#3fb950" font-weight="700">92.3 / 100 (±0.07 CI95)</text>
+    <text x="468" y="204" fill="#8b949e">Readiness Score:</text>
+    <text x="645" y="204" fill="#3fb950" font-weight="700">92.3 / 100 (±0.07 CI95)</text>
 
-    <text x="468" y="228" fill="#8b949e">Sentiment Trajectory:</text>
-    <text x="657" y="228" fill="#79c0ff">+0.452 → +0.530 → +0.649</text>
+    <text x="468" y="230" fill="#8b949e">Sentiment R1→R3:</text>
+    <text x="645" y="230" fill="#79c0ff">+0.452 → +0.530 → +0.649</text>
 
-    <text x="468" y="254" fill="#8b949e">Verdict:</text>
-    <rect x="657" y="239" width="150" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
-    <text x="732" y="254" text-anchor="middle" fill="#56d364" font-size="11.5" font-weight="700">GO (Phase-1 Ready)</text>
+    <text x="468" y="258" fill="#8b949e">Verdict:</text>
+    <rect x="645" y="243" width="160" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="725" y="258" text-anchor="middle" fill="#56d364" font-size="11.5" font-weight="700">GO (Phase-1 Ready)</text>
   </g>
 
   <!-- Mini Sentiment Bars Right -->
   <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#8b949e">
-    <text x="468" y="294">R1 Discovery</text>
-    <rect x="567" y="284" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="567" y="284" width="160" height="12" rx="4" fill="#58a6ff"/>
+    <text x="468" y="296">R1 Discovery</text>
+    <rect x="567" y="286" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="286" width="160" height="12" rx="4" fill="#58a6ff"/>
 
-    <text x="468" y="320">R2 Contagion</text>
-    <rect x="567" y="310" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="567" y="310" width="184" height="12" rx="4" fill="#d29922"/>
+    <text x="468" y="322">R2 Contagion</text>
+    <rect x="567" y="312" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="312" width="184" height="12" rx="4" fill="#d29922"/>
 
-    <text x="468" y="346">R3 Equilibrium</text>
-    <rect x="567" y="336" width="240" height="12" rx="4" fill="#0d1117"/>
-    <rect x="567" y="336" width="214" height="12" rx="4" fill="#3fb950"/>
+    <text x="468" y="348">R3 Equilibrium</text>
+    <rect x="567" y="338" width="240" height="12" rx="4" fill="#0d1117"/>
+    <rect x="567" y="338" width="214" height="12" rx="4" fill="#3fb950"/>
 
-    <text x="468" y="376" fill="#6e7681" font-size="10.5">8 cohorts • regional • high regulatory risk (safety gate active)</text>
+    <text x="468" y="376" fill="#6e7681" font-size="10.5">8 cohorts · future_app · website_funnel · custom_project</text>
   </g>
 </svg>

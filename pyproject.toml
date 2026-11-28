@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pulse-crowd"
 version = "2.2.0"
-description = "Adaptive virtual crowd & in-app UX funnel simulation (1,000-25,000+ personas) for SaaS, apps, e-commerce & dropshipping."
+description = "Guided virtual crowd & in-app UX funnel simulation (1,000-25,000+ personas) for dropshipping, e-commerce, future apps/webs, SaaS & custom projects."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
