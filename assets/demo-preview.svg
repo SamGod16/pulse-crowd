@@ -50,7 +50,7 @@
 
   <!-- Left Card: Dropshipping vs Hardened DTC -->
   <rect x="28" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-  <text x="46" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700">$ simulate_crowd.py --spec dropshipping-vs-dtc</text>
+  <text x="46" y="137" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700">$ simulate_crowd.py --spec dropshipping-vs-dtc</text>
   <line x1="46" y1="150" x2="412" y2="150" stroke="#21262d" stroke-width="1"/>
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#c9d1d9">
@@ -87,7 +87,7 @@
 
   <!-- Right Card: Regulated Marketplace / Pre-Code Apps -->
   <rect x="450" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-  <text x="468" y="138" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
+  <text x="468" y="137" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.8" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
   <line x1="468" y1="150" x2="834" y2="150" stroke="#21262d" stroke-width="1"/>
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#c9d1d9">
