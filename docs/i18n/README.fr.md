@@ -11,7 +11,7 @@
 
 **[📊 Démo Interactive en Ligne](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 Releases GitHub](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
 
-![Aperçu CLI PulseCrowd](../../assets/demo-preview.svg)
+![Aperçu CLI PulseCrowd](../../assets/i18n/demo-preview.fr.svg)
 
 ---
 

@@ -11,7 +11,7 @@
 
 **[📊 라이브 인터랙티브 데모](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 Releases](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 Good First Issues](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
 
-![PulseCrowd CLI 미리보기](../../assets/demo-preview.svg)
+![PulseCrowd CLI 미리보기](../../assets/i18n/demo-preview.ko.svg)
 
 ---
 

@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="PulseCrowd v2.2 CLI पूर्वावलोकन: 7 बिज़नेस, UX फ़नल और ई-कॉमर्स">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#131922"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Terminal Card -->
+  <rect width="880" height="420" rx="14" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Top Bar -->
+  <rect width="880" height="40" rx="14" fill="#161b22"/>
+  <rect y="26" width="880" height="14" fill="#161b22"/>
+  <line x1="0" y1="40" x2="880" y2="40" stroke="#30363d" stroke-width="1"/>
+  <circle cx="24" cy="20" r="6" fill="#f85149"/>
+  <circle cx="44" cy="20" r="6" fill="#d29922"/>
+  <circle cx="64" cy="20" r="6" fill="#3fb950"/>
+  <text x="445" y="25" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="11.5" font-weight="600">pulse-crowd v2.2 — 7-वर्टिकल क्राउड, UX फ़नल और ई-कॉमर्स सिम्युलेटर</text>
+
+  <!-- 5-Step Pipeline Flow Pills -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="11" font-weight="600">
+    <rect x="28" y="58" width="154" height="34" rx="8" fill="#1f2937" stroke="#bc8cff" stroke-width="1"/>
+    <text x="105" y="79" text-anchor="middle" fill="#d2a8ff">0. बिज़नेस पूछ (7)</text>
+
+    <path d="M 185 75 L 195 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="195,71 201,75 195,79" fill="#8b949e"/>
+
+    <rect x="204" y="58" width="152" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="280" y="79" text-anchor="middle" fill="#79c0ff">1. कोड / आइडिया</text>
+
+    <path d="M 359 75 L 369 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="369,71 375,75 369,79" fill="#8b949e"/>
+
+    <rect x="378" y="58" width="148" height="34" rx="8" fill="#1f2937" stroke="#388bfd" stroke-width="1"/>
+    <text x="452" y="79" text-anchor="middle" fill="#79c0ff">2. संख्या (&gt;= 1k)</text>
+
+    <path d="M 529 75 L 539 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="539,71 545,75 539,79" fill="#8b949e"/>
+
+    <rect x="548" y="58" width="160" height="34" rx="8" fill="#1f2937" stroke="#d29922" stroke-width="1"/>
+    <text x="628" y="79" text-anchor="middle" fill="#e3b341">3. UX + 3 राउंड</text>
+
+    <path d="M 711 75 L 721 75" stroke="#8b949e" stroke-width="1.5"/>
+    <polygon points="721,71 727,75 721,79" fill="#8b949e"/>
+
+    <rect x="730" y="58" width="122" height="34" rx="8" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="791" y="79" text-anchor="middle" fill="#56d364">4. स्कोर व CPC</text>
+  </g>
+
+  <!-- Left Card: Dropshipping vs Hardened DTC -->
+  <rect x="28" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="46" y="137" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="11" font-weight="700">$ simulate_crowd.py --spec dropshipping-vs-dtc</text>
+  <line x1="46" y1="150" x2="412" y2="150" stroke="#21262d" stroke-width="1"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="11.2" fill="#c9d1d9">
+    <text x="46" y="176" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">कुल पर्सोना:</text>
+    <text x="188" y="176" fill="#e6edf3" font-weight="700">4,800–4,900 (complex_4k_8k)</text>
+
+    <text x="46" y="204" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">कमज़ोर ड्रॉपशीप:</text>
+    <text x="188" y="204" fill="#f85149" font-weight="700">14.0/100 NO-GO · $0.04 MaxCPC</text>
+
+    <text x="46" y="230" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">बेहतर DTC:</text>
+    <text x="188" y="230" fill="#3fb950" font-weight="700">95.1/100 GO · $2.51 MaxCPC</text>
+
+    <text x="46" y="258" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">प्रमुख बाधा #1:</text>
+    <text x="188" y="258" fill="#e3b341">shipping-step (70% शॉक)</text>
+  </g>
+
+  <!-- Mini UX Bars Left -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="10.5" fill="#8b949e">
+    <text x="46" y="296">UX पूर्णता (कमज़ोर)</text>
+    <rect x="182" y="286" width="206" height="12" rx="4" fill="#0d1117"/>
+    <rect x="182" y="286" width="10" height="12" rx="4" fill="#f85149"/>
+    <text x="394" y="296" fill="#f85149" font-size="10.5" font-weight="700">3.6%</text>
+
+    <text x="46" y="322">UX पूर्णता (DTC)</text>
+    <rect x="182" y="312" width="206" height="12" rx="4" fill="#0d1117"/>
+    <rect x="182" y="312" width="154" height="12" rx="4" fill="#3fb950"/>
+    <text x="394" y="322" fill="#3fb950" font-size="10.5" font-weight="700">74.9%</text>
+
+    <text x="46" y="348">स्टोर CVR अंतर</text>
+    <text x="182" y="348" fill="#79c0ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="11.2" font-weight="700">0.15% → 4.67% CVR</text>
+
+    <text x="46" y="376" fill="#6e7681" font-size="10">अटकना · भटकना · खो जाना · कीमत/भरोसा झटका</text>
+  </g>
+
+  <!-- Right Card: Regulated Marketplace / Pre-Code Apps -->
+  <rect x="450" y="112" width="402" height="278" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="468" y="137" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="10.8" font-weight="700">$ simulate_crowd.py --spec regulated-marketplace.json</text>
+  <line x1="468" y1="150" x2="834" y2="150" stroke="#21262d" stroke-width="1"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', monospace" font-size="11.2" fill="#c9d1d9">
+    <text x="468" y="176" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">सैंपल आकार:</text>
+    <text x="635" y="176" fill="#e6edf3" font-weight="700">6,750 (complex_4k_8k)</text>
+
+    <text x="468" y="204" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">रेडीनेस स्कोर:</text>
+    <text x="635" y="204" fill="#3fb950" font-weight="700">92.3 / 100 (±0.07 CI95)</text>
+
+    <text x="468" y="230" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">भाव R1→R3:</text>
+    <text x="635" y="230" fill="#79c0ff">+0.452 → +0.530 → +0.649</text>
+
+    <text x="468" y="258" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif">अंतिम निर्णय:</text>
+    <rect x="635" y="243" width="180" height="22" rx="5" fill="#132a1c" stroke="#3fb950" stroke-width="1"/>
+    <text x="725" y="258" text-anchor="middle" fill="#56d364" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="11" font-weight="700">GO (फेज़-1 तैयार)</text>
+  </g>
+
+  <!-- Mini Sentiment Bars Right -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Kohinoor Devanagari', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="10.5" fill="#8b949e">
+    <text x="468" y="296">R1 खोज</text>
+    <rect x="588" y="286" width="226" height="12" rx="4" fill="#0d1117"/>
+    <rect x="588" y="286" width="150" height="12" rx="4" fill="#58a6ff"/>
+
+    <text x="468" y="322">R2 सामाजिक प्रसार</text>
+    <rect x="588" y="312" width="226" height="12" rx="4" fill="#0d1117"/>
+    <rect x="588" y="312" width="174" height="12" rx="4" fill="#d29922"/>
+
+    <text x="468" y="348">R3 सप्ताह-2 संतुलन</text>
+    <rect x="588" y="338" width="226" height="12" rx="4" fill="#0d1117"/>
+    <rect x="588" y="338" width="202" height="12" rx="4" fill="#3fb950"/>
+
+    <text x="468" y="376" fill="#6e7681" font-size="10">8 समूह · future_app · website_funnel · custom</text>
+  </g>
+</svg>

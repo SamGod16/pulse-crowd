@@ -11,7 +11,7 @@
 
 **[📊 在线交互演示](https://samuelcorelabs.github.io/pulse-crowd/)** · **[📦 GitHub Releases](https://github.com/SamuelCoreLabs/pulse-crowd/releases)** · **[🌱 新手友好议题](https://github.com/SamuelCoreLabs/pulse-crowd/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
 
-![PulseCrowd CLI 预览](../../assets/demo-preview.svg)
+![PulseCrowd CLI 预览](../../assets/i18n/demo-preview.zh-CN.svg)
 
 ---
 

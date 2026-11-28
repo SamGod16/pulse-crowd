@@ -116,7 +116,8 @@ pulse-crowd/
 ├── CODE_OF_CONDUCT.md                # Contributor Covenant Code of Conduct
 ├── SECURITY.md                       # Private vulnerability reporting policy
 ├── assets/
-│   └── demo-preview.svg              # Architecture & observed benchmark preview
+│   ├── demo-preview.svg              # Architecture & observed benchmark preview
+│   └── i18n/                         # Localized SVG previews (ES, ZH, JA, KO, FR, DE, PT-BR, IT, HI, RU)
 ├── docs/
 │   ├── index.html                    # Interactive GitHub Pages web demo
 │   └── i18n/                         # README translations (ES, ZH, JA, KO, FR, DE, PT-BR, IT, HI, RU)
